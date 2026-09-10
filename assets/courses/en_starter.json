@@ -1,0 +1,181 @@
+{
+  "id": "en-starter",
+  "title": "Inglês: primeiros passos",
+  "sourceLanguage": "pt-BR",
+  "targetLanguage": "en",
+  "level": "A1",
+  "units": [
+    {
+      "id": "en-u1",
+      "title": "Primeiras conexões",
+      "description": "Cumprimente, apresente-se e converse com gentileza.",
+      "lessons": [
+        {
+          "id": "en-l1",
+          "title": "Um olá abre portas",
+          "description": "Cumprimentos para diferentes momentos do dia.",
+          "exercises": [
+            {"id":"en-l1-e1","type":"choice","prompt":"Você encontra alguém pela manhã. Como cumprimenta?","answer":"Good morning","options":["Good night","Good morning","Goodbye"],"explanation":"Good morning significa bom dia. Good night é uma despedida à noite."},
+            {"id":"en-l1-e2","type":"typed","prompt":"Escreva em inglês: olá.","answer":"Hello","acceptedAnswers":["Hi"],"explanation":"Hello e hi são cumprimentos. Hi costuma ser mais informal."},
+            {"id":"en-l1-e3","type":"wordOrder","prompt":"Monte: Boa tarde, Ana.","answer":"Good afternoon Ana","options":["Ana","afternoon","Good"],"explanation":"Good afternoon é usado durante a tarde; o nome pode vir depois."},
+            {"id":"en-l1-e4","type":"choice","prompt":"Como se despedir dizendo até logo?","answer":"See you","options":["Please","See you","Welcome"],"explanation":"See you é uma despedida informal, equivalente a até logo."},
+            {"id":"en-l1-e5","type":"typed","prompt":"Traduza: boa noite (ao se despedir para dormir).","answer":"Good night","explanation":"Ao terminar o dia ou ir dormir, dizemos good night. Ao chegar à noite, usamos good evening."}
+          ]
+        },
+        {
+          "id": "en-l2",
+          "title": "Prazer em conhecer",
+          "description": "Diga seu nome e pergunte o nome de alguém.",
+          "exercises": [
+            {"id":"en-l2-e1","type":"choice","prompt":"Qual frase significa meu nome é Lia?","answer":"My name is Lia","options":["Her name is Lia","My name is Lia","Your name is Lia"],"explanation":"My indica meu ou minha; my name is apresenta seu nome."},
+            {"id":"en-l2-e2","type":"typed","prompt":"Escreva em inglês: Eu sou Bruno.","answer":"I am Bruno","acceptedAnswers":["I'm Bruno"],"explanation":"I am significa eu sou. I'm é a forma contraída."},
+            {"id":"en-l2-e3","type":"wordOrder","prompt":"Monte: Qual é o seu nome?","answer":"What is your name","options":["name","What","your","is"],"explanation":"What is your name? é uma pergunta comum para conhecer alguém."},
+            {"id":"en-l2-e4","type":"choice","prompt":"Você acabou de conhecer uma colega. Diga prazer em conhecer você.","answer":"Nice to meet you","options":["Nice to meet you","See you tomorrow","Good night"],"explanation":"Nice to meet you é usado ao ser apresentado a alguém."},
+            {"id":"en-l2-e5","type":"typed","prompt":"Traduza: Eu sou do Brasil.","answer":"I am from Brazil","acceptedAnswers":["I'm from Brazil"],"explanation":"From indica origem. Brazil é a grafia de Brasil em inglês."}
+          ]
+        },
+        {
+          "id": "en-l3",
+          "title": "Pequenas gentilezas",
+          "description": "Peça, agradeça e peça desculpas.",
+          "exercises": [
+            {"id":"en-l3-e1","type":"choice","prompt":"Qual palavra torna um pedido mais educado?","answer":"Please","options":["Yesterday","Please","Blue"],"explanation":"Please significa por favor e pode acompanhar pedidos."},
+            {"id":"en-l3-e2","type":"typed","prompt":"Como dizer obrigado em inglês?","answer":"Thank you","acceptedAnswers":["Thanks"],"explanation":"Thank you e thanks expressam agradecimento. Thanks é mais informal."},
+            {"id":"en-l3-e3","type":"wordOrder","prompt":"Monte: Água, por favor.","answer":"Water please","options":["please","Water"],"explanation":"Você pode fazer um pedido simples com o item seguido de please."},
+            {"id":"en-l3-e4","type":"choice","prompt":"Alguém agradeceu. Como responder de nada?","answer":"You are welcome","options":["I am sorry","You are welcome","Good evening"],"explanation":"You are welcome, ou you're welcome, é uma resposta a um agradecimento."},
+            {"id":"en-l3-e5","type":"typed","prompt":"Escreva em inglês: Eu sinto muito.","answer":"I am sorry","acceptedAnswers":["I'm sorry"],"explanation":"I am sorry expressa um pedido de desculpas ou solidariedade."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-u2",
+      "title": "Meu dia a dia",
+      "description": "Fale de casa, pessoas próximas e preferências.",
+      "lessons": [
+        {
+          "id": "en-l4",
+          "title": "Pessoas da minha vida",
+          "description": "Apresente amigos e familiares.",
+          "exercises": [
+            {"id":"en-l4-e1","type":"choice","prompt":"Qual palavra significa irmã?","answer":"Sister","options":["Brother","Sister","Father"],"explanation":"Sister é irmã; brother é irmão; father é pai."},
+            {"id":"en-l4-e2","type":"typed","prompt":"Escreva em inglês: minha mãe.","answer":"My mother","acceptedAnswers":["My mom","My mum"],"explanation":"Mother significa mãe. Mom e mum são formas carinhosas comuns."},
+            {"id":"en-l4-e3","type":"wordOrder","prompt":"Monte: Este é meu amigo.","answer":"This is my friend","options":["friend","my","This","is"],"explanation":"This is apresenta uma pessoa ou coisa próxima. Friend significa amigo ou amiga."},
+            {"id":"en-l4-e4","type":"choice","prompt":"Como dizer ela é minha irmã?","answer":"She is my sister","options":["He is my brother","She is my sister","They are my friends"],"explanation":"She significa ela e is acompanha esse pronome no presente."},
+            {"id":"en-l4-e5","type":"typed","prompt":"Traduza: meu pai.","answer":"My father","acceptedAnswers":["My dad"],"explanation":"Father significa pai; dad é uma forma mais informal."}
+          ]
+        },
+        {
+          "id": "en-l5",
+          "title": "Uma pausa para comer",
+          "description": "Nomeie alimentos e expresse preferências.",
+          "exercises": [
+            {"id":"en-l5-e1","type":"choice","prompt":"Qual palavra significa pão?","answer":"Bread","options":["Milk","Bread","Rice"],"explanation":"Bread é pão; milk é leite; rice é arroz."},
+            {"id":"en-l5-e2","type":"typed","prompt":"Escreva em inglês: Eu gosto de café.","answer":"I like coffee","explanation":"I like expressa uma preferência. Coffee significa café."},
+            {"id":"en-l5-e3","type":"wordOrder","prompt":"Monte: Eu bebo água.","answer":"I drink water","options":["water","I","drink"],"explanation":"Drink significa beber. Em inglês, o sujeito I aparece antes do verbo."},
+            {"id":"en-l5-e4","type":"choice","prompt":"Você quer uma maçã. Qual palavra deve procurar?","answer":"Apple","options":["Apple","Cheese","Tea"],"explanation":"Apple é maçã; cheese é queijo; tea é chá."},
+            {"id":"en-l5-e5","type":"typed","prompt":"Traduza: chá, por favor.","answer":"Tea please","explanation":"Tea é chá. Please torna o pedido mais educado."}
+          ]
+        },
+        {
+          "id": "en-l6",
+          "title": "No meu espaço",
+          "description": "Objetos e lugares de casa.",
+          "exercises": [
+            {"id":"en-l6-e1","type":"choice","prompt":"Em qual cômodo normalmente preparamos a comida?","answer":"Kitchen","options":["Bedroom","Kitchen","Bathroom"],"explanation":"Kitchen significa cozinha. Bedroom é quarto; bathroom é banheiro."},
+            {"id":"en-l6-e2","type":"typed","prompt":"Escreva em inglês: livro.","answer":"Book","explanation":"Book é livro. Para um livro, podemos dizer a book."},
+            {"id":"en-l6-e3","type":"wordOrder","prompt":"Monte: A porta está aberta.","answer":"The door is open","options":["open","door","The","is"],"explanation":"The door é a porta. Is open indica que ela está aberta."},
+            {"id":"en-l6-e4","type":"choice","prompt":"Qual palavra significa mesa?","answer":"Table","options":["Window","Chair","Table"],"explanation":"Table é mesa; chair é cadeira; window é janela."},
+            {"id":"en-l6-e5","type":"typed","prompt":"Traduza: minha casa.","answer":"My house","acceptedAnswers":["My home"],"explanation":"House é a construção; home é o lar. As duas traduções cabem aqui."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-u3",
+      "title": "Explorando a cidade",
+      "description": "Encontre lugares, compre algo e pegue transporte.",
+      "lessons": [
+        {
+          "id": "en-l7",
+          "title": "Qual é o caminho?",
+          "description": "Pergunte por lugares e entenda direções.",
+          "exercises": [
+            {"id":"en-l7-e1","type":"choice","prompt":"Qual orientação significa vire à esquerda?","answer":"Turn left","options":["Turn right","Go straight","Turn left"],"explanation":"Left é esquerda. Right é direita e straight indica seguir em frente."},
+            {"id":"en-l7-e2","type":"typed","prompt":"Escreva em inglês: parque.","answer":"Park","explanation":"Park é parque. The park significa o parque."},
+            {"id":"en-l7-e3","type":"wordOrder","prompt":"Monte: Onde fica a estação?","answer":"Where is the station","options":["station","is","Where","the"],"explanation":"Where pergunta onde. Where is the station? serve para pedir a localização."},
+            {"id":"en-l7-e4","type":"choice","prompt":"Você precisa comprar remédio. Procure uma...","answer":"Pharmacy","options":["Bakery","Pharmacy","Library"],"explanation":"Pharmacy é farmácia; bakery é padaria; library é biblioteca."},
+            {"id":"en-l7-e5","type":"typed","prompt":"Traduza: vire à direita.","answer":"Turn right","explanation":"Turn significa virar e right, neste contexto, direita."}
+          ]
+        },
+        {
+          "id": "en-l8",
+          "title": "Uma compra simples",
+          "description": "Pergunte preços e escolha itens.",
+          "exercises": [
+            {"id":"en-l8-e1","type":"choice","prompt":"Qual pergunta significa quanto custa?","answer":"How much is it","options":["Where is it","How much is it","What is your name"],"explanation":"How much is it? pergunta o preço de um item."},
+            {"id":"en-l8-e2","type":"typed","prompt":"Escreva o número três em inglês.","answer":"Three","explanation":"Three é três. Não confunda com tree, que significa árvore."},
+            {"id":"en-l8-e3","type":"wordOrder","prompt":"Monte: Eu quero esta camisa.","answer":"I want this shirt","options":["shirt","want","I","this"],"explanation":"Want significa querer. This shirt indica esta camisa, próxima de quem fala."},
+            {"id":"en-l8-e4","type":"choice","prompt":"Qual cor corresponde a azul?","answer":"Blue","options":["Green","Red","Blue"],"explanation":"Blue é azul; green é verde; red é vermelho."},
+            {"id":"en-l8-e5","type":"typed","prompt":"Traduza: dois ingressos, por favor.","answer":"Two tickets please","explanation":"Two é dois. Tickets é o plural de ticket, que pode ser ingresso ou passagem."}
+          ]
+        },
+        {
+          "id": "en-l9",
+          "title": "Vamos de ônibus",
+          "description": "Palavras úteis para pequenos deslocamentos.",
+          "exercises": [
+            {"id":"en-l9-e1","type":"choice","prompt":"Qual palavra significa ônibus?","answer":"Bus","options":["Train","Bike","Bus"],"explanation":"Bus é ônibus; train é trem; bike é bicicleta."},
+            {"id":"en-l9-e2","type":"typed","prompt":"Escreva em inglês: aeroporto.","answer":"Airport","explanation":"Airport é aeroporto. A palavra combina air (ar) e port (porto)."},
+            {"id":"en-l9-e3","type":"wordOrder","prompt":"Monte: Eu preciso de um táxi.","answer":"I need a taxi","options":["taxi","a","need","I"],"explanation":"I need significa eu preciso. Antes de taxi usamos o artigo a."},
+            {"id":"en-l9-e4","type":"choice","prompt":"Como perguntar onde fica o ponto de ônibus?","answer":"Where is the bus stop","options":["Where is the bus stop","What is your name","How much is the shirt"],"explanation":"Bus stop é ponto de ônibus. Where is pergunta a localização."},
+            {"id":"en-l9-e5","type":"typed","prompt":"Traduza: a estação de trem.","answer":"The train station","acceptedAnswers":["The railway station"],"explanation":"Train station e railway station significam estação de trem."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-u4",
+      "title": "Conversas e planos",
+      "description": "Fale de rotina, clima e próximos encontros.",
+      "lessons": [
+        {
+          "id": "en-l10",
+          "title": "Como está o dia?",
+          "description": "Descreva o clima e como você se sente.",
+          "exercises": [
+            {"id":"en-l10-e1","type":"choice","prompt":"Qual frase significa está ensolarado?","answer":"It is sunny","options":["It is rainy","It is cold","It is sunny"],"explanation":"Sunny significa ensolarado. Usamos it para falar do clima."},
+            {"id":"en-l10-e2","type":"typed","prompt":"Escreva em inglês: Eu estou feliz.","answer":"I am happy","acceptedAnswers":["I'm happy"],"explanation":"Happy significa feliz. I am também pode expressar como você está."},
+            {"id":"en-l10-e3","type":"wordOrder","prompt":"Monte: Hoje está frio.","answer":"It is cold today","options":["today","cold","It","is"],"explanation":"Cold significa frio. Today pode vir no fim da frase para indicar hoje."},
+            {"id":"en-l10-e4","type":"choice","prompt":"Qual palavra significa cansado?","answer":"Tired","options":["Hungry","Tired","Happy"],"explanation":"Tired é cansado; hungry é com fome; happy é feliz."},
+            {"id":"en-l10-e5","type":"typed","prompt":"Traduza: está chovendo.","answer":"It is raining","acceptedAnswers":["It's raining"],"explanation":"It is raining descreve a chuva acontecendo agora."}
+          ]
+        },
+        {
+          "id": "en-l11",
+          "title": "Minha rotina",
+          "description": "Conte atividades e reconheça dias da semana.",
+          "exercises": [
+            {"id":"en-l11-e1","type":"choice","prompt":"Qual palavra significa segunda-feira?","answer":"Monday","options":["Sunday","Friday","Monday"],"explanation":"Monday é segunda-feira; Sunday é domingo; Friday é sexta-feira."},
+            {"id":"en-l11-e2","type":"typed","prompt":"Escreva em inglês: Eu estudo inglês.","answer":"I study English","explanation":"Study significa estudar. Nomes de idiomas, como English, levam inicial maiúscula na escrita."},
+            {"id":"en-l11-e3","type":"wordOrder","prompt":"Monte: Eu trabalho em casa.","answer":"I work at home","options":["home","I","at","work"],"explanation":"Work é trabalhar. At home é a expressão para em casa."},
+            {"id":"en-l11-e4","type":"choice","prompt":"Qual frase significa eu leio todos os dias?","answer":"I read every day","options":["I run every night","I read every day","I work on Monday"],"explanation":"Read é ler. Every day, em duas palavras, significa todos os dias."},
+            {"id":"en-l11-e5","type":"typed","prompt":"Traduza: Eu gosto de música.","answer":"I like music","explanation":"Music significa música em geral; neste caso não usamos um artigo antes dela."}
+          ]
+        },
+        {
+          "id": "en-l12",
+          "title": "Nos vemos amanhã",
+          "description": "Faça convites simples e combine um reencontro.",
+          "exercises": [
+            {"id":"en-l12-e1","type":"choice","prompt":"Qual palavra significa amanhã?","answer":"Tomorrow","options":["Yesterday","Today","Tomorrow"],"explanation":"Tomorrow é amanhã; today é hoje; yesterday é ontem."},
+            {"id":"en-l12-e2","type":"typed","prompt":"Escreva em inglês: Até amanhã.","answer":"See you tomorrow","explanation":"See you tomorrow é uma despedida quando haverá um reencontro amanhã."},
+            {"id":"en-l12-e3","type":"wordOrder","prompt":"Monte: Vamos ao parque.","answer":"Let's go to the park","options":["park","go","Let's","the","to"],"explanation":"Let's go é um convite para ir juntos. To the park indica o destino."},
+            {"id":"en-l12-e4","type":"choice","prompt":"Como aceitar um convite dizendo sim, por favor?","answer":"Yes please","options":["No thanks","Yes please","I am sorry"],"explanation":"Yes, please aceita uma oferta de forma educada; no, thanks recusa."},
+            {"id":"en-l12-e5","type":"typed","prompt":"Traduza: Eu estou pronto.","answer":"I am ready","acceptedAnswers":["I'm ready"],"explanation":"Ready significa pronto ou pronta. Você já pode usar estas frases em novas conversas!"}
+          ]
+        }
+      ]
+    }
+  ]
+}

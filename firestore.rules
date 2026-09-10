@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/backups/progress {
+      function isOwner() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+      function validBackup() {
+        return request.resource.data.keys().hasAll([
+            'schemaVersion', 'payload', 'updatedAt'
+          ])
+          && request.resource.data.keys().hasOnly([
+            'schemaVersion', 'payload', 'updatedAt'
+          ])
+          && request.resource.data.schemaVersion is int
+          && request.resource.data.schemaVersion == 1
+          && request.resource.data.payload is string
+          && request.resource.data.payload.size() < 200000
+          && request.resource.data.updatedAt is timestamp
+          && request.resource.data.updatedAt == request.time;
+      }
+      allow get: if isOwner();
+      allow create, update: if isOwner() && validBackup();
+      allow delete: if isOwner();
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

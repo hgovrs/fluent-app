@@ -1,0 +1,13 @@
+{
+  "name": "Fluent — seu próximo idioma",
+  "short_name": "Fluent",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#faf9fe",
+  "theme_color": "#6654e8",
+  "description": "Prática de idiomas em pequenas conquistas.",
+  "lang": "pt-BR",
+  "icons": [
+    {"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{"source": "**", "destination": "/index.html"}],
+    "headers": [
+      {
+        "source": "/flutter_bootstrap.js",
+        "headers": [{"key": "Cache-Control", "value": "no-cache"}]
+      }
+    ]
+  },
+  "emulators": {
+    "firestore": {"port": 8080},
+    "ui": {"enabled": false},
+    "singleProjectMode": true
+  }
+}
