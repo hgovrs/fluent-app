@@ -1,21 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../models/course.dart';
+import '../models/feedback_catalog.dart';
+import '../services/feedback_audio_player.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
+import '../widgets/feedback_theme_button.dart';
 
 class LessonScreen extends StatefulWidget {
-  const LessonScreen({super.key, required this.controller, required this.exercises, this.lesson});
+  const LessonScreen({super.key, required this.controller, required this.exercises, this.lesson, this.createFeedbackPlayer});
 
   final LearningController controller;
   final List<Exercise> exercises;
   final Lesson? lesson;
+  final FeedbackAudioPlayer Function()? createFeedbackPlayer;
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
 }
 
-class _LessonScreenState extends State<LessonScreen> {
+class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver {
   final _text = TextEditingController();
   final Map<String, bool> _results = {};
   final List<int> _words = [];
@@ -26,6 +32,32 @@ class _LessonScreenState extends State<LessonScreen> {
   bool _saving = false;
   bool _allowPop = false;
   int _earnedXp = 0;
+  late final FeedbackAudioPlayer _audio;
+  final _feedbackPicker = FeedbackPicker();
+  FeedbackClip? _feedback;
+  late String _themeId;
+
+  @override
+  void initState() {
+    super.initState();
+    _audio = widget.createFeedbackPlayer?.call() ?? FeedbackAudioPlayer();
+    _themeId = widget.controller.feedbackThemeId;
+    widget.controller.addListener(_themeChanged);
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  void _themeChanged() {
+    final themeId = widget.controller.feedbackThemeId;
+    if (_themeId == themeId) return;
+    _themeId = themeId;
+    unawaited(_audio.stop());
+    setState(() => _feedback = null);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) unawaited(_audio.stop());
+  }
 
   Exercise get _exercise => widget.exercises[_index];
 
@@ -37,12 +69,16 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    widget.controller.removeListener(_themeChanged);
+    _audio.dispose();
     _text.dispose();
     super.dispose();
   }
 
   Future<void> _exit() async {
     if (_saving) return;
+    unawaited(_audio.stop());
     if (_finished) {
       Navigator.of(context).pop();
       return;
@@ -67,14 +103,23 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _check() {
+    if (_correct != null || _saving || _answer.trim().isEmpty) return;
     FocusScope.of(context).unfocus();
     setState(() {
       _correct = _exercise.accepts(_answer);
       _results[_exercise.id] = _correct!;
+      final theme = widget.controller.feedbackTheme;
+      _feedback = theme == null ? null : _feedbackPicker.pick(
+        theme,
+        _correct! ? FeedbackCategory.correct : FeedbackCategory.incorrect,
+      );
     });
+    if (_feedback != null) unawaited(_audio.play(_feedback!));
   }
 
   Future<void> _continue() async {
+    unawaited(_audio.stop());
+    _feedback = null;
     if (_index < widget.exercises.length - 1) {
       setState(() {
         _index++;
@@ -120,6 +165,12 @@ class _LessonScreenState extends State<LessonScreen> {
           automaticallyImplyLeading: false,
           leading: IconButton(tooltip: 'Sair da prática', onPressed: _saving ? null : _exit, icon: const Icon(Icons.close_rounded)),
           title: Text(widget.lesson?.title ?? 'Revisão do dia'),
+          actions: [
+            FeedbackThemeButton(
+              controller: widget.controller,
+              onOpening: () => unawaited(_audio.stop()),
+            ),
+          ],
         ),
         body: SafeArea(
           child: Center(
@@ -262,6 +313,42 @@ class _LessonScreenState extends State<LessonScreen> {
                 children: [
                   Text(_correct! ? 'Muito bem!' : 'Vamos aprender com essa!',
                       style: Theme.of(context).textTheme.titleLarge),
+                  if (_feedback != null) ...[
+                    const SizedBox(height: 8),
+                    Text(_feedback!.text),
+                    ListenableBuilder(
+                      listenable: _audio,
+                      builder: (context, _) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {
+                              if (_audio.status == FeedbackAudioStatus.playing ||
+                                  _audio.status == FeedbackAudioStatus.loading) {
+                                unawaited(_audio.stop());
+                              } else {
+                                unawaited(_audio.play(_feedback!));
+                              }
+                            },
+                            icon: Icon(
+                              _audio.status == FeedbackAudioStatus.playing ||
+                                      _audio.status == FeedbackAudioStatus.loading
+                                  ? Icons.stop_rounded
+                                  : Icons.volume_up_rounded,
+                            ),
+                            label: Text(
+                              _audio.status == FeedbackAudioStatus.playing ||
+                                      _audio.status == FeedbackAudioStatus.loading
+                                  ? 'Parar áudio'
+                                  : 'Ouvir reação',
+                            ),
+                          ),
+                          if (_audio.status == FeedbackAudioStatus.unavailable)
+                            const Text('Áudio indisponível. Você pode continuar pela correção escrita.'),
+                        ],
+                      ),
+                    ),
+                  ],
                   if (!_correct!) ...[
                     const SizedBox(height: 8),
                     Text('Resposta: ${exercise.answer}', style: const TextStyle(fontWeight: FontWeight.w700)),
