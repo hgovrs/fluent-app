@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data/course_catalog.dart';
+import 'data/feedback_catalog_loader.dart';
+import 'models/feedback_catalog.dart';
 import 'screens/home_screen.dart';
 import 'services/cloud_service.dart';
 import 'services/progress_store.dart';
@@ -31,7 +33,17 @@ class _FluentAppState extends State<FluentApp> {
 
   Future<(LearningController, CloudService)> _load() async {
     final courses = await CourseCatalog.load();
-    final controller = LearningController(courses: courses, store: ProgressStore());
+    FeedbackCatalog feedbackCatalog;
+    try {
+      feedbackCatalog = await FeedbackCatalogLoader.load();
+    } catch (_) {
+      feedbackCatalog = FeedbackCatalog([]);
+    }
+    final controller = LearningController(
+      courses: courses,
+      store: ProgressStore(),
+      feedbackCatalog: feedbackCatalog,
+    );
     await controller.load();
     final cloud = await CloudService.initialize();
     return (controller, cloud);

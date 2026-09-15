@@ -1,0 +1,123 @@
+name: Gerar áudios ElevenLabs
+
+on:
+  workflow_dispatch:
+    inputs:
+      secret_environment:
+        description: Ambiente que contém os segredos ElevenLabs
+        type: choice
+        options:
+          - copilot
+          - fluent
+        default: copilot
+        required: true
+      generate:
+        description: Gerar MP3 e autorizar consumo de créditos (desmarcado = somente prévia)
+        type: boolean
+        default: false
+      force:
+        description: Regenerar arquivos existentes após alterar frases ou voz (consome créditos)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: elevenlabs-feedback-generation
+  cancel-in-progress: false
+
+jobs:
+  feedback:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.secret_environment }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Obter catálogo e gerador
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Instalar Flutter e Dart no runner (não no celular)
+        uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # v2.21.0
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+
+      - name: Resolver dependências
+        run: flutter pub get
+
+      - name: Testar antes de consumir créditos
+        run: flutter test
+
+      - name: Conferir frases e estimativa sem chamar a API
+        id: preview
+        env:
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=(--dry-run)
+          if [[ "$FORCE" == "true" ]]; then
+            args+=(--force)
+          fi
+          dart run tool/generate_feedback_audio.dart "${args[@]}" \
+            | tee "$RUNNER_TEMP/feedback-preview.txt"
+
+      - name: Gerar com a voz cadastrada
+        id: generate
+        if: inputs.generate
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID || vars.ELEVENLABS_VOICE_ID }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          if [[ -z "${ELEVENLABS_API_KEY//[[:space:]]/}" ||
+                -z "${ELEVENLABS_VOICE_ID//[[:space:]]/}" ]]; then
+            echo "::error::Cadastre ELEVENLABS_API_KEY e ELEVENLABS_VOICE_ID no ambiente selecionado. Nenhuma requisição foi enviada."
+            exit 1
+          fi
+          args=(--generate)
+          if [[ "$FORCE" == "true" ]]; then
+            args+=(--force)
+          fi
+          dart run tool/generate_feedback_audio.dart "${args[@]}"
+
+      - name: Disponibilizar prévia
+        if: always() && steps.preview.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: feedback-preview-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/feedback-preview.txt
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Disponibilizar MP3 e catálogo (inclusive lote parcial em caso de falha)
+        if: always() && (steps.generate.outcome == 'success' || steps.generate.outcome == 'failure')
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: feedback-audio-${{ steps.generate.outcome }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            assets/audio_feedback/*.mp3
+            assets/audio_feedback/catalog.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Resumo para acompanhamento pelo celular
+        if: always()
+        env:
+          PREVIEW_RESULT: ${{ steps.preview.outcome }}
+          GENERATION_RESULT: ${{ steps.generate.outcome }}
+        run: |
+          {
+            echo "## Feedback de áudio"
+            echo "- Prévia: $PREVIEW_RESULT"
+            echo "- Geração: $GENERATION_RESULT"
+            echo "- Baixe os arquivos na seção **Artifacts** desta execução."
+            echo "- Lotes com **failure** no nome podem estar incompletos ou conter apenas o catálogo."
+            echo "- Os MP3 não foram commitados nem incluídos em um APK automaticamente."
+            echo "- Nova execução pode consumir créditos novamente: artefatos anteriores não são recuperados."
+            echo "- Para integrar, informe ao Copilot o link desta execução; não envie segredos."
+          } >> "$GITHUB_STEP_SUMMARY"
