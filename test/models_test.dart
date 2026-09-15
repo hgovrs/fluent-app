@@ -22,8 +22,8 @@ void main() {
   group('conteúdo original do catálogo', () {
     test('carrega quatro unidades e doze lições completas', () async {
       final courses = await CourseCatalog.load(bundle: _DiskAssets());
-      expect(courses, hasLength(1));
-      final course = courses.single;
+      final course = courses.first;
+      expect(course.id, 'en-starter');
       expect(course.sourceLanguage, 'pt-BR');
       expect(course.targetLanguage, 'en');
       expect(course.units, hasLength(4));

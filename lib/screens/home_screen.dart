@@ -9,6 +9,7 @@ import '../theme.dart';
 import '../widgets/feedback_theme_button.dart';
 import 'lesson_screen.dart';
 import 'profile_screen.dart';
+import 'sources_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.controller, required this.cloud});
@@ -131,6 +132,36 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       Text('Um pouco hoje.\nUm mundo amanhã.', style: Theme.of(context).textTheme.headlineLarge),
       const SizedBox(height: 8),
       const Text('Seu próximo passo começa com poucos minutos.'),
+      if (controller.courses.length > 1) ...[
+        const SizedBox(height: 16),
+        DropdownButtonFormField<String>(
+          initialValue: controller.course.id,
+          key: ValueKey(controller.course.id),
+          isExpanded: true,
+          decoration: const InputDecoration(labelText: 'Escolha sua trilha'),
+          items: [
+            for (final course in controller.courses)
+              DropdownMenuItem(
+                value: course.id,
+                child: Text(course.title, overflow: TextOverflow.ellipsis),
+              ),
+          ],
+          onChanged: (id) {
+            if (id != null) controller.selectCourse(id);
+          },
+        ),
+      ],
+      if (controller.course.coverage.isNotEmpty) ...[
+        const SizedBox(height: 12),
+        Text(controller.course.coverage),
+      ],
+      TextButton.icon(
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => const SourcesScreen(),
+        )),
+        icon: const Icon(Icons.menu_book_outlined),
+        label: const Text('Fontes e licenças'),
+      ),
       const SizedBox(height: 24),
       SurfaceCard(
         color: mint,
@@ -141,10 +172,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               const Icon(Icons.public_rounded, color: green, size: 32),
               const SizedBox(width: 12),
               Expanded(child: Text(controller.course.title, style: Theme.of(context).textTheme.titleLarge)),
-              Chip(label: Text(controller.course.level), side: BorderSide.none),
             ]),
+            const SizedBox(height: 8),
+            Text(controller.course.level),
             const SizedBox(height: 14),
-            Text(next == null ? 'Você concluiu a trilha inicial!' : next.title,
+            Text(next == null ? 'Você concluiu esta trilha de prática!' : next.title,
                 style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(height: 6),
             Text(next == null

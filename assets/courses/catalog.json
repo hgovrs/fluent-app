@@ -1,3 +1,10 @@
 {
-  "courses": ["assets/courses/en_starter.json"]
+  "courses": [
+    "assets/courses/en_starter.json",
+    "assets/courses/en_a1.json",
+    "assets/courses/en_a2.json",
+    "assets/courses/en_b1.json",
+    "assets/courses/en_b2.json",
+    "assets/courses/en_c1.json"
+  ]
 }

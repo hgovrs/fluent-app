@@ -1,0 +1,220 @@
+{
+  "id": "en-a1",
+  "title": "Inglês A1 — Fundamentos",
+  "sourceLanguage": "pt-BR",
+  "targetLanguage": "en",
+  "level": "A1 · prática parcial",
+  "contentVersion": 1,
+  "authorship": "original",
+  "coverage": "Prática parcial de conteúdos associados ao A1 do CEFR, com explicações em português e exercícios originais. Não constitui curso completo, avaliação de proficiência ou certificação. As leituras indicadas são complementares; bc-reads trabalha alfabetização e leitura, não uma classificação CEFR.",
+  "units": [
+    {
+      "id": "en-a1-u1",
+      "title": "Pessoas e primeiras informações",
+      "description": "Apresente pessoas, identifique objetos e leia números simples.",
+      "lessons": [
+        {
+          "id": "en-a1-u1-l1",
+          "title": "Quem está aqui?",
+          "description": "Use o verbo be para nomes, origem e estado.",
+          "studyNotes": "O verbo be pode corresponder a ser ou estar. No presente, usamos I am, you are e he/she/it is. Por exemplo: I am Jo. She is from Peru. Não omita o sujeito em inglês.\n\nEm perguntas, be vem antes do sujeito: Are you ready? Para negar, acrescente not depois do verbo: I am not tired. Leia pequenos diálogos procurando quem fala e a quem cada pronome se refere.",
+          "sourceIds": ["bc-reads"],
+          "exercises": [
+            {"id":"en-a1-u1-l1-e1","type":"choice","prompt":"Leia: Jo: 'I am from Peru.' Max: 'I am from Canada.' De onde é Jo?","answer":"Peru","options":["Canada","Peru","Brazil"],"explanation":"A fala de Jo contém from Peru. From apresenta a origem; a informação sobre Canada pertence a Max."},
+            {"id":"en-a1-u1-l1-e2","type":"typed","prompt":"Complete com a forma de be no presente, usando uma palavra: I ___ ready.","answer":"am","explanation":"O sujeito I exige am no presente de be: I am ready significa estou pronto ou pronta."},
+            {"id":"en-a1-u1-l1-e3","type":"wordOrder","prompt":"Monte a pergunta: Você é Sam?","answer":"Are you Sam","options":["Sam","you","Are"],"explanation":"Para perguntar com be, coloque Are antes de you. Não é necessário o auxiliar do."},
+            {"id":"en-a1-u1-l1-e4","type":"choice","prompt":"Leia: 'This is Mei. She is my teacher.' A quem She se refere?","answer":"Mei","options":["Ao narrador","Mei","A várias pessoas"],"explanation":"She retoma Mei, apresentada na primeira frase. É um pronome singular."},
+            {"id":"en-a1-u1-l1-e5","type":"typed","prompt":"Complete com a forma de be no presente, usando uma palavra: We ___ students.","answer":"are","explanation":"We significa nós e combina com are. Students está no plural porque se refere ao grupo."},
+            {"id":"en-a1-u1-l1-e6","type":"wordOrder","prompt":"Monte a declaração sem contração: Ela não está cansada.","answer":"She is not tired","options":["not","tired","She","is"],"explanation":"A negação de be é formada com not depois de is: She is not tired."}
+          ]
+        },
+        {
+          "id": "en-a1-u1-l2",
+          "title": "Uma bolsa e uma chave",
+          "description": "Distinga a, an, the e objetos de uso diário.",
+          "studyNotes": "Use a ou an para apresentar um item singular contável ainda não identificado: a bag, an orange. A escolha depende do som inicial seguinte: an umbrella começa com som de vogal.\n\nUse the quando o contexto já identifica o objeto: I have a cup. The cup is blue. Em This is my key, my já identifica o dono; não colocamos a antes de my.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u1-l2-e1","type":"choice","prompt":"Complete: 'This is ___ umbrella.' Qual artigo indefinido cabe antes de umbrella?","answer":"an","options":["a","the","an"],"explanation":"Umbrella começa com som de vogal, por isso recebe an. The é definido, não o artigo indefinido solicitado."},
+            {"id":"en-a1-u1-l2-e2","type":"typed","prompt":"Complete com a ou an: I have ___ pencil.","answer":"a","explanation":"Pencil começa com som de consoante. Para um lápis não especificado, usamos a pencil."},
+            {"id":"en-a1-u1-l2-e3","type":"wordOrder","prompt":"Monte: Esta é minha chave.","answer":"This is my key","options":["key","This","my","is"],"explanation":"This is apresenta um objeto próximo. My vem antes de key e indica que a chave é minha."},
+            {"id":"en-a1-u1-l2-e4","type":"choice","prompt":"Leia: 'I have a bag. The bag is green. My coat is black.' Qual objeto é verde?","answer":"The bag","options":["The coat","The bag","The key"],"explanation":"The bag retoma a bolsa mencionada com a bag. Green descreve a bolsa; black descreve o casaco."},
+            {"id":"en-a1-u1-l2-e5","type":"typed","prompt":"Retome o mesmo objeto com o artigo definido, usando uma palavra: I see a cat. ___ cat is small.","answer":"The","explanation":"Depois de apresentar a cat, usamos the cat para falar desse mesmo gato, agora identificado."},
+            {"id":"en-a1-u1-l2-e6","type":"wordOrder","prompt":"Monte: A caixa está aberta.","answer":"The box is open","options":["open","is","The","box"],"explanation":"The box é o sujeito. Is liga o objeto ao estado open, aberto."}
+          ]
+        },
+        {
+          "id": "en-a1-u1-l3",
+          "title": "Idade e quantidade",
+          "description": "Leia números e forme plurais regulares.",
+          "studyNotes": "Para idade, inglês usa be, não have: My son is ten. A pergunta é How old are you? Para quantidades, one acompanha o singular e números maiores normalmente acompanham o plural: one pen, four pens.\n\nMuitos plurais recebem -s: book/books. Alguns recebem -es, como box/boxes. Nos números, thirteen é 13 e thirty é 30; leia a palavra inteira antes de escolher.",
+          "sourceIds": ["bc-reads"],
+          "exercises": [
+            {"id":"en-a1-u1-l3-e1","type":"choice","prompt":"Leia: 'Rui is thirteen. His sister is thirty.' Qual é a idade de Rui?","answer":"13","options":["3","30","13"],"explanation":"Thirteen corresponde a 13; thirty corresponde a 30. A primeira frase informa a idade de Rui."},
+            {"id":"en-a1-u1-l3-e2","type":"typed","prompt":"Escreva o número 12 por extenso em inglês.","answer":"twelve","explanation":"Twelve significa doze. A grafia não segue simplesmente a junção de two com ten."},
+            {"id":"en-a1-u1-l3-e3","type":"wordOrder","prompt":"Monte a pergunta sobre idade: Quantos anos você tem?","answer":"How old are you","options":["you","old","How","are"],"explanation":"How old pergunta a idade. Usamos are you porque idade é expressa com be em inglês."},
+            {"id":"en-a1-u1-l3-e4","type":"choice","prompt":"Qual expressão indica exatamente duas caixas?","answer":"two boxes","options":["two box","two boxes","one box"],"explanation":"Depois de two, o substantivo precisa estar no plural. Box forma o plural com -es: boxes."},
+            {"id":"en-a1-u1-l3-e5","type":"typed","prompt":"Complete usando apenas o plural de book: There are three ___.","answer":"books","explanation":"O plural regular de book é books. Three indica mais de um livro."},
+            {"id":"en-a1-u1-l3-e6","type":"wordOrder","prompt":"Monte: Meu irmão tem nove anos.","answer":"My brother is nine","options":["nine","brother","My","is"],"explanation":"My brother is nine expressa idade. Is, e não has, é o verbo usado nessa construção."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a1-u2",
+      "title": "Casa e rotina",
+      "description": "Descreva o que possui, atividades habituais e horários.",
+      "lessons": [
+        {
+          "id": "en-a1-u2-l1",
+          "title": "O que temos em casa",
+          "description": "Pratique have, has, possessivos e existência.",
+          "studyNotes": "Have expressa posse: I have a desk. Com he, she ou it no presente afirmativo, use has: She has a lamp. O possessivo vem antes do objeto: his phone, her bike, our room.\n\nPara dizer que algo existe num lugar, use there is no singular e there are no plural: There is a sofa. There are two chairs. Essas formas apresentam o que há, não quem é o dono.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u2-l1-e1","type":"choice","prompt":"Leia: 'Nina has a bike. Her brother has a car.' O que pertence a Nina?","answer":"A bike","options":["A car","A bike","A bus"],"explanation":"Nina has a bike indica posse de uma bicicleta. O carro pertence ao irmão dela."},
+            {"id":"en-a1-u2-l1-e2","type":"typed","prompt":"Complete com have no presente afirmativo, usando uma palavra: He ___ a desk.","answer":"has","explanation":"Com he, a forma afirmativa de have no presente é has."},
+            {"id":"en-a1-u2-l1-e3","type":"wordOrder","prompt":"Monte: Nós temos uma cozinha pequena.","answer":"We have a small kitchen","options":["kitchen","have","small","We","a"],"explanation":"We combina com have. O adjetivo small vem antes do substantivo kitchen."},
+            {"id":"en-a1-u2-l1-e4","type":"choice","prompt":"Complete para indicar existência: 'There ___ two windows in the room.'","answer":"are","options":["is","has","are"],"explanation":"Two windows está no plural, então usamos there are. Has expressa posse, não a construção de existência."},
+            {"id":"en-a1-u2-l1-e5","type":"typed","prompt":"Substitua apenas Nina's pelo possessivo correspondente a she: Nina's bag is red. → ___ bag is red.","answer":"Her","explanation":"Her, antes de bag, indica que a bolsa pertence a ela. She funciona como sujeito, não como possessivo."},
+            {"id":"en-a1-u2-l1-e6","type":"wordOrder","prompt":"Monte: Há um espelho no banheiro.","answer":"There is a mirror in the bathroom","options":["bathroom","a","in","There","mirror","the","is"],"explanation":"There is apresenta um objeto singular. In the bathroom informa o cômodo onde ele está."}
+          ]
+        },
+        {
+          "id": "en-a1-u2-l2",
+          "title": "Todos os dias",
+          "description": "Use o presente simples para hábitos e perguntas.",
+          "studyNotes": "Para hábitos, use o presente simples: I walk to work. Com he, she e it, normalmente acrescentamos -s: He walks to work. Verbos como watch recebem -es: She watches films.\n\nPerguntas usam do ou does antes do sujeito: Do you cook? Does he cook? Depois de does, o verbo principal volta à forma básica. Na negativa, use do not ou does not: She does not drive.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u2-l2-e1","type":"choice","prompt":"Leia: 'I work in a shop. I walk to work every day.' Como essa pessoa vai ao trabalho?","answer":"On foot","options":["By train","On foot","By car"],"explanation":"Walk significa caminhar. On foot é a expressão equivalente a a pé."},
+            {"id":"en-a1-u2-l2-e2","type":"typed","prompt":"Complete com work no presente simples afirmativo: My sister ___ at home.","answer":"works","explanation":"My sister equivale a she. Na afirmativa do presente simples, work recebe -s."},
+            {"id":"en-a1-u2-l2-e3","type":"wordOrder","prompt":"Monte a pergunta: Você lê livros?","answer":"Do you read books","options":["books","you","Do","read"],"explanation":"Para perguntar sobre um hábito com you, colocamos Do antes do sujeito e mantemos read na forma básica."},
+            {"id":"en-a1-u2-l2-e4","type":"choice","prompt":"Qual frase está correta no presente simples?","answer":"Does Leo cook dinner?","options":["Does Leo cooks dinner?","Do Leo cook dinner?","Does Leo cook dinner?"],"explanation":"Leo é terceira pessoa do singular, portanto usamos does. O verbo cook fica sem -s depois do auxiliar."},
+            {"id":"en-a1-u2-l2-e5","type":"typed","prompt":"Complete com o auxiliar negativo sem contração: I ___ not drive.","answer":"do","explanation":"Com I, a negativa do presente simples usa do not mais o verbo básico drive."},
+            {"id":"en-a1-u2-l2-e6","type":"wordOrder","prompt":"Monte sem contração: Ela não bebe café.","answer":"She does not drink coffee","options":["coffee","does","She","drink","not"],"explanation":"She exige does not. O verbo principal permanece drink, sem -s."}
+          ]
+        },
+        {
+          "id": "en-a1-u2-l3",
+          "title": "Relógio e calendário",
+          "description": "Leia horas, dias e marcadores de frequência.",
+          "studyNotes": "Para uma hora exata, use at: The class starts at eight. Para dias da semana, use on: We meet on Thursday. Os dias da semana são escritos com inicial maiúscula.\n\nHalf past six significa seis e meia: passaram trinta minutos das seis. Always, usually e never indicam frequência; com um verbo comum, aparecem normalmente antes dele: I usually eat early.",
+          "sourceIds": ["bc-reads"],
+          "exercises": [
+            {"id":"en-a1-u2-l3-e1","type":"choice","prompt":"Leia o aviso: 'Breakfast: half past six. Lunch: twelve.' A que horas é o café da manhã?","answer":"6:30","options":["6:00","12:00","6:30"],"explanation":"Half past six significa seis e meia. Twelve indica a hora do almoço, não a do café da manhã."},
+            {"id":"en-a1-u2-l3-e2","type":"typed","prompt":"Complete com at, in ou on: The lesson starts ___ nine.","answer":"at","explanation":"Usamos at antes de uma hora específica: at nine significa às nove."},
+            {"id":"en-a1-u2-l3-e3","type":"wordOrder","prompt":"Monte a pergunta: A que horas você almoça?","answer":"What time do you have lunch","options":["lunch","time","you","What","have","do"],"explanation":"What time pergunta o horário. Have lunch é a expressão para almoçar."},
+            {"id":"en-a1-u2-l3-e4","type":"choice","prompt":"Leia: 'The library is open on Monday and Tuesday. It is closed on Sunday.' Em qual destes dias ela está fechada?","answer":"Sunday","options":["Monday","Sunday","Tuesday"],"explanation":"Closed significa fechado. O aviso associa closed a Sunday, domingo."},
+            {"id":"en-a1-u2-l3-e5","type":"typed","prompt":"Complete com at, in ou on: We play football ___ Friday.","answer":"on","explanation":"On é usado com dias da semana: on Friday significa na sexta-feira."},
+            {"id":"en-a1-u2-l3-e6","type":"wordOrder","prompt":"Monte: Eu geralmente tomo chá. Coloque usually antes do verbo principal.","answer":"I usually drink tea","options":["tea","drink","I","usually"],"explanation":"Usually indica um hábito frequente, mas não absoluto. A posição solicitada é entre I e drink."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a1-u3",
+      "title": "Compras e caminhos",
+      "description": "Peça comida, confira preços e siga orientações simples.",
+      "lessons": [
+        {
+          "id": "en-a1-u3-l1",
+          "title": "À mesa",
+          "description": "Faça pedidos e identifique preferências alimentares.",
+          "studyNotes": "I like fala de preferência geral: I like soup. Para pedir de forma educada, use I would like ou I'd like: I'd like a sandwich. Um pedido não afirma necessariamente um hábito.\n\nPodemos contar apples e sandwiches. Para uma quantidade não especificada de água ou pão, usamos some: some water, some bread. Please suaviza o pedido; No, thank you permite recusar uma oferta.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u3-l1-e1","type":"choice","prompt":"Leia: Server: 'Tea or juice?' Ada: 'Juice, please. No tea.' O que Ada pede?","answer":"Juice","options":["Tea","Milk","Juice"],"explanation":"Juice, please é o pedido de suco. No tea exclui explicitamente o chá."},
+            {"id":"en-a1-u3-l1-e2","type":"typed","prompt":"Complete com a ou some para pedir uma quantidade não especificada de água, sem contar porções: I would like ___ water.","answer":"some","explanation":"Water é não contável neste uso. Some permite pedir uma quantidade não especificada; a water indicaria uma porção, leitura excluída pelo enunciado."},
+            {"id":"en-a1-u3-l1-e3","type":"wordOrder","prompt":"Monte o pedido sem contração: Eu gostaria de um sanduíche.","answer":"I would like a sandwich","options":["sandwich","like","I","a","would"],"explanation":"Would like é uma forma educada de pedir. Sandwich é singular contável e recebe a."},
+            {"id":"en-a1-u3-l1-e4","type":"choice","prompt":"Você não quer mais pão. Qual resposta recusa educadamente a oferta 'More bread?'?","answer":"No, thank you.","options":["Yes, please.","No, thank you.","Two more, please."],"explanation":"No, thank you recusa e agradece. As outras respostas aceitam mais comida."},
+            {"id":"en-a1-u3-l1-e5","type":"typed","prompt":"Complete com like no presente simples afirmativo: My father ___ rice.","answer":"likes","explanation":"My father corresponde a he, então like recebe -s. A frase expressa preferência."},
+            {"id":"en-a1-u3-l1-e6","type":"wordOrder","prompt":"Monte a pergunta: Você gosta de sopa?","answer":"Do you like soup","options":["soup","Do","like","you"],"explanation":"Do you like pergunta sobre gosto pessoal. Soup aparece sem artigo para falar da comida em geral."}
+          ]
+        },
+        {
+          "id": "en-a1-u3-l2",
+          "title": "Na pequena loja",
+          "description": "Pergunte preços e diferencie singular e plural.",
+          "studyNotes": "Para um item, pergunte How much is this hat? Para vários, use are: How much are these socks? This aponta para um objeto próximo; these aponta para vários objetos próximos.\n\nCores e tamanhos vêm normalmente antes do substantivo: a blue shirt, two small bags. Em etiquetas, procure o nome do produto e o número ao lado dele para não confundir preços.",
+          "sourceIds": ["bc-reads"],
+          "exercises": [
+            {"id":"en-a1-u3-l2-e1","type":"choice","prompt":"Leia a etiqueta: 'Red hat: £8. Blue hat: £6. Black bag: £10.' Quanto custa o chapéu azul?","answer":"£6","options":["£8","£6","£10"],"explanation":"Blue hat identifica o chapéu azul e está associado a £6. Os outros valores pertencem a produtos diferentes."},
+            {"id":"en-a1-u3-l2-e2","type":"typed","prompt":"Complete com is ou are: How much ___ these socks?","answer":"are","explanation":"These socks está no plural. Por isso, a pergunta de preço usa are."},
+            {"id":"en-a1-u3-l2-e3","type":"wordOrder","prompt":"Monte a pergunta: Quanto custa este casaco?","answer":"How much is this coat","options":["coat","is","How","this","much"],"explanation":"How much pergunta o preço. This coat é singular, então a forma de be é is."},
+            {"id":"en-a1-u3-l2-e4","type":"choice","prompt":"Você aponta para dois sapatos próximos. Qual expressão usa o demonstrativo e o plural corretos?","answer":"these shoes","options":["this shoes","these shoe","these shoes"],"explanation":"These acompanha o plural shoes. This seria usado com um objeto singular."},
+            {"id":"en-a1-u3-l2-e5","type":"typed","prompt":"O preço é £15. Escreva apenas o número por extenso em inglês.","answer":"fifteen","explanation":"Fifteen é quinze. Fifty, com final diferente, significa cinquenta."},
+            {"id":"en-a1-u3-l2-e6","type":"wordOrder","prompt":"Monte: Eu preciso de uma bolsa preta.","answer":"I need a black bag","options":["bag","black","need","I","a"],"explanation":"Need expressa necessidade. Em a black bag, a cor black aparece antes do substantivo bag."}
+          ]
+        },
+        {
+          "id": "en-a1-u3-l3",
+          "title": "Encontre a biblioteca",
+          "description": "Entenda direções e localize lugares da cidade.",
+          "studyNotes": "Pergunte Where is the library? para saber onde fica a biblioteca. Next to significa ao lado de; opposite significa em frente a, do outro lado: The café is opposite the bank.\n\nOrientações costumam usar o verbo sem sujeito: Turn right. Go straight. Para indicar um ponto do caminho, use at: Turn left at the school. Confira o marco mencionado antes de escolher a direção.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u3-l3-e1","type":"choice","prompt":"Leia: 'Go straight. Turn left at the school. The library is next to the café.' Onde fica a biblioteca em relação ao café?","answer":"Ao lado do café","options":["Dentro do café","Longe do café","Ao lado do café"],"explanation":"Next to significa ao lado de. A escola é o ponto para virar, não a localização final da biblioteca."},
+            {"id":"en-a1-u3-l3-e2","type":"typed","prompt":"Complete com left ou right para orientar uma virada à direita: Turn ___.","answer":"right","explanation":"Right significa direita em orientações. Left significa esquerda."},
+            {"id":"en-a1-u3-l3-e3","type":"wordOrder","prompt":"Monte a pergunta: Onde fica a farmácia?","answer":"Where is the pharmacy","options":["pharmacy","the","Where","is"],"explanation":"Where pergunta a localização. Pharmacy é o lugar onde se compram medicamentos."},
+            {"id":"en-a1-u3-l3-e4","type":"choice","prompt":"A orientação diz 'Go straight'. Qual ação ela pede?","answer":"Seguir em frente","options":["Virar à esquerda","Seguir em frente","Parar aqui"],"explanation":"Straight indica a continuidade em frente; não pede uma mudança para esquerda ou direita."},
+            {"id":"en-a1-u3-l3-e5","type":"typed","prompt":"Complete a expressão 'ao lado de' com uma palavra: The bank is next ___ the café.","answer":"to","explanation":"A expressão completa é next to. A preposição to faz parte dessa indicação de posição."},
+            {"id":"en-a1-u3-l3-e6","type":"wordOrder","prompt":"Monte: Vire à esquerda na ponte.","answer":"Turn left at the bridge","options":["bridge","at","Turn","the","left"],"explanation":"Turn left dá a direção. At the bridge identifica o ponto em que a pessoa deve virar."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a1-u4",
+      "title": "Pequenas conversas completas",
+      "description": "Combine habilidades, ações do momento e leitura prática.",
+      "lessons": [
+        {
+          "id": "en-a1-u4-l1",
+          "title": "Posso ajudar?",
+          "description": "Fale de habilidades e faça pedidos com can.",
+          "studyNotes": "Can expressa habilidade: I can swim. Ele não muda com o sujeito: She can swim, sem -s em can ou swim. Para negar, use cannot ou can't.\n\nCan também inicia pedidos: Can you open the door? Nesse contexto, a pessoa pede uma ação, não um relato sobre habilidades. Let's propõe uma atividade conjunta: Let's play a game.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u4-l1-e1","type":"choice","prompt":"Leia: Eli: 'Can you swim?' Bea: 'Yes, but I cannot ride a bike.' O que Bea sabe fazer?","answer":"Swim","options":["Swim","Ride a bike","Drive a bus"],"explanation":"Yes responde à pergunta sobre nadar. Cannot nega a habilidade de andar de bicicleta."},
+            {"id":"en-a1-u4-l1-e2","type":"typed","prompt":"Complete usando a forma correta de speak depois de can: She can ___ English.","answer":"speak","explanation":"Depois de can, usamos o verbo na forma básica, sem to e sem -s."},
+            {"id":"en-a1-u4-l1-e3","type":"wordOrder","prompt":"Monte o pedido: Você pode abrir a janela?","answer":"Can you open the window","options":["window","open","Can","the","you"],"explanation":"Can vem antes de you na pergunta. Open the window é a ação pedida."},
+            {"id":"en-a1-u4-l1-e4","type":"choice","prompt":"Você quer propor uma caminhada juntos. Qual frase faz esse convite?","answer":"Let's go for a walk.","options":["I cannot walk.","Let's go for a walk.","She walks to work."],"explanation":"Let's inclui quem fala e propõe uma ação conjunta. As demais frases descrevem capacidade ou rotina."},
+            {"id":"en-a1-u4-l1-e5","type":"typed","prompt":"Reescreva apenas can't como uma única palavra sem contração: I can't dance.","answer":"cannot","explanation":"A forma não contraída de can't é cannot, normalmente escrita como uma só palavra."},
+            {"id":"en-a1-u4-l1-e6","type":"wordOrder","prompt":"Monte: Vamos jogar tênis.","answer":"Let's play tennis","options":["tennis","Let's","play"],"explanation":"Let's é seguido do verbo básico play. Com esportes, geralmente não usamos artigo: play tennis."}
+          ]
+        },
+        {
+          "id": "en-a1-u4-l2",
+          "title": "O que acontece agora",
+          "description": "Descreva ações em andamento e o tempo.",
+          "studyNotes": "Para uma ação acontecendo agora, use be mais verbo com -ing: I am reading. She is cooking. O sujeito determina am, is ou are; o verbo principal mantém a forma com -ing.\n\nCompare um hábito, I walk every day, com uma ação do momento, I am walking now. Para o tempo, use it: It is cold. It is raining. Em perguntas como Are they waiting?, be vem antes do sujeito.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a1-u4-l2-e1","type":"choice","prompt":"Leia: 'It is raining. Omar is reading inside. His sister is cooking.' Quem está lendo?","answer":"Omar","options":["His sister","Omar","As duas pessoas"],"explanation":"Omar é o sujeito de is reading. A irmã é o sujeito de is cooking."},
+            {"id":"en-a1-u4-l2-e2","type":"typed","prompt":"Complete com be no presente, usando uma palavra: They ___ waiting now.","answer":"are","explanation":"They exige are. Are waiting descreve uma espera que está acontecendo agora."},
+            {"id":"en-a1-u4-l2-e3","type":"wordOrder","prompt":"Monte: Ela está preparando o jantar.","answer":"She is cooking dinner","options":["dinner","is","She","cooking"],"explanation":"O presente contínuo combina is com cooking. Dinner é o complemento do verbo."},
+            {"id":"en-a1-u4-l2-e4","type":"choice","prompt":"Qual frase descreve uma atividade acontecendo agora, e não um hábito?","answer":"I am drawing now.","options":["I draw every Sunday.","I like drawing.","I am drawing now."],"explanation":"Am drawing é presente contínuo e now destaca o momento atual. Every Sunday marca um hábito."},
+            {"id":"en-a1-u4-l2-e5","type":"typed","prompt":"Complete com a forma de read terminada em -ing: I am ___ a letter.","answer":"reading","explanation":"Acrescentamos -ing a read para formar reading. Am reading significa estou lendo."},
+            {"id":"en-a1-u4-l2-e6","type":"wordOrder","prompt":"Monte a pergunta: Está chovendo?","answer":"Is it raining","options":["raining","it","Is"],"explanation":"Para perguntar sobre o tempo, usamos o sujeito it e colocamos Is antes dele."}
+          ]
+        },
+        {
+          "id": "en-a1-u4-l3",
+          "title": "Um encontro no parque",
+          "description": "Integre avisos, horários, objetos e preferências.",
+          "studyNotes": "Em um recado curto, procure quatro informações: quem, onde, quando e o que levar. Por exemplo: Meet Jo at the lake at ten. Bring a cup. At pode indicar tanto um local de encontro quanto um horário.\n\nBring significa trazer para o local indicado. Don't mais verbo básico dá uma orientação negativa: Don't bring glass bottles. Ao responder a uma pergunta de leitura, use o recado, não uma suposição sobre hábitos das pessoas.",
+          "sourceIds": ["bc-reads"],
+          "exercises": [
+            {"id":"en-a1-u4-l3-e1","type":"choice","prompt":"Leia o recado: 'Picnic on Saturday at eleven. Meet at the park gate. Bring water.' Onde as pessoas devem se encontrar?","answer":"At the park gate","options":["At the station","At the park gate","At the café"],"explanation":"Meet at the park gate indica o ponto de encontro: o portão do parque. Saturday e eleven informam dia e hora."},
+            {"id":"en-a1-u4-l3-e2","type":"typed","prompt":"Leia: 'Meet at eleven. Bring water.' Copie apenas a palavra inglesa que indica o que trazer.","answer":"water","explanation":"Bring introduz o item solicitado. Water é água; eleven informa o horário."},
+            {"id":"en-a1-u4-l3-e3","type":"wordOrder","prompt":"Monte a orientação: Traga um copo e uma colher.","answer":"Bring a cup and a spoon","options":["spoon","a","Bring","and","cup","a"],"explanation":"Bring inicia a orientação. Há dois artigos a, um para cup e outro para spoon."},
+            {"id":"en-a1-u4-l3-e4","type":"choice","prompt":"Leia: Kim: 'Do you like apples?' Mo: 'Yes. I have two in my bag.' Quantas maçãs Mo tem na bolsa?","answer":"Two","options":["One","Three","Two"],"explanation":"Two informa a quantidade. In my bag localiza as maçãs na bolsa de quem fala."},
+            {"id":"en-a1-u4-l3-e5","type":"typed","prompt":"Complete a orientação negativa com a contração de do not: ___ bring glass bottles.","answer":"Don't","acceptedAnswers":["Don’t"],"explanation":"Don't mais o verbo básico bring forma uma orientação para não trazer algo. Glass bottles são garrafas de vidro."},
+            {"id":"en-a1-u4-l3-e6","type":"wordOrder","prompt":"Monte a pergunta: Você tem uma colher?","answer":"Do you have a spoon","options":["spoon","have","Do","a","you"],"explanation":"Com have como verbo de posse, a pergunta no presente simples usa Do you have. A spoon é uma colher."}
+          ]
+        }
+      ]
+    }
+  ]
+}

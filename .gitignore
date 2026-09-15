@@ -41,3 +41,8 @@ GoogleService-Info.plist
 *-debug.log
 node_modules/
 .firebase-cache/
+
+# Personal source downloads and acquisition receipts are not app assets.
+content-cache/
+__pycache__/
+*.py[cod]
