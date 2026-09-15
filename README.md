@@ -57,19 +57,67 @@ pedagógica** e não avalia pronúncia.
 
 | Tema | Exemplo de acerto | Exemplo de erro |
 | --- | --- | --- |
-| Zoação leve | “Acertou bonito! Essa resposta merece até replay!” | “Quase um gol, mas foi na trave! Olha a resposta e bora aprender.” |
+| Zoação leve | “Receba! Mais uma pro gabarito!” | “Você foi com tanta certeza que até eu acreditei.” |
 | Torcida | “Que categoria! Mais uma resposta no fundo da rede!” | “Hora de ajustar a estratégia! A correção mostra o caminho.” |
 | Tranquilo | “Resposta correta. Continue no seu ritmo.” | “Sem pressa. Leia a explicação para se preparar para a próxima.” |
 
-As 20 frases são originais, não transcrições de memes, vídeos ou falas de
-terceiros. A pesquisa de feedback da
+O catálogo tem 20 frases. O tema Zoação leve usa as oito reações curtas aprovadas,
+incluindo adaptações de bordões brasileiros; Torcida e Tranquilo mantêm suas
+frases originais. Não usamos gravações de terceiros nem imitamos suas vozes.
+Referências culturais não equivalem a autorização: confira direitos e licenças
+antes da distribuição. A pesquisa de feedback da
 [Education Endowment Foundation](https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/feedback)
 orientou a decisão de comentar a tarefa e indicar um próximo passo, em vez de
 atacar a pessoa. As brincadeiras são opcionais, sem insultos à inteligência,
 comparações entre alunos ou humilhação. Não se promete que o humor, por si só,
 melhore o aprendizado.
 
-### Gerar com a sua voz
+### Gerar pelo GitHub no celular (sem Flutter local)
+
+O workflow **Gerar áudios ElevenLabs** instala Flutter/Dart no runner do GitHub
+Actions. Você não precisa instalar SDK, abrir terminal ou ter computador.
+
+1. Primeiro, integre esta alteração à **branch padrão** do repositório. O botão
+   de execução manual só aparece depois que o workflow existe nessa branch;
+   por segurança, o job não executa em outras branches.
+2. Em **Settings → Environments**, use `copilot` ou `fluent`, onde já cadastrou
+   `ELEVENLABS_API_KEY` e `ELEVENLABS_VOICE_ID`. O Voice ID pode ser um secret
+   ou uma variável; a chave deve ser um secret. Não envie valores no chat.
+   Configure revisores e restrição à branch padrão no ambiente quando disponíveis.
+3. Abra [Actions → Gerar áudios ElevenLabs](https://github.com/hgovrs/fluent-app/actions/workflows/generate-feedback-audio.yml).
+   Se a interface do aplicativo móvel não exibir **Run workflow**, abra esse
+   link no navegador do celular (modo desktop, se necessário).
+4. Selecione a branch padrão e o ambiente que contém os segredos. Execute
+   primeiro com **generate desmarcado**: isso testa o projeto e mostra a
+   quantidade de frases/caracteres sem enviar nada ao ElevenLabs.
+5. Depois de conferir a prévia, execute com **generate marcado** para autorizar
+   o consumo de créditos. Marque **force** se houver MP3 antigos no repositório
+   após mudar voz ou frases. Para as frases novas de Zoação leve, arquivos
+   previamente gerados com os mesmos IDs precisam ser substituídos.
+6. Ao terminar, abra a execução e a seção **Artifacts**. O pacote
+   `feedback-audio-success-…` contém MP3 e catálogo, disponível por 30 dias;
+   a prévia fica disponível por 14 dias. Baixe o ZIP para ouvir os arquivos.
+
+O ambiente é selecionado explicitamente pelo workflow: segredos em `fluent`
+funcionam aqui sem precisar renomeá-lo para `copilot`. Não há execução paga
+automática em pushes ou pull requests. Testes precisam passar antes da geração;
+a chave fica disponível apenas na etapa que chama o ElevenLabs.
+
+**Integração sem terminal:** após conferir os áudios, envie ao Copilot o link
+da execução e peça para incorporar os MP3 ao projeto e validar o build. O ZIP
+tem os arquivos na raiz; no repositório, eles pertencem a
+`assets/audio_feedback/`. O workflow não faz commits, não publica releases e
+não produz um APK: disponibilizar um artefato não incorpora áudio ao aplicativo.
+
+**Falhas e custos:** lotes com `failure` no nome são parciais e podem conter
+apenas o catálogo. Confira o resultado e os logs antes de repetir. Cada execução
+começa em um runner limpo e não recupera artefatos anteriores; enquanto os MP3
+não estiverem no repositório, rodar novamente pode cobrar todas as frases de novo,
+mesmo com **force desmarcado**. Execuções são serializadas, sem cancelar uma
+geração em andamento, mas cliques repetidos podem enfileirar outra cobrança.
+Não publique chaves nos logs e revogue qualquer chave anteriormente exposta.
+
+### Gerar com a sua voz em um ambiente com Flutter
 
 A integração com a [API de síntese do ElevenLabs](https://elevenlabs.io/docs/api-reference/text-to-speech/convert)
 é **editorial, antes do build**, não uma chamada do celular a cada resposta.

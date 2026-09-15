@@ -6,14 +6,14 @@
       "name": "Zoação leve",
       "description": "Brincadeiras com a resposta, nunca com você. Sem humilhação.",
       "clips": [
-        {"id": "acerto_1", "category": "correct", "text": "Parabéns! Tá voando! Daqui a pouco precisa de pista de pouso!"},
-        {"id": "acerto_2", "category": "correct", "text": "Acertou bonito! Essa resposta merece até replay!"},
-        {"id": "acerto_3", "category": "correct", "text": "Olha esse acerto! Pode comemorar, mas não fecha o aplicativo!"},
-        {"id": "acerto_4", "category": "correct", "text": "Mandou bem demais! O gabarito que lute!"},
-        {"id": "erro_1", "category": "incorrect", "text": "Essa resposta foi passear longe do gabarito! Bora conferir a explicação?"},
-        {"id": "erro_2", "category": "incorrect", "text": "Opa! A resposta escorregou na casca de banana. Confere a correção!"},
-        {"id": "erro_3", "category": "incorrect", "text": "Quase um gol, mas foi na trave! Olha a resposta e bora aprender."},
-        {"id": "erro_4", "category": "incorrect", "text": "Essa pegou uma curva errada! Respira e confere a explicação."}
+        {"id": "acerto_1", "category": "correct", "text": "Receba! Mais uma pro gabarito!"},
+        {"id": "acerto_2", "category": "correct", "text": "Bonita, você não tá pra brincadeira hoje!"},
+        {"id": "acerto_3", "category": "correct", "text": "É ela! A pessoa bilíngue!"},
+        {"id": "acerto_4", "category": "correct", "text": "Acertou! Foi conhecimento ou foi entretenimento?"},
+        {"id": "erro_1", "category": "incorrect", "text": "Errrrou! A confiança tava linda. A resposta, nem tanto."},
+        {"id": "erro_2", "category": "incorrect", "text": "Amiga… de onde você tirou isso?"},
+        {"id": "erro_3", "category": "incorrect", "text": "Você foi com tanta certeza que até eu acreditei."},
+        {"id": "erro_4", "category": "incorrect", "text": "Calma, calabreso! Bora organizar esse inglês."}
       ]
     },
     {
