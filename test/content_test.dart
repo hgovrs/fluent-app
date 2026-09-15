@@ -35,6 +35,9 @@ void main() {
         expect(lesson.exercises.map((e) => e.type).toSet(),
             containsAll(ExerciseType.values));
         for (final exercise in lesson.exercises) {
+          if (course.id == 'en-b2' || course.id == 'en-c1') {
+            expect(exercise.context, isNotEmpty, reason: exercise.id);
+          }
           expect(exercise.accepts(exercise.answer), isTrue, reason: exercise.id);
           expect(exercise.accepts(''), isFalse);
           if (exercise.type == ExerciseType.choice) {
@@ -46,6 +49,34 @@ void main() {
         }
       }
     }
+  });
+
+  test('texto compartilhado acompanha cada exercício fora da lição', () {
+    final lesson = Lesson.fromJson({
+      'id': 'reading',
+      'title': 'Leitura',
+      'description': 'Inferência',
+      'readingPassage': 'The shop closes at six.',
+      'exercises': [
+        {
+          'id': 'reading-e1',
+          'type': 'typed',
+          'prompt': 'What time does the shop close?',
+          'answer': 'six',
+          'explanation': 'O texto indica six.',
+        },
+        {
+          'id': 'reading-e2',
+          'type': 'choice',
+          'prompt': 'Is the shop open at seven?',
+          'answer': 'No',
+          'options': ['Yes', 'No'],
+          'explanation': 'Seven é depois do fechamento.',
+        },
+      ],
+    });
+    expect(lesson.exercises.last.context, 'The shop closes at six.');
+    expect(lesson.exercises.first.context, lesson.exercises.last.context);
   });
 
   test('campos novos são opcionais para cursos existentes', () {

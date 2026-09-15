@@ -9,6 +9,7 @@ class Exercise {
     this.acceptedAnswers = const [],
     this.options = const [],
     required this.explanation,
+    this.context = '',
   });
 
   final String id;
@@ -18,6 +19,7 @@ class Exercise {
   final List<String> acceptedAnswers;
   final List<String> options;
   final String explanation;
+  final String context;
 
   static String normalize(String value) => value
       .trim()
@@ -32,7 +34,7 @@ class Exercise {
             .any((candidate) => normalize(candidate) == normalized);
   }
 
-  factory Exercise.fromJson(Map<String, dynamic> json) {
+  factory Exercise.fromJson(Map<String, dynamic> json, {String context = ''}) {
     final exercise = Exercise(
       id: _text(json, 'id'),
       type: ExerciseType.values.byName(_text(json, 'type')),
@@ -41,6 +43,7 @@ class Exercise {
       acceptedAnswers: _strings(json['acceptedAnswers'] ?? []),
       options: _strings(json['options'] ?? []),
       explanation: _text(json, 'explanation'),
+      context: context,
     );
     if (Exercise.normalize(exercise.answer).isEmpty ||
         (exercise.type == ExerciseType.choice &&
@@ -80,16 +83,20 @@ class Lesson {
   final String studyNotes;
   final List<String> sourceIds;
 
-  factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
-        id: _text(json, 'id'),
-        title: _text(json, 'title'),
-        description: _text(json, 'description'),
-        studyNotes: json.containsKey('studyNotes') ? _text(json, 'studyNotes') : '',
-        sourceIds: _strings(json['sourceIds'] ?? []),
-        exercises: _objects(json, 'exercises')
-            .map(Exercise.fromJson)
-            .toList(growable: false),
-      );
+  factory Lesson.fromJson(Map<String, dynamic> json) {
+    final passage =
+        json.containsKey('readingPassage') ? _text(json, 'readingPassage') : '';
+    return Lesson(
+      id: _text(json, 'id'),
+      title: _text(json, 'title'),
+      description: _text(json, 'description'),
+      studyNotes: json.containsKey('studyNotes') ? _text(json, 'studyNotes') : '',
+      sourceIds: _strings(json['sourceIds'] ?? []),
+      exercises: _objects(json, 'exercises')
+          .map((exercise) => Exercise.fromJson(exercise, context: passage))
+          .toList(growable: false),
+    );
+  }
 }
 
 class CourseUnit {

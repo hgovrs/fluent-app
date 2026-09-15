@@ -231,6 +231,20 @@ class _LessonScreenState extends State<LessonScreen> {
           ExerciseType.wordOrder => 'ORGANIZE A FRASE',
         }, style: const TextStyle(color: green, fontWeight: FontWeight.w800, letterSpacing: 1)),
         const SizedBox(height: 12),
+        if (exercise.context.isNotEmpty) ...[
+          SurfaceCard(
+            color: mint,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Texto de apoio', style: TextStyle(fontWeight: FontWeight.w700)),
+                const SizedBox(height: 8),
+                SelectableText(exercise.context),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
         Text(exercise.prompt, style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 28),
         if (exercise.type == ExerciseType.choice)

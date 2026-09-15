@@ -61,6 +61,8 @@ acessível pelo ícone de livro durante os exercícios. Há leitura de trechos
 originais, escolha, preenchimento de respostas delimitadas e ordenação de
 palavras, com feedback explicativo. **Fontes e licenças** funciona offline como
 registro de referências; os endereços externos precisam de internet.
+O texto de apoio acompanha também exercícios isolados na revisão espaçada;
+não é necessário ter respondido à pergunta anterior para recuperar a leitura.
 
 O mapeamento A1–C1 é **editorial e aproximado**, não validado pelas instituições
 citadas. Não equivale a cumprir todos os descritores CEFR. Faltam avaliação oral,
@@ -84,9 +86,9 @@ autoria, licença indicada, restrições, estado da análise e arquivos candidat
 | --- | --- | --- |
 | [BC Reads — BCcampus / Vancouver Community College](https://opentextbc.ca/abealf1/) | Leitura e alfabetização de adultos; Readers e Course Packs 1–6 | CC BY 4.0, salvo exceções. Os seis níveis **não são** A1–C2. |
 | [Communication Beginnings — Portland State](https://pdxscholar.library.pdx.edu/pdxopen/18/) | Comunicação, viagens, rotinas, lugares e trabalho | CC BY-NC 4.0 indicada no livro; conferir separadamente áudios e imagens. |
-| [Let's Get to Work! — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/lets-get-to-work) | Comunicação profissional intermediária | Conferir licença no arquivo específico e direitos de vídeos externos. |
-| [In the Loop — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/in-the-loop) | Comunicação intermediária superior | Nível interno do PCC; não converter automaticamente para B2. |
-| [Synthesis — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/synthesis) | Escrita acadêmica avançada | Não substitui um curso completo C1; direitos por arquivo. |
+| [Let's Get to Work! — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/lets-get-to-work) | Comunicação profissional intermediária | **Licença não verificada**; aquisição bloqueada. |
+| [In the Loop — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/in-the-loop) | Comunicação intermediária superior | **Licença não verificada**; aquisição bloqueada. Nível interno do PCC, não B2 certificado. |
+| [Synthesis — PCC](https://openoregon.pressbooks.pub/synthesis/part/part-1/) | Escrita acadêmica avançada | CC BY-NC-SA 4.0 indicada na edição Pressbooks, salvo exceções; não substitui um curso completo C1. |
 | [English: skills for learning — Open University](https://www.open.edu/openlearn/education-development/english-skills-learning/content-section-overview) | Leitura e organização da escrita acadêmica | CC BY-NC-SA 4.0 geral, com exceções em Acknowledgements. |
 
 **Limitação desta execução:** o ambiente não conseguiu acessar diretamente
@@ -95,6 +97,38 @@ vários sites das editoras (falhas de DNS). A pesquisa de metadados e sumários 
 auditoria completa de mídia nem reutilização autorizada de arquivos não
 inspecionados. O material de prática original funciona independentemente desses
 downloads; nenhuma referência inacessível bloqueia o aprendizado.
+
+**Correção da pesquisa anterior:** não foi possível sustentar a atribuição
+CC BY-NC-SA a *Let's Get to Work!* e *In the Loop*. As respostas de busca
+conflitavam e citavam outros materiais. Ambos permanecem com licença
+**não verificada**, mesmo para a aquisição automatizada. Para *Communication
+Beginnings*, a licença indicada é **BY-NC**, não BY.
+
+Análise possível a partir dos sumários indexados:
+
+- **BC Reads:** Reader 1 trata de plantas/jardins; 2, vida e poemas de Langston
+  Hughes; 3, história/cultura/fauna da Colúmbia Britânica; 4, direitos humanos;
+  5, aprendizagem e memória; 6, narrativas digitais. Combinar cada Reader com
+  seu Course Pack, objetivos, rubricas e avaliação é mais útil que tratar livros
+  numerados como níveis CEFR. Citações literárias e mídias exigem revisão própria.
+- **Communication Beginnings:** sete capítulos sobre universidade,
+  apresentações, viagens, alimentação, cidade, rotinas/hobbies e trabalho,
+  complementando comunicação contextualizada.
+- **Synthesis:** processo de escrita, estrutura de ensaios, pesquisa/avaliação
+  de fontes, citações, transições e revisão. **OpenLearn** complementa leitura
+  ativa, anotações, paráfrase e planejamento acadêmico.
+- Os materiais PCC de comunicação incluem recursos separados e links externos;
+  não foi confirmado um pacote único completo que funcione offline.
+
+Endereços concretos de descoberta, **não arquivos baixados ou aprovados**:
+[Reader 1 XHTML](https://opentextbc.ca/abealfreader1/open/download?type=xhtml),
+[Course Pack 1 XHTML](https://opentextbc.ca/abealf1/open/download?type=xhtml),
+[livro web PSU](https://pdx.pressbooks.pub/communicationbeginningsanintroductory/),
+[Synthesis XHTML](https://openoregon.pressbooks.pub/synthesis/open/download?type=xhtml)
+e [OpenLearn imprimível](https://www.open.edu/openlearn/education-development/english-skills-learning/altformat-printable).
+XHTML não é PDF/EPUB e não é aceito pelo utilitário; nenhuma URL de exportação
+deve ser construída por adivinhação. URLs candidatas de PDF do BC Reads e de
+um espelho eCampusOntario também falharam em verificações de acesso por DNS.
 
 ### Licenças: agora e antes de publicar
 
@@ -164,6 +198,10 @@ houver um hash confiável previamente obtido. Sem essa revisão o comando recusa
 o arquivo. A primeira aquisição registra um hash de integridade local, que não
 é por si só prova de autoria ou autorização.
 
+Nesta execução, `download --allow-noncommercial` retornou **código 1**:
+as seis referências ainda não possuem arquivos aprovados no registro. Nenhum
+arquivo ou recibo de download bem-sucedido foi criado.
+
 O comando verifica formato, limita tamanho e grava de forma atômica com recibo;
 não extrai arquivos nem executa conteúdo baixado. Falhas de rede/licença não
 modificam cursos do app. Conferir o recibo antes de confiar no cache; não
@@ -184,7 +222,9 @@ requisito; o backend de progresso continua separado do conteúdo didático.
    Serviço gratuito tem limites e pode ficar indisponível ao excedê-los.
 3. Como alternativa, avaliar **Cloudflare Pages Free** para JSON e arquivos
    estáticos pequenos, conferindo [limites oficiais](https://developers.cloudflare.com/pages/platform/limits/),
-   termos e tamanho máximo por arquivo. Não tratar uma hospedagem pública como
+   termos e tamanho máximo por arquivo. A documentação oficial consultada lista
+   **25 MiB por arquivo, 20 mil arquivos por site e 500 builds/mês** no Free;
+   revalidar esses limites antes da migração. Não tratar uma hospedagem pública como
    biblioteca privada; não colocar materiais ainda pendentes em URLs públicas.
 4. Em uma implementação futura, baixar por HTTPS sob demanda, validar tamanho,
    esquema e hash antes de ativar o pacote, gravar em cache de forma atômica e
@@ -349,6 +389,10 @@ Os idiomas não são implementados como telas diferentes:
    em `assets/content/sources.json`). Novos cursos incluem `contentVersion`
    inteiro positivo e `coverage` para explicitar o escopo. Esses campos são
    opcionais para preservar o curso inicial.
+   Se várias questões usam a mesma leitura, coloque o texto em `readingPassage`
+   na lição. O carregador associa esse contexto a cada exercício, inclusive
+   quando ele aparece sozinho na revisão espaçada. Não deixe perguntas
+   dependentes de textos presentes apenas em outro exercício.
 5. Registre o caminho em `assets/courses/catalog.json`. O seletor de cursos
    passa a mostrar o novo idioma automaticamente.
 6. Mantenha IDs estáveis e únicos dentro do curso. Não reutilize IDs de
@@ -402,3 +446,13 @@ Eles cobrem consentimento NC, arquivos não revisados, limites, formato,
 integridade, cache, URLs/redirecionamentos e limpeza de downloads interrompidos.
 Esses testes não demonstram que as editoras estejam acessíveis nem que as
 licenças de todas as mídias tenham sido verificadas.
+
+Resultado disponível: **34 testes do utilitário passaram**; depois disso, apenas
+o diretório temporário dos testes foi trocado para o padrão do sistema, sem nova
+execução. A análise CodeQL de Python encontrou **zero alertas**. A ferramenta
+automática de revisão de código não estava instalada; isso não equivale a uma
+revisão automática aprovada nem valida o runtime Flutter.
+A revisão estática adicional identificou questões que perdiam o texto de apoio
+na revisão espaçada; isso foi corrigido com `readingPassage`/`Exercise.context`,
+com testes de regressão adicionados. A revisão da correção não apontou novos
+problemas relevantes, mas esses testes Flutter continuam sem execução.

@@ -19,6 +19,7 @@ void main() {
       exercises: [
         Exercise(id: 'study-exercise', type: ExerciseType.choice,
           prompt: 'Cumprimente.', answer: 'Hello', options: ['Hello', 'Bye'],
+          context: 'Sam meets a friend in the morning.',
           explanation: 'Hello é uma saudação.'),
       ],
     );
@@ -42,6 +43,14 @@ void main() {
     await tester.tap(find.text('Voltar à prática'));
     await tester.pumpAndSettle();
     expect(find.text('Cumprimente.'), findsOneWidget);
+    await tester.pumpWidget(MaterialApp(
+      theme: fluentTheme,
+      home: LessonScreen(controller: controller, exercises: lesson.exercises),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('Revisão do dia'), findsOneWidget);
+    expect(find.text('Texto de apoio'), findsOneWidget);
+    expect(find.text('Sam meets a friend in the morning.'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
     controller.dispose();
   });

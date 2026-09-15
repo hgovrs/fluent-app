@@ -75,7 +75,8 @@ class _SourcesScreenState extends State<SourcesScreen> {
                           Text(source.limitations),
                           const SizedBox(height: 8),
                           SelectableText(source.url),
-                          SelectableText(source.licenseUrl),
+                          if (source.licenseUrl != source.url)
+                            SelectableText(source.licenseUrl),
                         ],
                       ),
                     ),
