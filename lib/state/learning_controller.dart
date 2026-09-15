@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 
 import '../models/course.dart';
+import '../models/feedback_catalog.dart';
 import '../models/learning_progress.dart';
 import '../services/progress_store.dart';
 
@@ -10,8 +11,10 @@ class LearningController extends ChangeNotifier {
   LearningController({
     required List<Course> courses,
     required ProgressStore store,
+    FeedbackCatalog? feedbackCatalog,
     DateTime Function()? now,
   })  : courses = List.unmodifiable(courses),
+        feedbackCatalog = feedbackCatalog ?? FeedbackCatalog([]),
         _store = store,
         _now = now ?? DateTime.now {
     if (courses.isEmpty ||
@@ -25,6 +28,7 @@ class LearningController extends ChangeNotifier {
   }
 
   final List<Course> courses;
+  final FeedbackCatalog feedbackCatalog;
   final ProgressStore _store;
   final DateTime Function() _now;
   final Map<String, LearningProgress> _progress = {};
@@ -36,6 +40,9 @@ class LearningController extends ChangeNotifier {
       courses.firstWhere((course) => course.id == _selectedCourseId);
   LearningProgress get progress => _progress[_selectedCourseId]!;
   bool get goalReached => progress.dailyXp >= progress.dailyGoal;
+  FeedbackTheme? get feedbackTheme =>
+      feedbackCatalog.theme(progress.feedbackThemeId);
+  String get feedbackThemeId => feedbackTheme?.id ?? FeedbackCatalog.off;
 
   bool isCompleted(Lesson lesson) =>
       course.lessons.any((item) => item.id == lesson.id) &&
@@ -179,6 +186,14 @@ class LearningController extends ChangeNotifier {
   Future<void> selectCourse(String id) async {
     if (!_progress.containsKey(id)) throw ArgumentError('Curso desconhecido.');
     _selectedCourseId = id;
+    await _persist();
+  }
+
+  Future<void> setFeedbackTheme(String id) async {
+    if (id != FeedbackCatalog.off && feedbackCatalog.theme(id) == null) {
+      throw ArgumentError('Tema de feedback desconhecido.');
+    }
+    _progress[_selectedCourseId] = progress.copyWith(feedbackThemeId: id);
     await _persist();
   }
 

@@ -16,6 +16,7 @@ dependencies:
   firebase_auth: 6.6.1
   cloud_firestore: 6.9.0
   shared_preferences: 2.5.5
+  just_audio: 0.10.6
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +28,4 @@ flutter:
   assets:
     - assets/courses/
     - assets/content/
+    - assets/audio_feedback/

@@ -14,5 +14,6 @@ A documentação completa está em **[docs/documentacao.md](docs/documentacao.md
 - Funcionalidades e decisões de produto.
 - Conteúdo A1–C1, fontes, licenças e uso pessoal.
 - Aquisição e armazenamento dos materiais e migração futura para nuvem.
+- Feedback de áudio opcional, temas e geração editorial com ElevenLabs.
 - Execução local, configuração do Firebase e privacidade.
 - Inclusão de cursos, estrutura do projeto e estado da validação.

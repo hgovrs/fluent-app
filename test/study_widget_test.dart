@@ -36,6 +36,7 @@ void main() {
       theme: fluentTheme,
       home: LessonScreen(controller: controller, exercises: lesson.exercises, lesson: lesson),
     ));
+    expect(find.byTooltip('Feedback de áudio: Sem áudio'), findsOneWidget);
     await tester.tap(find.byTooltip('Material de estudo'));
     await tester.pumpAndSettle();
     expect(find.text('Use hello para cumprimentar.'), findsOneWidget);
@@ -43,12 +44,20 @@ void main() {
     await tester.tap(find.text('Voltar à prática'));
     await tester.pumpAndSettle();
     expect(find.text('Cumprimente.'), findsOneWidget);
+    await tester.tap(find.byTooltip('Feedback de áudio: Sem áudio'));
+    await tester.pumpAndSettle();
+    expect(find.text('Feedback de áudio'), findsOneWidget);
+    await tester.tap(find.text('Sem áudio'));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Material de estudo'), findsOneWidget);
+    expect(controller.progress.completedLessonIds, isEmpty);
     await tester.pumpWidget(MaterialApp(
       theme: fluentTheme,
       home: LessonScreen(controller: controller, exercises: lesson.exercises),
     ));
     await tester.pumpAndSettle();
     expect(find.text('Revisão do dia'), findsOneWidget);
+    expect(find.byTooltip('Feedback de áudio: Sem áudio'), findsOneWidget);
     expect(find.text('Texto de apoio'), findsOneWidget);
     expect(find.text('Sam meets a friend in the morning.'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
