@@ -7,8 +7,9 @@ progresso manualmente entre dispositivos.
 
 ## O que está implementado
 
-- Trilha progressiva de inglês iniciante: 4 unidades, 12 lições e 60 exercícios
-  originais, com saudações, apresentações, situações cotidianas e viagens.
+- Trilha inicial preservada: 4 unidades, 12 lições e 60 exercícios originais.
+- Cinco trilhas adicionais de prática parcial A1–C1, com material de estudo,
+  exercícios originais e referências institucionais complementares.
 - Exercícios de múltipla escolha, escrita e organização de frases.
 - Feedback explicativo, correção tolerante a maiúsculas e pontuação, sem vidas
   limitadas nem punição por errar.
@@ -20,7 +21,7 @@ progresso manualmente entre dispositivos.
 - Layout adaptável, sem fontes, imagens ou APIs de IA pagas.
 - Testes de domínio, navegação, exercícios e regras de acesso; workflow de CI.
 
-O curso é uma **introdução**, não um curso A1 completo ou uma certificação de
+As trilhas são **prática parcial**, não cursos CEFR completos nem certificação de
 proficiência. Não há avaliação de pronúncia, reconhecimento de voz, vídeos,
 chatbot, ranking público ou conteúdo copiado de outros aplicativos.
 
@@ -36,6 +37,167 @@ Pesquisa realizada antes da implementação, em setembro de 2026:
 
 As referências inspiram as funcionalidades, não a marca, as ilustrações ou o
 conteúdo. O visual e os exercícios deste projeto são próprios.
+
+## Conteúdo A1–C1, fontes e uso pessoal
+
+### O que está disponível no app
+
+O seletor **Escolha sua trilha** permite começar em qualquer nível; dentro de
+cada trilha, as lições são liberadas em sequência. Progresso e revisão continuam
+separados por curso. O curso inicial e seus IDs não foram substituídos.
+
+| Trilha | Unidades / lições / exercícios | Foco |
+| --- | --- | --- |
+| Primeiros passos (existente) | 4 / 12 / 60 | Introdução cotidiana |
+| A1 — Fundamentos | 4 / 12 / 72 | Identidade, rotina, tempo, compras e lugares |
+| A2 | 4 / 12 / 72 | Passado, planos, comparação e experiências |
+| B1 | 4 / 12 / 72 | Narrativas, hipóteses e comunicação no trabalho |
+| B2 — Argumentação | 4 / 12 / 72 | Argumentos, inferência, registro e correspondência |
+| C1 — Nuance e precisão | 4 / 12 / 72 | Posicionamento, coesão, leitura crítica e precisão |
+
+São **420 exercícios em 72 lições**, incluindo os 60 anteriores. Cada nova
+lição contém uma explicação em português em **Antes de praticar**, também
+acessível pelo ícone de livro durante os exercícios. Há leitura de trechos
+originais, escolha, preenchimento de respostas delimitadas e ordenação de
+palavras, com feedback explicativo. **Fontes e licenças** funciona offline como
+registro de referências; os endereços externos precisam de internet.
+
+O mapeamento A1–C1 é **editorial e aproximado**, não validado pelas instituições
+citadas. Não equivale a cumprir todos os descritores CEFR. Faltam avaliação oral,
+escuta com áudio real, interação espontânea, redações abertas com avaliação e
+validação pedagógica independente. B2/C1 especialmente são prática de leitura e
+linguagem, não prova de proficiência. Não há C2. O app não promete avaliar
+respostas livres com correção determinística.
+
+### Auditoria das referências
+
+A pesquisa distingue **referência de leitura**, **adaptação** e **arquivo
+adquirido**. As novas explicações, situações, textos e questões foram escritos
+para o Fluent; **não são cópias nem conversões integrais dos livros**.
+`sourceIds` indica leitura complementar, não autoria institucional dos exercícios.
+Não há associação, endosso ou certificação dessas instituições.
+
+O registro versionado é `assets/content/sources.json`, contendo instituição,
+autoria, licença indicada, restrições, estado da análise e arquivos candidatos.
+
+| Fonte | Complementação pretendida | Limites de licença/cobertura |
+| --- | --- | --- |
+| [BC Reads — BCcampus / Vancouver Community College](https://opentextbc.ca/abealf1/) | Leitura e alfabetização de adultos; Readers e Course Packs 1–6 | CC BY 4.0, salvo exceções. Os seis níveis **não são** A1–C2. |
+| [Communication Beginnings — Portland State](https://pdxscholar.library.pdx.edu/pdxopen/18/) | Comunicação, viagens, rotinas, lugares e trabalho | CC BY-NC 4.0 indicada no livro; conferir separadamente áudios e imagens. |
+| [Let's Get to Work! — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/lets-get-to-work) | Comunicação profissional intermediária | Conferir licença no arquivo específico e direitos de vídeos externos. |
+| [In the Loop — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/in-the-loop) | Comunicação intermediária superior | Nível interno do PCC; não converter automaticamente para B2. |
+| [Synthesis — PCC](https://sites.google.com/pcc.edu/oer-for-esol/home/synthesis) | Escrita acadêmica avançada | Não substitui um curso completo C1; direitos por arquivo. |
+| [English: skills for learning — Open University](https://www.open.edu/openlearn/education-development/english-skills-learning/content-section-overview) | Leitura e organização da escrita acadêmica | CC BY-NC-SA 4.0 geral, com exceções em Acknowledgements. |
+
+**Limitação desta execução:** o ambiente não conseguiu acessar diretamente
+vários sites das editoras (falhas de DNS). A pesquisa de metadados e sumários não
+é uma leitura integral de todas as obras. Não se declara download concluído,
+auditoria completa de mídia nem reutilização autorizada de arquivos não
+inspecionados. O material de prática original funciona independentemente desses
+downloads; nenhuma referência inacessível bloqueia o aprendizado.
+
+### Licenças: agora e antes de publicar
+
+O uso solicitado é **pessoal, local e não comercial**. Isso permite considerar
+obras NC conforme seus termos, mas não dispensa atribuição, avisos de licença,
+identificação de alterações e demais condições. Estar no computador local,
+ser gratuito ou estar em repositório privado não substitui uma licença.
+
+- **BY:** atribuir autor, título, fonte e licença; informar adaptações.
+- **NC:** não explorar comercialmente sem permissão separada. Anúncios,
+  assinaturas e distribuição ligada a atividade comercial precisam de análise.
+- **SA:** adaptações distribuídas devem respeitar a licença compatível exigida;
+  isso não torna automaticamente todo o código do app sujeito à mesma licença.
+- Imagens, gravações, músicas, marcas e vídeos incorporados podem ter direitos
+  diferentes. Não baixar vídeos de plataformas nem remover proteção de acesso.
+- Não adaptar nem distribuir conteúdo **ND**, de licença desconhecida ou
+  excluído da licença geral sem autorização adequada.
+
+**Não deixar a revisão de direitos somente para depois da publicação.** Um
+repositório público já distribui o que recebe. Por isso, os downloads pessoais
+ficam ignorados pelo Git e não entram automaticamente no build. A versão atual
+empacota os exercícios originais, as notas próprias e o índice de referências,
+não os livros NC nem suas mídias.
+
+Antes de exposição pública ou comercial: inventariar cada arquivo e adaptação;
+verificar licença e exceções; manter apenas o que autoriza o uso pretendido;
+substituir ou remover os demais; revisar atribuições dentro do app e nos pacotes;
+recompilar e invalidar pacotes/cache antigos. Retirar depois não desfaz uma
+distribuição anterior. Preservar IDs do conteúdo original e não reutilizar IDs
+de exercícios removidos com outro significado.
+
+### Armazenamento e aquisição
+
+Há duas camadas deliberadamente separadas:
+
+1. **App offline:** `assets/courses/` contém catálogo e cursos JSON;
+   `assets/content/` contém referências e licenças. Ambos são assets Flutter
+   versionados neste repositório. Não há chamadas de rede para estudar.
+2. **Biblioteca editorial pessoal:** `content-cache/` guarda livros originais
+   e recibos de aquisição, ignorados pelo Git e fora do `pubspec.yaml`.
+   Eles servem à leitura/auditoria, **não são automaticamente exibidos pelo app**.
+   PDF/EPUB e players de áudio/vídeo não estão implementados nesta versão.
+
+Preferir exportações **PDF/EPUB oferecidas pela própria instituição**, em vez de
+espelhar sites inteiros ou baixar páginas de cursos com conteúdo incompleto.
+Conservar o original sem alterações e registrar autor, URL, licença, data,
+tamanho e SHA-256. Baixar áudio/imagem separadamente só depois de conferir sua
+própria autorização. Vídeos grandes não devem ser commits no Git.
+
+O comando de aquisição `tool/content_library.py` usa somente Python 3 padrão:
+consulta o registro, exige revisão de licença por arquivo e permite optar
+explicitamente por materiais NC. Os comandos devem ser executados na raiz:
+
+```sh
+python3 tool/content_library.py list
+python3 tool/content_library.py download --source bc-reads
+python3 tool/content_library.py download --source communication-beginnings --allow-noncommercial
+python3 tool/content_library.py verify --source communication-beginnings
+```
+
+Uma lista de downloads vazia significa **não adquirido / aguardando URL e
+licença verificadas**, não sucesso. Não transformar uma URL inferida em download
+aprovado. Para cadastrar um arquivo, conferir manualmente o link oficial e
+os créditos, adicionar `id`, `url`, `format` (`pdf` ou `epub`) e
+`licenseReviewed: true` em `downloads` da fonte; acrescentar `sha256` quando
+houver um hash confiável previamente obtido. Sem essa revisão o comando recusa
+o arquivo. A primeira aquisição registra um hash de integridade local, que não
+é por si só prova de autoria ou autorização.
+
+O comando verifica formato, limita tamanho e grava de forma atômica com recibo;
+não extrai arquivos nem executa conteúdo baixado. Falhas de rede/licença não
+modificam cursos do app. Conferir o recibo antes de confiar no cache; não
+versionar o cache apenas porque o download passou.
+
+### Migração futura para nuvem sem cobrança automática
+
+**Não implementada nem ativada agora.** Manter uma cópia local funcional é o
+requisito; o backend de progresso continua separado do conteúdo didático.
+
+1. Publicar somente pacotes com direitos aprovados para a distribuição escolhida.
+   Manter cursos JSON pequenos e um manifesto versionado com ID, versão, URL,
+   tamanho, SHA-256, licença e atribuições; hospedar mídias separadamente.
+2. Preferir inicialmente **Firebase Hosting no Spark**, já compatível com este
+   projeto, sem conta de faturamento. Hospedar arquivos estáticos, não livros
+   binários no Firestore. Conferir cotas atuais de armazenamento e transferência
+   em [Hosting usage and pricing](https://firebase.google.com/docs/hosting/usage-quotas-pricing).
+   Serviço gratuito tem limites e pode ficar indisponível ao excedê-los.
+3. Como alternativa, avaliar **Cloudflare Pages Free** para JSON e arquivos
+   estáticos pequenos, conferindo [limites oficiais](https://developers.cloudflare.com/pages/platform/limits/),
+   termos e tamanho máximo por arquivo. Não tratar uma hospedagem pública como
+   biblioteca privada; não colocar materiais ainda pendentes em URLs públicas.
+4. Em uma implementação futura, baixar por HTTPS sob demanda, validar tamanho,
+   esquema e hash antes de ativar o pacote, gravar em cache de forma atômica e
+   manter a versão anterior/embutida se a rede falhar. Permitir apagar downloads
+   sem apagar progresso. Preservar IDs estáveis e definir migração de conteúdo.
+5. No Android, usar armazenamento privado do app; na web, planejar IndexedDB/
+   Cache Storage, cotas e limpeza pelo navegador. A atual versão web **não
+   garante** funcionamento offline depois de fechada.
+6. Monitorar cotas e deixar downloads opcionais; não habilitar Blaze nem serviços
+   pagos automaticamente. Cloud Storage for Firebase não é a escolha de custo
+   zero sem faturamento nesta arquitetura. Áudio/vídeo em escala pode ultrapassar
+   qualquer franquia grátis; reduzir/selecionar conteúdo em vez de prometer
+   tráfego ilimitado.
 
 ## Executar localmente
 
@@ -183,6 +345,10 @@ Os idiomas não são implementados como telas diferentes:
 3. Cada unidade contém `lessons`; cada lição contém `exercises`.
 4. Os exercícios usam `choice`, `typed` ou `wordOrder`, com `prompt`, `answer`,
    `acceptedAnswers`, `options` e `explanation`, conforme o tipo.
+   Novas lições também incluem `studyNotes` e `sourceIds` (referências existentes
+   em `assets/content/sources.json`). Novos cursos incluem `contentVersion`
+   inteiro positivo e `coverage` para explicitar o escopo. Esses campos são
+   opcionais para preservar o curso inicial.
 5. Registre o caminho em `assets/courses/catalog.json`. O seletor de cursos
    passa a mostrar o novo idioma automaticamente.
 6. Mantenha IDs estáveis e únicos dentro do curso. Não reutilize IDs de
@@ -198,12 +364,15 @@ ajustes na normalização de respostas.
 
 ```text
 assets/courses/       Catálogo e conteúdo original empacotado
+assets/content/       Registro de fontes, licenças e downloads revisados
+content-cache/        Livros pessoais e recibos locais (ignorado pelo Git)
 lib/models/          Cursos, exercícios, progresso e revisões
 lib/data/            Carregamento e validação do catálogo
 lib/state/           Regras de aprendizado e coordenação do progresso
 lib/services/        Persistência local e Firebase opcional
 lib/screens/         Trilha, exercícios, revisão e conta
 test/                Testes de domínio e widgets
+tool/                Aquisição editorial de fontes, fora do runtime
 firebase/            Testes das regras Firestore
 android/ ios/ web/   Runners Flutter
 firestore.rules      Isolamento de usuários e validação de backups
@@ -211,9 +380,25 @@ firestore.rules      Isolamento de usuários e validação de backups
 
 ## Estado da validação
 
-O ambiente usado para criar esta implementação não tinha `flutter` nem `dart`,
-e o download do SDK foi bloqueado pela rede. Os comandos de scaffolding,
-resolução de dependências e validação foram tentados, mas os testes Flutter e
-os builds **não puderam ser executados localmente**. Não há APK validado
-incluído neste repositório. Execute o workflow de CI ou os comandos acima em
-um ambiente com Flutter antes de distribuir.
+Na expansão de conteúdo de 15/09/2026, `flutter analyze`, `flutter test` e
+`flutter build web` foram tentados, mas o ambiente não tinha `flutter` nem
+`dart`; a consulta ao download do SDK retornou HTTP 403. Portanto, os novos
+testes Flutter e os builds **não foram executados localmente**. Não há APK
+validado incluído nesta alteração. Execute o workflow de CI ou os comandos acima
+em um ambiente com Flutter antes de distribuir.
+
+Há testes Flutter para preservar o curso inicial, validar os novos campos,
+referências, conteúdo e respostas, além da consulta ao material de estudo.
+A validação estrutural dos novos JSONs foi realizada durante a autoria, sem
+substituir uma revisão pedagógica independente.
+
+O utilitário de aquisição possui testes sem rede, com a biblioteca padrão:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s test -p content_library_test.py
+```
+
+Eles cobrem consentimento NC, arquivos não revisados, limites, formato,
+integridade, cache, URLs/redirecionamentos e limpeza de downloads interrompidos.
+Esses testes não demonstram que as editoras estejam acessíveis nem que as
+licenças de todas as mídias tenham sido verificadas.

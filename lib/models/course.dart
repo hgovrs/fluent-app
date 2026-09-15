@@ -69,17 +69,23 @@ class Lesson {
     required this.title,
     required this.description,
     required this.exercises,
+    this.studyNotes = '',
+    this.sourceIds = const [],
   });
 
   final String id;
   final String title;
   final String description;
   final List<Exercise> exercises;
+  final String studyNotes;
+  final List<String> sourceIds;
 
   factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
         id: _text(json, 'id'),
         title: _text(json, 'title'),
         description: _text(json, 'description'),
+        studyNotes: json.containsKey('studyNotes') ? _text(json, 'studyNotes') : '',
+        sourceIds: _strings(json['sourceIds'] ?? []),
         exercises: _objects(json, 'exercises')
             .map(Exercise.fromJson)
             .toList(growable: false),
@@ -116,6 +122,8 @@ class Course {
     required this.targetLanguage,
     required this.level,
     required this.units,
+    this.coverage = '',
+    this.contentVersion = 1,
   });
 
   final String id;
@@ -124,17 +132,25 @@ class Course {
   final String targetLanguage;
   final String level;
   final List<CourseUnit> units;
+  final String coverage;
+  final int contentVersion;
 
   List<Lesson> get lessons =>
       units.expand((unit) => unit.lessons).toList(growable: false);
 
   factory Course.fromJson(Map<String, dynamic> json) {
+    final version = json['contentVersion'] ?? 1;
+    if (version is! int || version < 1) {
+      throw const FormatException('Versão de conteúdo inválida.');
+    }
     final course = Course(
       id: _text(json, 'id'),
       title: _text(json, 'title'),
       sourceLanguage: _text(json, 'sourceLanguage'),
       targetLanguage: _text(json, 'targetLanguage'),
       level: _text(json, 'level'),
+      coverage: json.containsKey('coverage') ? _text(json, 'coverage') : '',
+      contentVersion: version,
       units: _objects(json, 'units').map(CourseUnit.fromJson).toList(growable: false),
     );
     final ids = <String>{};

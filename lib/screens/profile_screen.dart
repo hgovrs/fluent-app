@@ -157,19 +157,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
+                    key: ValueKey(widget.controller.course.id),
                     initialValue: widget.controller.course.id,
-                    decoration: const InputDecoration(labelText: 'Idioma em prática'),
+                    decoration: const InputDecoration(labelText: 'Trilha em prática'),
                     isExpanded: true,
                     items: [
                       for (final course in widget.controller.courses)
-                        DropdownMenuItem(value: course.id, child: Text('${course.title} · ${course.level}')),
+                        DropdownMenuItem(value: course.id, child: Text(course.title, maxLines: 1, overflow: TextOverflow.ellipsis)),
                     ],
                     onChanged: (id) {
                       if (id != null) widget.controller.selectCourse(id);
                     },
                   ),
                   const SizedBox(height: 10),
-                  const Text('Primeiro destino: inglês. A estrutura já está preparada para novos cursos.'),
+                  const Text('Trilhas de prática parcial A1–C1. Concluir exercícios não certifica proficiência.'),
                 ],
               ),
             ),

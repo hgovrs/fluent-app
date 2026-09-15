@@ -1,0 +1,220 @@
+{
+  "id": "en-a2",
+  "title": "Inglês A2 — Cotidiano e experiências",
+  "sourceLanguage": "pt-BR",
+  "targetLanguage": "en",
+  "level": "A2 · prática parcial",
+  "contentVersion": 1,
+  "authorship": "original",
+  "coverage": "Prática parcial de conteúdos associados ao A2 do CEFR. O material original amplia recursos para situações cotidianas, mas não constitui curso completo, avaliação de proficiência ou certificação. As leituras recomendadas são complementares e não são a origem dos exercícios.",
+  "units": [
+    {
+      "id": "en-a2-u1",
+      "title": "Conte o que aconteceu",
+      "description": "Relate dias passados, viagens e interrupções.",
+      "lessons": [
+        {
+          "id": "en-a2-u1-l1",
+          "title": "Ontem foi diferente",
+          "description": "Use was, were e o passado regular.",
+          "studyNotes": "Para situações passadas com be, use was com I/he/she/it e were com you/we/they: The shop was quiet. We were early. Yesterday e last night indicam períodos terminados.\n\nMuitos verbos formam o passado com -ed: clean/cleaned. Verbos terminados em e recebem apenas -d: arrive/arrived. Na negativa de outros verbos, use did not mais a forma básica: We did not stay.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u1-l1-e1","type":"choice","prompt":"Leia: 'Yesterday the café was closed, so we cooked at home.' Por que as pessoas cozinharam em casa?","answer":"The café was closed.","options":["They worked at the café.","The café was closed.","Their kitchen was closed."],"explanation":"So conecta o motivo ao resultado: o café estava fechado, então cozinharam em casa."},
+            {"id":"en-a2-u1-l1-e2","type":"typed","prompt":"Complete com be no passado: The children ___ tired after the walk.","answer":"were","explanation":"The children é plural e corresponde a they. No passado de be, usamos were."},
+            {"id":"en-a2-u1-l1-e3","type":"wordOrder","prompt":"Monte: Nós visitamos o museu ontem. Deixe yesterday no final.","answer":"We visited the museum yesterday","options":["yesterday","museum","We","the","visited"],"explanation":"Visited é o passado regular de visit. Yesterday marca um momento terminado e ocupa a posição final solicitada."},
+            {"id":"en-a2-u1-l1-e4","type":"choice","prompt":"Qual frase nega corretamente uma ação passada?","answer":"She did not call.","options":["She did not called.","She does not called.","She did not call."],"explanation":"Did já marca o passado. O verbo principal fica na forma básica call depois de did not."},
+            {"id":"en-a2-u1-l1-e5","type":"typed","prompt":"Escreva apenas o passado simples de arrive: We ___ at noon yesterday.","answer":"arrived","explanation":"Arrive termina em e; acrescentamos apenas -d para formar arrived."},
+            {"id":"en-a2-u1-l1-e6","type":"wordOrder","prompt":"Monte a pergunta: O hotel estava limpo?","answer":"Was the hotel clean","options":["clean","hotel","Was","the"],"explanation":"Em perguntas com be no passado, was vem antes do sujeito singular. Não usamos did com essa estrutura."}
+          ]
+        },
+        {
+          "id": "en-a2-u1-l2",
+          "title": "Uma viagem curta",
+          "description": "Pratique verbos irregulares e perguntas com did.",
+          "studyNotes": "Alguns verbos têm passado irregular: go/went, buy/bought e take/took. Exemplo: We took a bus and bought a map. Essas formas precisam ser aprendidas junto ao verbo básico.\n\nEm perguntas, use did mais o sujeito e o verbo básico: Where did you go? Não repita a marca de passado em went depois de did. First, then e finally ajudam a organizar etapas de um relato.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u1-l2-e1","type":"choice","prompt":"Leia: 'First, I bought a ticket. Then I took the train. Finally, I met Alba at the station.' O que aconteceu antes de pegar o trem?","answer":"Buying a ticket","options":["Meeting Alba","Buying a ticket","Leaving the station"],"explanation":"First marca a primeira ação: bought a ticket. Then introduz a ação seguinte, pegar o trem."},
+            {"id":"en-a2-u1-l2-e2","type":"typed","prompt":"Complete com o passado simples de go: Last week, I ___ to Bristol.","answer":"went","explanation":"Go tem passado irregular: went. Last week indica um período encerrado."},
+            {"id":"en-a2-u1-l2-e3","type":"wordOrder","prompt":"Monte a pergunta: Onde você comprou o bilhete?","answer":"Where did you buy the ticket","options":["ticket","buy","Where","the","you","did"],"explanation":"Where pergunta o lugar. Depois do auxiliar did, usamos buy, não bought."},
+            {"id":"en-a2-u1-l2-e4","type":"choice","prompt":"Qual resposta curta afirmativa combina com 'Did they catch the bus?'?","answer":"Yes, they did.","options":["Yes, they do.","Yes, they were.","Yes, they did."],"explanation":"A resposta curta retoma did, o auxiliar usado na pergunta sobre uma ação passada."},
+            {"id":"en-a2-u1-l2-e5","type":"typed","prompt":"Complete com o passado simples de take: We ___ a taxi yesterday.","answer":"took","explanation":"O passado irregular de take é took. Take a taxi significa pegar um táxi."},
+            {"id":"en-a2-u1-l2-e6","type":"wordOrder","prompt":"Monte sem contração: Eu não perdi meu passaporte.","answer":"I did not lose my passport","options":["passport","did","my","lose","I","not"],"explanation":"A negação passada usa did not seguido de lose. Lost seria usado em uma afirmativa sem did."}
+          ]
+        },
+        {
+          "id": "en-a2-u1-l3",
+          "title": "No meio da ação",
+          "description": "Combine passado contínuo e passado simples.",
+          "studyNotes": "Was/were mais verbo com -ing descreve uma ação em andamento num momento passado: At six, I was making soup. A ação já estava acontecendo naquele instante.\n\nO passado simples pode apresentar um acontecimento que interrompe ou ocorre durante essa ação: I was sleeping when the phone rang. When liga os eventos; observe qual ação estava em andamento e qual aconteceu pontualmente.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a2-u1-l3-e1","type":"choice","prompt":"Leia: 'Mina was washing dishes when the lights went out.' Qual atividade já estava acontecendo?","answer":"Washing dishes","options":["Repairing the lights","Washing dishes","Going to bed"],"explanation":"Was washing descreve a ação em andamento. Went out apresenta o acontecimento que ocorreu durante ela."},
+            {"id":"en-a2-u1-l3-e2","type":"typed","prompt":"Complete com was ou were: We ___ walking when it started to rain.","answer":"were","explanation":"We exige were. Were walking descreve a caminhada em andamento no passado."},
+            {"id":"en-a2-u1-l3-e3","type":"wordOrder","prompt":"Monte começando por I: Eu estava lendo quando você ligou.","answer":"I was reading when you called","options":["called","reading","you","I","when","was"],"explanation":"Was reading é a ação em progresso. Called, no passado simples, apresenta a ligação."},
+            {"id":"en-a2-u1-l3-e4","type":"choice","prompt":"Complete a ação em andamento às oito de ontem: 'At eight yesterday, he ___ dinner.'","answer":"was cooking","options":["is cooking","was cooking","were cooking"],"explanation":"Yesterday exige referência passada e he combina com was. Was cooking destaca a atividade em andamento."},
+            {"id":"en-a2-u1-l3-e5","type":"typed","prompt":"Complete com a forma de sit terminada em -ing: She was ___ near the door.","answer":"sitting","explanation":"Sit dobra o t antes de -ing: sitting. Was sitting descreve a posição naquele momento passado."},
+            {"id":"en-a2-u1-l3-e6","type":"wordOrder","prompt":"Monte a pergunta: O que eles estavam fazendo?","answer":"What were they doing","options":["doing","they","What","were"],"explanation":"Depois de What, colocamos were antes de they. Doing completa a pergunta no passado contínuo."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a2-u2",
+      "title": "Planos e escolhas",
+      "description": "Combine encontros, compare alternativas e organize compras.",
+      "lessons": [
+        {
+          "id": "en-a2-u2-l1",
+          "title": "A agenda de amanhã",
+          "description": "Diferencie compromissos, intenções e decisões imediatas.",
+          "studyNotes": "O presente contínuo também apresenta um compromisso futuro combinado: I'm meeting the dentist on Friday. O contexto futuro e a combinação prévia ajudam a distinguir esse uso de uma ação acontecendo agora.\n\nBe going to mais verbo básico expressa uma intenção: We are going to paint the room. Will pode apresentar uma decisão no momento da fala: The phone is ringing. I'll answer it. Essas formas podem se sobrepor; leia a situação em vez de tratar uma palavra de tempo como regra absoluta.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u2-l1-e1","type":"choice","prompt":"Leia: 'The tickets are booked. We are flying to Lima on Tuesday.' O que a mensagem apresenta?","answer":"A confirmed future arrangement","options":["A daily habit","A finished journey","A confirmed future arrangement"],"explanation":"Os bilhetes já estão reservados. Are flying, com on Tuesday, descreve um compromisso futuro combinado."},
+            {"id":"en-a2-u2-l1-e2","type":"typed","prompt":"Complete a estrutura going to com uma palavra: I am going ___ study tonight.","answer":"to","explanation":"A estrutura é be going to mais verbo básico. To liga going ao verbo study."},
+            {"id":"en-a2-u2-l1-e3","type":"wordOrder","prompt":"Monte o compromisso começando por We e deixando tomorrow no final: Nós vamos encontrar Ava amanhã.","answer":"We are meeting Ava tomorrow","options":["tomorrow","Ava","We","meeting","are"],"explanation":"Are meeting com tomorrow pode expressar um encontro previamente combinado, não apenas uma ação atual."},
+            {"id":"en-a2-u2-l1-e4","type":"choice","prompt":"Leia: Jo: 'This bag is heavy.' Pat: 'I'll carry it for you.' O que Pat faz?","answer":"Offers help","options":["Describes yesterday","Refuses help","Offers help"],"explanation":"I'll carry it for you oferece ajuda naquele momento. I'll é a contração de I will."},
+            {"id":"en-a2-u2-l1-e5","type":"typed","prompt":"Complete com be no presente, usando uma palavra: They ___ going to rent a flat.","answer":"are","explanation":"They exige are. Are going to rent apresenta a intenção de alugar um apartamento."},
+            {"id":"en-a2-u2-l1-e6","type":"wordOrder","prompt":"Monte a pergunta sobre intenção: Você vai participar do clube?","answer":"Are you going to join the club","options":["club","to","Are","join","the","you","going"],"explanation":"Na pergunta com going to, Are vem antes de you. Join permanece na forma básica."}
+          ]
+        },
+        {
+          "id": "en-a2-u2-l2",
+          "title": "Qual opção vale a pena?",
+          "description": "Use comparativos e superlativos com dados concretos.",
+          "studyNotes": "Adjetivos curtos frequentemente recebem -er para comparar: small/smaller. Use than para introduzir a outra opção: This room is smaller than that one. Adjetivos mais longos geralmente usam more: more comfortable.\n\nPara destacar um item dentro de um grupo, use o superlativo: the cheapest hotel, the most comfortable seat. Há formas irregulares, como good/better/best. Compare apenas a característica informada; um preço menor não prova qualidade melhor.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a2-u2-l2-e1","type":"choice","prompt":"Leia: 'Bus: £4, 35 minutes. Train: £7, 20 minutes.' Qual afirmação corresponde aos dados?","answer":"The train is faster than the bus.","options":["The bus is faster than the train.","The train is cheaper than the bus.","The train is faster than the bus."],"explanation":"O trem leva 20 minutos, menos que os 35 do ônibus, portanto é mais rápido. Ele não é mais barato."},
+            {"id":"en-a2-u2-l2-e2","type":"typed","prompt":"Escreva o comparativo de cheap: This ticket is ___ than that one.","answer":"cheaper","explanation":"Cheap é um adjetivo curto. Acrescentamos -er e usamos than para introduzir a comparação."},
+            {"id":"en-a2-u2-l2-e3","type":"wordOrder","prompt":"Monte: Esta cadeira é mais confortável.","answer":"This chair is more comfortable","options":["comfortable","is","This","more","chair"],"explanation":"Comfortable forma a comparação com more, não com a terminação -er."},
+            {"id":"en-a2-u2-l2-e4","type":"choice","prompt":"Três quartos custam £40, £55 e £70. Como descrever o quarto de £40 considerando apenas o preço?","answer":"The cheapest room","options":["The most expensive room","The cheapest room","The biggest room"],"explanation":"Cheapest é o superlativo de cheap e identifica o menor preço do grupo. Os preços não informam o tamanho."},
+            {"id":"en-a2-u2-l2-e5","type":"typed","prompt":"Complete com o comparativo irregular de good: This map is ___ than the old one.","answer":"better","explanation":"O comparativo de good é better. Não usamos gooder."},
+            {"id":"en-a2-u2-l2-e6","type":"wordOrder","prompt":"Monte: Este é o caminho mais curto.","answer":"This is the shortest route","options":["route","the","This","shortest","is"],"explanation":"The shortest é o superlativo de short. Ele destaca a rota de menor extensão no conjunto considerado."}
+          ]
+        },
+        {
+          "id": "en-a2-u2-l3",
+          "title": "Quanto precisamos?",
+          "description": "Diferencie contáveis, não contáveis e unidades.",
+          "studyNotes": "Use how many com plurais contáveis: How many eggs? Use how much com não contáveis: How much flour? Podemos contar recipientes ou unidades: two bottles of water, a kilo of rice.\n\nA few acompanha contáveis e indica alguns: a few tomatoes. A little acompanha não contáveis: a little milk. Any aparece frequentemente em perguntas e negativas: Is there any bread? Não transforme rice em rices para indicar quantidade comum de comida.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u2-l3-e1","type":"choice","prompt":"Leia: 'Shopping list: six eggs, a kilo of rice, two bottles of milk.' Qual item é contado diretamente, sem recipiente ou unidade de peso?","answer":"Eggs","options":["Rice","Milk","Eggs"],"explanation":"Eggs é contável e vem diretamente depois de six. Rice e milk são medidos por peso ou recipiente na lista."},
+            {"id":"en-a2-u2-l3-e2","type":"typed","prompt":"Complete com much ou many: How ___ flour do we need?","answer":"much","explanation":"Flour, farinha, é não contável neste uso. Por isso perguntamos how much flour."},
+            {"id":"en-a2-u2-l3-e3","type":"wordOrder","prompt":"Monte a pergunta: Quantos tomates temos?","answer":"How many tomatoes do we have","options":["have","tomatoes","How","we","many","do"],"explanation":"Tomatoes é plural contável. How many pergunta a quantidade de unidades."},
+            {"id":"en-a2-u2-l3-e4","type":"choice","prompt":"Qual expressão significa uma pequena quantidade de leite e está gramaticalmente correta?","answer":"a little milk","options":["a few milk","many milk","a little milk"],"explanation":"A little acompanha o não contável milk. A few e many exigiriam um substantivo plural contável."},
+            {"id":"en-a2-u2-l3-e5","type":"typed","prompt":"Complete com some ou any na negativa neutra: We do not have ___ onions.","answer":"any","explanation":"Em uma negativa neutra que indica ausência, usamos not any: não temos cebolas."},
+            {"id":"en-a2-u2-l3-e6","type":"wordOrder","prompt":"Monte: Precisamos de duas garrafas de água.","answer":"We need two bottles of water","options":["water","two","We","of","need","bottles"],"explanation":"Contamos bottles, não water. Of liga o recipiente ao seu conteúdo."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a2-u3",
+      "title": "Resolver situações cotidianas",
+      "description": "Entenda regras, peça ajuda e faça sugestões.",
+      "lessons": [
+        {
+          "id": "en-a2-u3-l1",
+          "title": "Regras e necessidade",
+          "description": "Diferencie obrigação, proibição e ausência de obrigação.",
+          "studyNotes": "Have to expressa necessidade ou obrigação: Visitors have to sign in. Com he/she/it, usamos has to. Must também pode expressar obrigação: You must wear a helmet.\n\nMustn't indica proibição: You mustn't park here. Don't have to significa que algo não é obrigatório: You don't have to print the ticket. Não confunda ausência de necessidade com uma ordem para não fazer.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u3-l1-e1","type":"choice","prompt":"Leia: 'Entry is free. You don't have to buy a ticket.' O que o aviso informa?","answer":"Buying a ticket is not necessary.","options":["Buying a ticket is forbidden.","Buying a ticket is necessary.","Buying a ticket is not necessary."],"explanation":"Don't have to indica ausência de obrigação. O aviso não proíbe comprar; afirma que a entrada não exige bilhete pago."},
+            {"id":"en-a2-u3-l1-e2","type":"typed","prompt":"Complete com have no presente afirmativo: She ___ to show her ID.","answer":"has","explanation":"Com she, have vira has. Has to show expressa a necessidade de apresentar identificação."},
+            {"id":"en-a2-u3-l1-e3","type":"wordOrder","prompt":"Monte a obrigação: Visitantes precisam usar um crachá.","answer":"Visitors have to wear a badge","options":["badge","to","Visitors","a","wear","have"],"explanation":"Visitors é plural e combina com have to. Wear a badge significa usar um crachá."},
+            {"id":"en-a2-u3-l1-e4","type":"choice","prompt":"O aviso diz 'No swimming: dangerous water.' Qual frase expressa a proibição?","answer":"You mustn't swim here.","options":["You don't have to swim here.","You mustn't swim here.","You can swim here."],"explanation":"Mustn't expressa proibição. Don't have to apenas diz que nadar não é obrigatório, sem proibi-lo."},
+            {"id":"en-a2-u3-l1-e5","type":"typed","prompt":"Complete a expressão de ausência de obrigação com uma palavra: You do not have ___ bring a towel.","answer":"to","explanation":"A estrutura é do not have to mais verbo básico. Ela informa que trazer toalha não é necessário."},
+            {"id":"en-a2-u3-l1-e6","type":"wordOrder","prompt":"Monte a pergunta: Precisamos pagar agora?","answer":"Do we have to pay now","options":["now","to","Do","pay","we","have"],"explanation":"Have to usa do em perguntas do presente simples. Now fica no final para perguntar sobre a necessidade de pagar neste momento."}
+          ]
+        },
+        {
+          "id": "en-a2-u3-l2",
+          "title": "Pedidos em uma hospedagem",
+          "description": "Explique um problema e peça uma ação específica.",
+          "studyNotes": "Could you mais verbo básico faz um pedido educado: Could you check the shower? Neste uso, could não relata necessariamente uma habilidade passada. O contexto é um pedido atual.\n\nPara explicar o motivo, use because: I need another blanket because the room is cold. Um pedido claro nomeia o problema e a ação desejada. Too antes de um adjetivo indica excesso: too noisy significa barulhento demais.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u3-l2-e1","type":"choice","prompt":"Leia: Guest: 'The room is too noisy. Could I move to a quieter room?' Receptionist: 'Yes, room 12 is available.' O que o hóspede deseja?","answer":"A quieter room","options":["A bigger breakfast","A quieter room","A later train"],"explanation":"Too noisy explica o problema. A quieter room é a solução solicitada, um quarto mais silencioso."},
+            {"id":"en-a2-u3-l2-e2","type":"typed","prompt":"Complete com a forma básica de check: Could you ___ the heater?","answer":"check","explanation":"Depois do modal could, usamos o verbo básico sem to e sem -s: check."},
+            {"id":"en-a2-u3-l2-e3","type":"wordOrder","prompt":"Monte o pedido: Você poderia trazer outra toalha?","answer":"Could you bring another towel","options":["towel","bring","Could","another","you"],"explanation":"Could you introduz o pedido educado. Another indica mais uma toalha ou uma toalha diferente."},
+            {"id":"en-a2-u3-l2-e4","type":"choice","prompt":"Leia: 'I need a blanket because the room is cold.' Qual é a razão do pedido?","answer":"The room is cold.","options":["The room is cold.","The blanket is wet.","The room is too bright."],"explanation":"Because introduz a causa. O texto informa frio no quarto, não um problema com uma manta já existente."},
+            {"id":"en-a2-u3-l2-e5","type":"typed","prompt":"Complete com too ou very para expressar excesso que impede dormir: The room is ___ noisy to sleep in.","answer":"too","explanation":"Too + adjetivo + to expressa um grau excessivo para realizar a ação. Very não completa essa estrutura com o mesmo sentido."},
+            {"id":"en-a2-u3-l2-e6","type":"wordOrder","prompt":"Monte a explicação sem contração: O chuveiro não está funcionando.","answer":"The shower is not working","options":["working","not","The","is","shower"],"explanation":"Is not working descreve uma falha atual de funcionamento. Shower significa chuveiro."}
+          ]
+        },
+        {
+          "id": "en-a2-u3-l3",
+          "title": "Conselhos e soluções",
+          "description": "Use should e sugestões para problemas simples.",
+          "studyNotes": "Should mais verbo básico apresenta conselho: You should save your work. A negativa é should not ou shouldn't. Conselho não é o mesmo que uma regra obrigatória.\n\nWhy don't we...? e Let's... podem propor uma solução conjunta: Why don't we take a break? Leia o problema antes de escolher a sugestão; uma frase gramaticalmente correta pode não resolver a situação apresentada.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a2-u3-l3-e1","type":"choice","prompt":"Leia: 'My phone battery is at 2%. I need to use it for a call in an hour.' Qual conselho atende diretamente ao problema?","answer":"You should charge your phone.","options":["You should turn up the music.","You should charge your phone.","You should buy a train ticket."],"explanation":"Charge your phone significa carregar o celular e responde ao problema de bateria quase vazia."},
+            {"id":"en-a2-u3-l3-e2","type":"typed","prompt":"Complete com a forma básica de save: You should ___ the address before leaving.","answer":"save","explanation":"Should é seguido do verbo básico save. O conselho é guardar o endereço antes de sair."},
+            {"id":"en-a2-u3-l3-e3","type":"wordOrder","prompt":"Monte a sugestão conjunta: Por que não fazemos uma pausa?","answer":"Why don't we take a break","options":["break","we","Why","a","take","don't"],"explanation":"Why don't we mais verbo básico pode funcionar como sugestão, não como uma cobrança sobre o motivo de não agir."},
+            {"id":"en-a2-u3-l3-e4","type":"choice","prompt":"Qual frase apresenta um conselho, sem declarar obrigação?","answer":"You should keep a copy.","options":["You must keep a copy.","You have to keep a copy.","You should keep a copy."],"explanation":"Should indica recomendação. Must e have to apresentam a ação como necessária ou obrigatória."},
+            {"id":"en-a2-u3-l3-e5","type":"typed","prompt":"Expanda apenas shouldn't para duas palavras: You shouldn't share your password.","answer":"should not","explanation":"Shouldn't é a contração de should not. A frase aconselha não compartilhar a senha."},
+            {"id":"en-a2-u3-l3-e6","type":"wordOrder","prompt":"Monte o conselho: Você deveria pedir ajuda.","answer":"You should ask for help","options":["help","ask","You","for","should"],"explanation":"Ask for help é a expressão para pedir ajuda. Should vem antes do verbo básico ask."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-a2-u4",
+      "title": "Experiências e mensagens",
+      "description": "Introduza o present perfect e integre leitura cotidiana.",
+      "lessons": [
+        {
+          "id": "en-a2-u4-l1",
+          "title": "Você já experimentou?",
+          "description": "Fale de experiências sem indicar um momento passado fechado.",
+          "studyNotes": "O present perfect combina have/has com particípio: I have tried kayaking. She has visited Oslo. Ele pode apresentar experiências até agora sem dizer quando exatamente aconteceram.\n\nEver costuma aparecer em perguntas sobre experiências: Have you ever flown? Never indica nenhuma experiência: I have never flown. Alguns particípios são irregulares, como see/seen e eat/eaten. Não acrescente don't a have never.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u4-l1-e1","type":"choice","prompt":"Leia: 'I have tried climbing, but I have never tried surfing.' Qual atividade a pessoa já experimentou?","answer":"Climbing","options":["Surfing","Both activities","Climbing"],"explanation":"Have tried afirma a experiência com escalada. Have never tried nega a experiência com surfe até agora."},
+            {"id":"en-a2-u4-l1-e2","type":"typed","prompt":"Complete o auxiliar do present perfect: She ___ visited Mexico twice.","answer":"has","explanation":"O present perfect usa has com she, seguido do particípio visited."},
+            {"id":"en-a2-u4-l1-e3","type":"wordOrder","prompt":"Monte a pergunta sobre experiência: Você já viu neve?","answer":"Have you ever seen snow","options":["snow","ever","Have","seen","you"],"explanation":"Have vem antes do sujeito na pergunta. Ever pergunta sobre alguma ocasião até o presente, e seen é o particípio de see."},
+            {"id":"en-a2-u4-l1-e4","type":"choice","prompt":"Qual frase usa corretamente o present perfect para uma experiência até agora?","answer":"We have eaten Korean food.","options":["We have ate Korean food.","We have eaten Korean food.","We has eaten Korean food."],"explanation":"We combina com have, e eat tem particípio eaten. Ate é o passado simples, não o particípio."},
+            {"id":"en-a2-u4-l1-e5","type":"typed","prompt":"Escreva o particípio de see: I have ___ this film before.","answer":"seen","explanation":"O particípio de see é seen. Have seen apresenta uma experiência anterior relevante agora."},
+            {"id":"en-a2-u4-l1-e6","type":"wordOrder","prompt":"Monte a declaração começando por I: Eu nunca viajei de avião.","answer":"I have never flown","options":["flown","never","I","have"],"explanation":"Never fica entre have e o particípio flown. A frase já é negativa, sem not adicional."}
+          ]
+        },
+        {
+          "id": "en-a2-u4-l2",
+          "title": "Já, ainda não e quando",
+          "description": "Contraste resultado atual e momento passado específico.",
+          "studyNotes": "Already pode indicar que uma ação já aconteceu: I've already packed. Yet costuma ir no final de perguntas e negativas: Have you packed yet? I haven't packed yet. Just indica uma ação muito recente: She has just arrived.\n\nUse o passado simples com um momento passado encerrado: I packed yesterday. Em Have you been to Rome? perguntamos pela experiência; em When did you go? pedimos um momento específico. O inglês americano também usa o passado simples em alguns contextos com just, already e yet.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-a2-u4-l2-e1","type":"choice","prompt":"Leia: 'I have already washed the dishes, but I haven't cleaned the floor yet.' Qual tarefa ainda não foi feita?","answer":"Cleaning the floor","options":["Washing the dishes","Cleaning the floor","Both tasks"],"explanation":"Haven't ... yet indica que limpar o chão ainda está pendente. Already mostra que a louça já foi lavada."},
+            {"id":"en-a2-u4-l2-e2","type":"typed","prompt":"Complete com yet ou never: Have you finished your homework ___?","answer":"yet","explanation":"Yet no final da pergunta verifica se a tarefa já foi concluída até agora. Never significa nunca e não ocupa essa posição nessa pergunta."},
+            {"id":"en-a2-u4-l2-e3","type":"wordOrder","prompt":"Monte sem contração, deixando yet no final: Ela ainda não chegou.","answer":"She has not arrived yet","options":["yet","not","She","arrived","has"],"explanation":"Has not arrived é o present perfect negativo. Yet no final indica que a chegada é esperada, mas ainda não aconteceu."},
+            {"id":"en-a2-u4-l2-e4","type":"choice","prompt":"Complete com a forma adequada ao momento passado encerrado: 'We ___ the exhibition last Sunday.'","answer":"visited","options":["have visited","visited","has visited"],"explanation":"Last Sunday localiza a visita em um período passado terminado. Nesse contexto, usamos o passado simples visited."},
+            {"id":"en-a2-u4-l2-e5","type":"typed","prompt":"Complete com o auxiliar da pergunta no passado simples: When ___ you buy this jacket?","answer":"did","explanation":"When pede o momento da compra. Did forma a pergunta no passado simples e buy fica na forma básica."},
+            {"id":"en-a2-u4-l2-e6","type":"wordOrder","prompt":"Monte: Nós acabamos de terminar. Coloque just entre o auxiliar e o particípio.","answer":"We have just finished","options":["finished","just","We","have"],"explanation":"Have just finished destaca uma conclusão muito recente. A posição solicitada de just é antes de finished."}
+          ]
+        },
+        {
+          "id": "en-a2-u4-l3",
+          "title": "Organize uma visita",
+          "description": "Integre mensagens, planos e decisões práticas.",
+          "studyNotes": "Em mensagens de organização, separe fatos concluídos, pendências e planos: I've booked the room. We haven't chosen lunch yet. We're meeting at noon. Cada forma verbal ajuda a situar a informação.\n\nBecause apresenta uma causa; so introduz um resultado: The lift is broken, so use the stairs. Before e after indicam ordem. Para compreender uma instrução, verifique também restrições, como um horário de fechamento ou uma mudança de local.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-a2-u4-l3-e1","type":"choice","prompt":"Leia: 'I've booked our museum tickets. We're meeting at the entrance at ten. Bring lunch because the café is closed.' Por que é preciso levar almoço?","answer":"The café is closed.","options":["The tickets are expensive.","The café is closed.","The museum opens at noon."],"explanation":"Because apresenta a razão: o café está fechado. As outras informações não aparecem na mensagem."},
+            {"id":"en-a2-u4-l3-e2","type":"typed","prompt":"Leia: 'I've booked the tickets, but I haven't printed them yet.' Copie o particípio que indica a tarefa ainda pendente.","answer":"printed","explanation":"Haven't printed ... yet indica que imprimir ainda não aconteceu. Booked descreve a reserva já concluída."},
+            {"id":"en-a2-u4-l3-e3","type":"wordOrder","prompt":"Monte começando por We: Nós vamos nos encontrar antes do almoço.","answer":"We are meeting before lunch","options":["lunch","meeting","We","before","are"],"explanation":"Are meeting pode indicar um encontro combinado. Before lunch coloca esse encontro antes do almoço."},
+            {"id":"en-a2-u4-l3-e4","type":"choice","prompt":"Leia: 'The lift is broken, so please use the stairs. Ask reception if you need step-free access.' A quem uma pessoa deve pedir uma alternativa sem escadas?","answer":"Reception","options":["The café","The ticket office","Reception"],"explanation":"A segunda frase orienta a pedir à recepção acesso sem degraus. Step-free access não é sinônimo de usar as escadas."},
+            {"id":"en-a2-u4-l3-e5","type":"typed","prompt":"Complete com because ou so para introduzir o resultado: The bus is late, ___ we are taking a taxi.","answer":"so","explanation":"So introduz a consequência do atraso: pegar um táxi. Because introduziria a causa, invertendo a relação apresentada."},
+            {"id":"en-a2-u4-l3-e6","type":"wordOrder","prompt":"Monte a pergunta: Devemos levar uma garrafa de água?","answer":"Should we bring a bottle of water","options":["water","we","bottle","Should","of","bring","a"],"explanation":"Should we pergunta se uma ação é aconselhável. A bottle of water usa um recipiente para contar a água."}
+          ]
+        }
+      ]
+    }
+  ]
+}

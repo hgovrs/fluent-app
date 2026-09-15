@@ -1,0 +1,220 @@
+{
+  "id": "en-b1",
+  "title": "Inglês B1 — Conexões e autonomia",
+  "sourceLanguage": "pt-BR",
+  "targetLanguage": "en",
+  "level": "B1 · prática parcial",
+  "contentVersion": 1,
+  "authorship": "original",
+  "coverage": "Prática parcial de conteúdos associados ao B1 do CEFR, com narrativas, opiniões e situações de trabalho originais. Não constitui curso completo, avaliação de proficiência ou certificação. Não cobre integralmente as competências do nível. As leituras recomendadas são suplementos, não fontes de exercícios copiados.",
+  "units": [
+    {
+      "id": "en-b1-u1",
+      "title": "Experiências com contexto",
+      "description": "Relacione passado e presente e organize narrativas.",
+      "lessons": [
+        {
+          "id": "en-b1-u1-l1",
+          "title": "Desde quando?",
+          "description": "Use present perfect com duração e contraste com passado simples.",
+          "studyNotes": "O present perfect pode ligar o passado ao presente: I have lived here for four years. For apresenta uma duração; since apresenta o ponto inicial: since 2022. Com uma situação que continua, não trate o período como encerrado.\n\nO passado simples pode delimitar uma etapa concluída: I lived there from 2018 to 2021. Um ano passado sozinho não obriga sempre ao passado simples: depois de since, ele pode indicar o início de uma situação ainda válida.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u1-l1-e1","type":"choice","prompt":"Leia: 'I have worked at the library since 2022, and I still enjoy my job.' Qual interpretação é sustentada pelo texto?","answer":"The person still works at the library.","options":["The person left in 2022.","The person still works at the library.","The person will start next year."],"explanation":"Have worked since 2022 liga o início no passado ao presente. Still enjoy my job reforça que o trabalho continua."},
+            {"id":"en-b1-u1-l1-e2","type":"typed","prompt":"Complete com for ou since: We have known each other ___ six years.","answer":"for","explanation":"Six years é uma duração. For acompanha períodos de tempo; since pede um ponto inicial."},
+            {"id":"en-b1-u1-l1-e3","type":"wordOrder","prompt":"Monte a pergunta sobre duração: Há quanto tempo você mora aqui?","answer":"How long have you lived here","options":["here","you","How","lived","long","have"],"explanation":"How long pergunta a duração. Have you lived permite perguntar por uma situação iniciada antes e ainda atual."},
+            {"id":"en-b1-u1-l1-e4","type":"choice","prompt":"Leia: 'I lived in Leeds from 2017 to 2020. Now I live in York.' Qual período está apresentado como encerrado?","answer":"Living in Leeds","options":["Living in York","Living in Leeds","Both places are current homes"],"explanation":"Lived com from 2017 to 2020 delimita uma etapa concluída. Now marca a residência atual em York."},
+            {"id":"en-b1-u1-l1-e5","type":"typed","prompt":"Complete com for ou since: She has owned this shop ___ March.","answer":"since","explanation":"March identifica o ponto inicial. Since liga esse início à situação que continua."},
+            {"id":"en-b1-u1-l1-e6","type":"wordOrder","prompt":"Monte começando por They: Eles estão casados há dez anos.","answer":"They have been married for ten years","options":["years","married","They","ten","been","for","have"],"explanation":"Have been married apresenta um estado que começou no passado e continua. For ten years informa a duração."}
+          ]
+        },
+        {
+          "id": "en-b1-u1-l2",
+          "title": "Uma história com interrupção",
+          "description": "Combine acontecimentos, cenário e anterioridade.",
+          "studyNotes": "O passado contínuo cria o cenário: We were waiting outside. O passado simples apresenta um acontecimento: The door opened. Juntos, mostram o que estava ocorrendo quando algo mudou.\n\nO past perfect, had mais particípio, pode esclarecer que uma ação aconteceu antes de outro momento passado: When I arrived, the talk had started. Não é necessário usá-lo em toda frase; ele serve para tornar a sequência temporal clara.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u1-l2-e1","type":"choice","prompt":"Leia: 'When I reached the station, the last train had already left. I called a taxi.' Qual evento aconteceu primeiro?","answer":"The train left.","options":["The narrator called a taxi.","The narrator reached the station.","The train left."],"explanation":"Had already left situa a partida antes da chegada à estação. A ligação para o táxi acontece depois."},
+            {"id":"en-b1-u1-l2-e2","type":"typed","prompt":"Complete com o auxiliar do past perfect: She ___ checked the address before she left the office.","answer":"had","explanation":"O past perfect usa had mais particípio, aqui checked, para marcar uma ação anterior a outro momento passado."},
+            {"id":"en-b1-u1-l2-e3","type":"wordOrder","prompt":"Monte começando por We: Estávamos conversando quando o alarme tocou.","answer":"We were talking when the alarm rang","options":["rang","talking","the","We","alarm","when","were"],"explanation":"Were talking cria o pano de fundo. Rang é o passado simples de ring e apresenta o acontecimento pontual."},
+            {"id":"en-b1-u1-l2-e4","type":"choice","prompt":"Leia: 'While Ana was carrying the boxes, a neighbour opened the gate for her.' Qual ação funciona como atividade em andamento?","answer":"Ana was carrying the boxes.","options":["The neighbour opened the gate.","Ana was carrying the boxes.","Ana had finished unpacking."],"explanation":"While e was carrying apresentam a ação em progresso. Opened é a intervenção pontual do vizinho."},
+            {"id":"en-b1-u1-l2-e5","type":"typed","prompt":"Escreva o particípio de leave: By the time I arrived, they had ___.","answer":"left","explanation":"Leave tem passado e particípio left. Had left indica que a saída ocorreu antes da chegada."},
+            {"id":"en-b1-u1-l2-e6","type":"wordOrder","prompt":"Monte começando por I: Eu tinha salvo o arquivo antes da queda de energia.","answer":"I had saved the file before the power cut","options":["cut","the","saved","I","before","file","had","power","the"],"explanation":"Had saved marca a ação anterior à queda de energia. Os dois the acompanham file e power cut."}
+          ]
+        },
+        {
+          "id": "en-b1-u1-l3",
+          "title": "Hábitos que mudaram",
+          "description": "Use used to e conectores para relatar mudanças.",
+          "studyNotes": "Used to mais verbo básico descreve um hábito ou estado passado que contrasta com o presente: I used to drive, but now I cycle. Na negativa com did, escreva did not use to, sem -d em use.\n\nAlthough introduz contraste: Although the flat was small, we liked it. Because introduz motivo e so apresenta resultado. Conectores ajudam o leitor a entender relações, não apenas a ordem dos fatos.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-b1-u1-l3-e1","type":"choice","prompt":"Leia: 'I used to buy lunch every day, but now I bring food from home.' Qual hábito pertence ao passado, em contraste com o presente?","answer":"Buying lunch every day","options":["Bringing food from home","Buying lunch every day","Cooking for the whole office"],"explanation":"Used to buy apresenta o hábito anterior. But now introduz a prática atual, levar comida de casa."},
+            {"id":"en-b1-u1-l3-e2","type":"typed","prompt":"Complete a forma negativa padrão com uma palavra: I did not ___ to enjoy gardening.","answer":"use","explanation":"Depois de did not, usamos use to, sem -d. Did já marca o passado."},
+            {"id":"en-b1-u1-l3-e3","type":"wordOrder","prompt":"Monte: Nós costumávamos morar perto do rio.","answer":"We used to live near the river","options":["river","live","We","the","used","near","to"],"explanation":"Used to live descreve uma situação passada. Near the river informa a localização."},
+            {"id":"en-b1-u1-l3-e4","type":"choice","prompt":"Complete com o conector de contraste: '___ the journey was long, we enjoyed it.'","answer":"Although","options":["Because","Although","So"],"explanation":"Although contrasta a viagem longa com a avaliação positiva. Because atribuiria a satisfação à duração, em vez do contraste solicitado."},
+            {"id":"en-b1-u1-l3-e5","type":"typed","prompt":"Complete com because ou so para introduzir a causa: We moved ___ the old flat was too small.","answer":"because","explanation":"A oração sobre o tamanho explica por que houve a mudança. Because introduz essa causa."},
+            {"id":"en-b1-u1-l3-e6","type":"wordOrder","prompt":"Monte a pergunta sobre um antigo hábito: Você costumava trabalhar à noite?","answer":"Did you use to work at night","options":["night","use","Did","at","work","you","to"],"explanation":"A pergunta usa Did you use to, sem -d em use. At night indica o período do antigo hábito."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-b1-u2",
+      "title": "Possibilidades e explicações",
+      "description": "Explore condições reais, situações imaginadas e descrições precisas.",
+      "lessons": [
+        {
+          "id": "en-b1-u2-l1",
+          "title": "Se acontecer, faremos isto",
+          "description": "Forme a primeira condicional e planos alternativos.",
+          "studyNotes": "Para uma possibilidade futura real, uma estrutura comum é if mais presente simples, seguido de will mais verbo básico: If the bus is late, we'll walk. O presente na oração com if pode falar do futuro.\n\nAs duas partes podem trocar de posição: We'll walk if the bus is late. Unless significa if not em muitos contextos: Unless it rains, we'll eat outside. Verifique a negação para não inverter a condição.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u2-l1-e1","type":"choice","prompt":"Leia: 'If the delivery arrives before noon, we'll prepare the orders today. Otherwise, we'll start tomorrow.' Quando começarão se a entrega chegar às 14h?","answer":"Tomorrow","options":["Today before noon","Tomorrow","Yesterday"],"explanation":"14h é depois de noon, meio-dia. A condição não é satisfeita, então vale otherwise: começar amanhã."},
+            {"id":"en-b1-u2-l1-e2","type":"typed","prompt":"Complete com rain no presente simples: If it ___, we will stay inside.","answer":"rains","explanation":"Na condição futura com if, usamos presente simples. It exige rains."},
+            {"id":"en-b1-u2-l1-e3","type":"wordOrder","prompt":"Monte começando por If: Se você ligar, eu vou atender.","answer":"If you call I will answer","options":["answer","you","I","If","will","call"],"explanation":"If you call usa presente simples para a condição. I will answer apresenta o resultado futuro; na escrita, cabe vírgula depois de call."},
+            {"id":"en-b1-u2-l1-e4","type":"choice","prompt":"Leia: 'Unless the shop is closed, I'll buy bread there.' Em qual situação a pessoa NÃO comprará pão nessa loja, segundo o plano?","answer":"The shop is closed.","options":["The shop is open.","Bread is available.","The shop is closed."],"explanation":"Unless the shop is closed equivale a if the shop is not closed. O fechamento impede a compra prevista."},
+            {"id":"en-b1-u2-l1-e5","type":"typed","prompt":"Substitua If ... not por uma palavra: If you do not hurry, you will miss the bus. → ___ you hurry, you will miss the bus.","answer":"Unless","explanation":"Unless you hurry significa se você não se apressar. A negativa já está incorporada em unless."},
+            {"id":"en-b1-u2-l1-e6","type":"wordOrder","prompt":"Monte a pergunta começando por What: O que você fará se chover?","answer":"What will you do if it rains","options":["rains","do","What","it","you","if","will"],"explanation":"A pergunta principal usa will you do. A condição mantém o presente simples em if it rains."}
+          ]
+        },
+        {
+          "id": "en-b1-u2-l2",
+          "title": "E se fosse diferente?",
+          "description": "Use a segunda condicional para hipóteses e conselhos.",
+          "studyNotes": "Para imaginar uma situação diferente da atual ou menos provável, use if mais passado simples e would mais verbo básico: If I had more space, I would grow vegetables. O passado aqui marca distância da realidade, não necessariamente tempo passado.\n\nIf I were you, I would... é uma forma comum de dar conselho. Em hipóteses, were pode acompanhar I/he/she/it no registro mais formal. Could pode apresentar uma capacidade ou possibilidade imaginada, mas os exercícios indicam quando usar would.",
+          "sourceIds": [],
+          "exercises": [
+            {"id":"en-b1-u2-l2-e1","type":"choice","prompt":"Leia: 'I don't have a garden. If I had one, I would grow tomatoes.' Qual é a situação real informada?","answer":"The speaker has no garden.","options":["The speaker has no garden.","The speaker grows tomatoes now.","The speaker bought a garden yesterday."],"explanation":"A primeira frase nega a existência de um jardim próprio. If I had one introduz uma hipótese, não um fato atual."},
+            {"id":"en-b1-u2-l2-e2","type":"typed","prompt":"Complete com have na forma exigida pela segunda condicional: If we ___ more time, we would visit the island.","answer":"had","explanation":"A oração com if usa passado simples na segunda condicional. Had expressa uma situação imaginada."},
+            {"id":"en-b1-u2-l2-e3","type":"wordOrder","prompt":"Monte o conselho começando por If: Se eu fosse você, perguntaria.","answer":"If I were you I would ask","options":["ask","I","you","would","If","were","I"],"explanation":"If I were you apresenta o conselho. O segundo I é o sujeito de would ask; ambos são necessários."},
+            {"id":"en-b1-u2-l2-e4","type":"choice","prompt":"Qual frase segue a estrutura pedida: segunda condicional com would no resultado?","answer":"If she lived closer, she would walk.","options":["If she lives closer, she will walk.","If she lived closer, she would walk.","If she would live closer, she walked."],"explanation":"Lived é o passado na condição e would walk é o resultado imaginado. A primeira opção é primeira condicional."},
+            {"id":"en-b1-u2-l2-e5","type":"typed","prompt":"Expanda apenas I'd para duas palavras nesta hipótese: If I had a bike, I'd cycle to work.","answer":"I would","explanation":"I'd pode representar I had ou I would em outros contextos. Antes do verbo básico cycle no resultado da hipótese, significa I would."},
+            {"id":"en-b1-u2-l2-e6","type":"wordOrder","prompt":"Monte a pergunta começando por What: O que você mudaria?","answer":"What would you change","options":["change","you","What","would"],"explanation":"Would you change pergunta sobre uma mudança imaginada. Would vem antes do sujeito e change fica na forma básica."}
+          ]
+        },
+        {
+          "id": "en-b1-u2-l3",
+          "title": "Qual pessoa, qual objeto?",
+          "description": "Use orações relativas para identificar e explicar.",
+          "studyNotes": "Orações relativas acrescentam informações a um substantivo. Who pode identificar pessoas: The neighbour who owns the dog is friendly. Which pode identificar coisas: The bus which stops here goes downtown. Em muitas relativas restritivas, that também é possível.\n\nWhere introduz uma relação de lugar: This is the café where we met. Whose indica posse: the artist whose painting won. Evite repetir o sujeito da relativa: the person who called, não who she called quando o sentido é a pessoa que ligou.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u2-l3-e1","type":"choice","prompt":"Leia: 'Please call the technician who installed the printer, not the one who repaired the lights.' Qual profissional deve receber a ligação?","answer":"The printer installer","options":["The person who repaired the lights","The printer installer","Any neighbour"],"explanation":"Who installed the printer restringe qual técnico deve ser chamado. A segunda parte exclui o outro profissional."},
+            {"id":"en-b1-u2-l3-e2","type":"typed","prompt":"Complete com who ou which: The nurse ___ helped us was very kind.","answer":"who","explanation":"Nurse se refere a uma pessoa, então who é a opção adequada entre as duas oferecidas. That também seria possível em outra formulação."},
+            {"id":"en-b1-u2-l3-e3","type":"wordOrder","prompt":"Monte: Este é o livro que eu recomendei.","answer":"This is the book that I recommended","options":["recommended","book","I","This","that","the","is"],"explanation":"That I recommended identifica o livro. I é o sujeito de recommended; that retoma o objeto recomendado."},
+            {"id":"en-b1-u2-l3-e4","type":"choice","prompt":"Complete indicando posse: 'The woman ___ bike was stolen called the police.'","answer":"whose","options":["who","where","whose"],"explanation":"Whose liga a mulher à bicicleta que pertence a ela. Who sozinho não indica essa posse antes de bike."},
+            {"id":"en-b1-u2-l3-e5","type":"typed","prompt":"Complete com where ou which: This is the park ___ we first met.","answer":"where","explanation":"Where significa onde e introduz o lugar do encontro. Which exigiria outra estrutura, como in which."},
+            {"id":"en-b1-u2-l3-e6","type":"wordOrder","prompt":"Monte: Eu conheço a pessoa que enviou a mensagem.","answer":"I know the person who sent the message","options":["message","who","I","the","sent","know","person","the"],"explanation":"Who é o sujeito de sent e retoma person. Não é necessário acrescentar outro pronome para esse sujeito."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-b1-u3",
+      "title": "Comunicação no trabalho",
+      "description": "Relate informações, descreva processos e resolva problemas em equipe.",
+      "lessons": [
+        {
+          "id": "en-b1-u3-l1",
+          "title": "O que ela disse",
+          "description": "Introduza discurso indireto e ajustes de referência.",
+          "studyNotes": "Ao relatar uma fala passada, podemos recuar o tempo verbal: Mia said, 'I am busy.' → Mia said that she was busy. Também ajustamos o pronome para manter a referência à pessoa correta. O recuo nem sempre é obrigatório quando algo ainda é verdadeiro; aqui ele será solicitado explicitamente.\n\nTell normalmente recebe a pessoa que ouviu: She told me that she was busy. Say não recebe essa pessoa diretamente: She said that... Em perguntas indiretas, usamos ordem de afirmação: He asked where the office was, não where was the office.",
+          "sourceIds": ["pcc-work"],
+          "exercises": [
+            {"id":"en-b1-u3-l1-e1","type":"choice","prompt":"Ontem Lia disse: 'I am available.' Qual relato com recuo verbal e pronome correto corresponde à fala?","answer":"Lia said that she was available.","options":["Lia said that I was available.","Lia said that she was available.","Lia said that she will be available."],"explanation":"I se refere a Lia e passa a she. Com o recuo solicitado, am passa a was."},
+            {"id":"en-b1-u3-l1-e2","type":"typed","prompt":"Complete com said ou told: My manager ___ me that the meeting was cancelled.","answer":"told","explanation":"Told admite o objeto me diretamente. Com said, seria necessário mudar a estrutura, por exemplo said to me."},
+            {"id":"en-b1-u3-l1-e3","type":"wordOrder","prompt":"Monte o relato: Ela disse que o pedido estava pronto.","answer":"She said that the order was ready","options":["ready","that","She","was","order","said","the"],"explanation":"Said introduz o relato. The order was ready mantém ordem de afirmação e usa was para o estado relatado."},
+            {"id":"en-b1-u3-l1-e4","type":"choice","prompt":"Qual pergunta indireta usa a ordem gramatical correta?","answer":"He asked where the office was.","options":["He asked where was the office.","He asked where the office was.","He asked where did the office was."],"explanation":"Na pergunta indireta, o sujeito the office vem antes de was. Não mantemos a inversão da pergunta direta."},
+            {"id":"en-b1-u3-l1-e5","type":"typed","prompt":"Faça o recuo de will para relatar uma promessa passada, usando uma palavra: Jo said, 'I will call.' → Jo said that she ___ call.","answer":"would","explanation":"No recuo verbal solicitado, will passa a would. She continua se referindo a Jo."},
+            {"id":"en-b1-u3-l1-e6","type":"wordOrder","prompt":"Monte: Ele me perguntou se eu estava pronto.","answer":"He asked me if I was ready","options":["ready","me","I","He","was","if","asked"],"explanation":"Asked me identifica quem recebeu a pergunta. If introduz uma pergunta de sim ou não, seguida da ordem I was."}
+          ]
+        },
+        {
+          "id": "en-b1-u3-l2",
+          "title": "Como o processo funciona",
+          "description": "Use voz passiva simples e sequência de ações.",
+          "studyNotes": "A voz passiva destaca quem ou o que recebe a ação: Orders are checked every morning. Formamos a passiva com be mais particípio. O sujeito orders é plural, por isso usamos are.\n\nNo passado, use was ou were: The parcel was delivered yesterday. Podemos acrescentar by para indicar o agente quando isso importa: The form was signed by the manager. First, next e finally organizam instruções e etapas.",
+          "sourceIds": ["pcc-work"],
+          "exercises": [
+            {"id":"en-b1-u3-l2-e1","type":"choice","prompt":"Leia: 'First, orders are checked. Next, items are packed. Finally, parcels are collected by the courier.' O que acontece imediatamente depois da verificação dos pedidos?","answer":"Items are packed.","options":["Parcels are collected.","Items are packed.","Customers write reviews."],"explanation":"Next introduz a etapa seguinte à verificação: os itens são embalados. A coleta vem por último."},
+            {"id":"en-b1-u3-l2-e2","type":"typed","prompt":"Complete be na passiva do presente: The reports ___ checked every Friday.","answer":"are","explanation":"Reports é plural. A passiva no presente usa are mais o particípio checked."},
+            {"id":"en-b1-u3-l2-e3","type":"wordOrder","prompt":"Monte a passiva, deixando yesterday no final: A encomenda foi entregue ontem.","answer":"The parcel was delivered yesterday","options":["yesterday","was","The","delivered","parcel"],"explanation":"Parcel recebe a ação. Was delivered forma a passiva no passado e yesterday situa o evento."},
+            {"id":"en-b1-u3-l2-e4","type":"choice","prompt":"Qual frase é a passiva de 'The team checks every application', mantendo o presente simples?","answer":"Every application is checked by the team.","options":["Every application was checked by the team.","Every application checks the team.","Every application is checked by the team."],"explanation":"Application passa a sujeito que recebe a ação. Is checked mantém o presente; was checked mudaria para o passado."},
+            {"id":"en-b1-u3-l2-e5","type":"typed","prompt":"Complete com a preposição que introduz o agente da passiva: The contract was signed ___ the director.","answer":"by","explanation":"By identifica quem realizou a ação na voz passiva: o diretor assinou o contrato."},
+            {"id":"en-b1-u3-l2-e6","type":"wordOrder","prompt":"Monte a pergunta na passiva: Quando as faturas são enviadas?","answer":"When are the invoices sent","options":["sent","invoices","When","the","are"],"explanation":"Are vem antes do sujeito plural invoices na pergunta. Sent é o particípio irregular de send."}
+          ]
+        },
+        {
+          "id": "en-b1-u3-l3",
+          "title": "Um problema, um próximo passo",
+          "description": "Identifique prioridades e proponha soluções profissionais.",
+          "studyNotes": "Uma mensagem de trabalho eficaz separa problema, impacto e ação: The file is missing, so we cannot finish the report. Could you resend it by noon? By noon indica um prazo final, não uma duração.\n\nPara colaborar sem acusar, descreva o fato observável e proponha o próximo passo. We could... apresenta uma possibilidade; I suggest... introduz uma sugestão. Confirme responsabilidades e horários em vez de concluir que um atraso prova desinteresse.",
+          "sourceIds": ["pcc-work"],
+          "exercises": [
+            {"id":"en-b1-u3-l3-e1","type":"choice","prompt":"Leia: 'Two figures are missing from the report. Please send them by 3 p.m. so we can finish before the client call at 4.' Qual é o prazo para enviar os números?","answer":"3 p.m.","options":["4 p.m.","3 p.m.","The next morning"],"explanation":"By 3 p.m. marca o prazo de envio. A ligação com o cliente acontece depois, às quatro."},
+            {"id":"en-b1-u3-l3-e2","type":"typed","prompt":"Complete com by ou until para indicar prazo de conclusão: Please finish the summary ___ Friday.","answer":"by","explanation":"By Friday significa até sexta como prazo final para concluir. Until descreve a continuidade de uma situação até esse momento."},
+            {"id":"en-b1-u3-l3-e3","type":"wordOrder","prompt":"Monte o pedido profissional: Você poderia confirmar o endereço de entrega?","answer":"Could you confirm the delivery address","options":["address","confirm","Could","delivery","you","the"],"explanation":"Could you torna o pedido educado. Delivery address é o endereço para o qual a entrega deve ser enviada."},
+            {"id":"en-b1-u3-l3-e4","type":"choice","prompt":"Um anexo não veio no e-mail. Qual resposta descreve o problema e pede uma ação sem atribuir culpa?","answer":"I can't see the attachment. Could you resend it?","options":["You never pay attention to anything.","I can't see the attachment. Could you resend it?","Everything is complete; no action is needed."],"explanation":"A resposta correta relata o que foi observado e pede reenvio. Não generaliza o comportamento da outra pessoa nem ignora o problema."},
+            {"id":"en-b1-u3-l3-e5","type":"typed","prompt":"Complete com solve na forma básica: We could ___ the problem together.","answer":"solve","explanation":"Depois de could, usamos o verbo básico solve. Could apresenta uma possibilidade de ação conjunta."},
+            {"id":"en-b1-u3-l3-e6","type":"wordOrder","prompt":"Monte a sugestão: Vamos verificar os números primeiro. Deixe first no final.","answer":"Let's check the figures first","options":["first","figures","Let's","the","check"],"explanation":"Let's propõe uma ação conjunta. Figures, neste contexto, significa números ou dados numéricos; first define a prioridade."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-b1-u4",
+      "title": "Ler, avaliar e responder",
+      "description": "Identifique evidências, opiniões e argumentos em textos curtos.",
+      "lessons": [
+        {
+          "id": "en-b1-u4-l1",
+          "title": "O que o texto permite concluir",
+          "description": "Faça inferências apoiadas em pistas sem inventar certezas.",
+          "studyNotes": "Uma inferência combina pistas do texto com uma conclusão limitada. Em The lights are off and the door is locked, é razoável pensar que o local não está acessível naquele momento; não sabemos por que fechou.\n\nMight e may expressam possibilidade: The owner might be away. Must pode expressar uma conclusão forte baseada em evidência, mas não a use quando os dados são insuficientes. Ao ler, distinga o que está dito, o que é provável e o que não tem apoio.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u4-l1-e1","type":"choice","prompt":"Leia: 'Nora checked the departure board three times and kept looking at her watch. Her interview was across town in an hour.' Qual inferência tem melhor apoio?","answer":"She was probably concerned about the time.","options":["She disliked all interviews.","She was probably concerned about the time.","She had already missed the interview."],"explanation":"Consultar o painel e o relógio, com um compromisso próximo, sugere preocupação com horário. O texto não prova antipatia nem atraso já consumado."},
+            {"id":"en-b1-u4-l1-e2","type":"typed","prompt":"Complete com might ou must para manter a possibilidade sem certeza: I am not sure where Ben is. He ___ be on the bus.","answer":"might","explanation":"Might apresenta uma possibilidade compatível com I am not sure. Must indicaria uma conclusão forte, não justificada aqui."},
+            {"id":"en-b1-u4-l1-e3","type":"wordOrder","prompt":"Monte a possibilidade começando por The: A loja talvez esteja fechada.","answer":"The shop might be closed","options":["closed","might","The","be","shop"],"explanation":"Might be closed indica possibilidade. O modal might é seguido de be na forma básica."},
+            {"id":"en-b1-u4-l1-e4","type":"choice","prompt":"Leia: 'The sign says the café closes at six. It is seven, the lights are off, and the door is locked.' Qual conclusão tem apoio mais forte?","answer":"The café is closed now.","options":["The café has closed forever.","The owner is on holiday.","The café is closed now."],"explanation":"Horário, luzes apagadas e porta trancada sustentam o fechamento atual. Não informam fechamento definitivo ou férias."},
+            {"id":"en-b1-u4-l1-e5","type":"typed","prompt":"Complete com be na forma exigida após may: The message may ___ a mistake.","answer":"be","explanation":"May é um modal e exige a forma básica be. A frase apresenta a possibilidade de a mensagem ser um engano."},
+            {"id":"en-b1-u4-l1-e6","type":"wordOrder","prompt":"Monte a pergunta começando por What: O que a evidência sugere?","answer":"What does the evidence suggest","options":["suggest","the","What","evidence","does"],"explanation":"Evidence é não contável e combina com does. Suggest fica na forma básica depois do auxiliar."}
+          ]
+        },
+        {
+          "id": "en-b1-u4-l2",
+          "title": "Opiniões com razões",
+          "description": "Diferencie fatos e avaliações e organize contrapontos.",
+          "studyNotes": "Uma afirmação factual pode ser verificada, como The library closes at eight. Uma opinião expressa avaliação: I think the new hours are more convenient. Uma opinião pode ter boas razões, mas não se torna fato apenas por soar confiante.\n\nAlthough e however apresentam contraste; because apresenta uma razão. I agree that... pode reconhecer um ponto antes de discordar de outro. Procure qualificadores como some, often e in my view: eles limitam a força da afirmação.",
+          "sourceIds": ["communication-beginnings"],
+          "exercises": [
+            {"id":"en-b1-u4-l2-e1","type":"choice","prompt":"Leia: 'The library now closes at eight. In my view, the later closing time makes it much more useful.' Qual trecho expressa explicitamente uma avaliação pessoal?","answer":"The later closing time makes it much more useful.","options":["The library closes at eight.","The later closing time makes it much more useful.","The library has a closing time."],"explanation":"In my view sinaliza opinião. Much more useful avalia a utilidade, enquanto o horário é uma informação verificável."},
+            {"id":"en-b1-u4-l2-e2","type":"typed","prompt":"Complete com opinion ou agree: In my ___, the plan needs more detail.","answer":"opinion","explanation":"In my opinion significa na minha opinião. Opinion é um substantivo; agree é um verbo e não cabe depois de my nessa expressão."},
+            {"id":"en-b1-u4-l2-e3","type":"wordOrder","prompt":"Monte começando por Although: Embora o plano seja barato, ele é arriscado.","answer":"Although the plan is cheap it is risky","options":["risky","the","it","Although","cheap","is","plan","is"],"explanation":"Although introduz a concessão: o custo baixo não elimina o risco. Na escrita, cabe vírgula depois de cheap."},
+            {"id":"en-b1-u4-l2-e4","type":"choice","prompt":"Leia: 'Working from home saves me travel time. However, I sometimes miss informal conversations with colleagues.' Qual resumo preserva os dois pontos?","answer":"The writer sees a benefit and a drawback.","options":["The writer rejects all remote work.","The writer sees a benefit and a drawback.","The writer never misses colleagues."],"explanation":"O tempo poupado é um benefício; a falta de conversas é uma desvantagem. However introduz esse contraste, e sometimes evita generalização."},
+            {"id":"en-b1-u4-l2-e5","type":"typed","prompt":"Complete com because ou although para apresentar a razão: I support the change ___ it reduces waste.","answer":"because","explanation":"Because introduz o motivo do apoio: reduzir desperdício. Although apresentaria uma concessão, não a razão solicitada."},
+            {"id":"en-b1-u4-l2-e6","type":"wordOrder","prompt":"Monte a concordância parcial: Eu concordo que o custo importa.","answer":"I agree that cost matters","options":["matters","that","I","cost","agree"],"explanation":"Agree that introduz o ponto aceito. Cost é singular e o verbo matters recebe -s."}
+          ]
+        },
+        {
+          "id": "en-b1-u4-l3",
+          "title": "Uma decisão em equipe",
+          "description": "Integre leitura crítica, condições e encaminhamentos.",
+          "studyNotes": "Para decidir em equipe, identifique o objetivo, as restrições e as evidências disponíveis. The pilot reduced waiting time descreve um resultado específico; isso não prova que qualquer ampliação terá o mesmo efeito.\n\nUma proposta responsável pode combinar condição e revisão: If the trial works, we'll extend it. Relatos com said, descrições com which e recomendações com should ajudam a resumir o debate sem apagar dúvidas ou transformar uma opinião em certeza.",
+          "sourceIds": ["pcc-work"],
+          "exercises": [
+            {"id":"en-b1-u4-l3-e1","type":"choice","prompt":"Leia: 'A two-week trial reduced waiting time by ten minutes. Staff said the new booking form was easier to use. We will test it for another month before deciding whether to keep it.' Qual decisão já foi tomada?","answer":"To continue testing for another month","options":["To keep the form permanently","To stop using the form immediately","To continue testing for another month"],"explanation":"O texto confirma mais um mês de teste. A decisão permanente ainda depende dessa avaliação."},
+            {"id":"en-b1-u4-l3-e2","type":"typed","prompt":"Complete o pronome relativo dentre who e which: The form, ___ was tested for two weeks, will be reviewed.","answer":"which","explanation":"Form é uma coisa, por isso usamos which. As vírgulas marcam uma informação adicional; that não substitui which nessa relativa explicativa."},
+            {"id":"en-b1-u4-l3-e3","type":"wordOrder","prompt":"Monte começando por If: Se o teste funcionar, nós o ampliaremos.","answer":"If the trial works we will extend it","options":["it","works","we","If","extend","trial","will","the"],"explanation":"If the trial works apresenta a condição no presente simples. Will extend apresenta a ação futura dependente do resultado."},
+            {"id":"en-b1-u4-l3-e4","type":"choice","prompt":"Leia: 'The new system saved time in one small team. We have no data from other teams yet.' Qual afirmação respeita os limites da evidência?","answer":"It helped one team, but wider results are still unknown.","options":["It will save time for every team.","It helped one team, but wider results are still unknown.","It failed in all other teams."],"explanation":"O resultado observado vale para uma equipe. A ausência de outros dados não prova nem sucesso geral nem fracasso nas demais equipes."},
+            {"id":"en-b1-u4-l3-e5","type":"typed","prompt":"Relate a fala com recuo verbal, usando be no passado: Staff said, 'The form is easier.' → Staff said that the form ___ easier.","answer":"was","explanation":"No recuo solicitado, is passa a was. O sujeito the form continua singular."},
+            {"id":"en-b1-u4-l3-e6","type":"wordOrder","prompt":"Monte a recomendação: Deveríamos revisar os resultados antes de decidir.","answer":"We should review the results before deciding","options":["deciding","results","We","before","review","should","the"],"explanation":"Should review apresenta uma recomendação. Depois de before como preposição, deciding usa -ing para indicar a ação posterior."}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-09-15",
+  "purpose": "Leituras complementares. Exercícios e resumos do app são originais; referências não significam adaptação ou importação dos livros.",
+  "sources": [
+    {
+      "id": "bc-reads",
+      "title": "BC Reads: Adult Literacy Fundamental English",
+      "institution": "Vancouver Community College / BCcampus, Canadá",
+      "authors": "Shantel Ivits",
+      "url": "https://opentextbc.ca/abealf1/",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "Readers e Course Packs 1–6: alfabetização de adultos, leitura contextualizada, vocabulário e atividades. Complemento de leitura, não equivalência oficial A1–C1.",
+      "limitations": "Licença indicada para o texto, salvo exceções. Conferir cada imagem e áudio. O material integral não está empacotado no app.",
+      "reviewStatus": "metadata-only",
+      "downloads": []
+    },
+    {
+      "id": "communication-beginnings",
+      "title": "Communication Beginnings",
+      "institution": "Portland State University, EUA",
+      "authors": "Della Jean Abrahams",
+      "url": "https://pdxscholar.library.pdx.edu/pdxopen/18/",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "description": "Listening e speaking para iniciantes com alguma base até intermediários: universidade, apresentações, viagens, alimentação, lugares, rotinas e trabalho. Inclui recursos de áudio na origem.",
+      "limitations": "Somente uso não comercial, salvo autorização adicional; verificar exceções e licença dos áudios. Não é um curso CEFR completo. O livro não está empacotado.",
+      "reviewStatus": "metadata-only",
+      "downloads": []
+    },
+    {
+      "id": "pcc-work",
+      "title": "Let's Get to Work!",
+      "institution": "Portland Community College, EUA",
+      "authors": "Equipe docente ESOL do Portland Community College; consultar créditos de cada arquivo",
+      "url": "https://sites.google.com/pcc.edu/oer-for-esol/home/lets-get-to-work",
+      "license": "CC BY-NC-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "description": "Inglês intermediário para trabalho, apresentações, compreensão oral e exploração de carreiras. Referência complementar para atividades profissionais.",
+      "limitations": "Licença deve ser confirmada no arquivo específico antes de importar. Não comercial e compartilhamento de adaptações sob a mesma licença quando aplicável; vídeos externos não são automaticamente redistribuíveis. Não importado.",
+      "reviewStatus": "pending-file-license",
+      "downloads": []
+    },
+    {
+      "id": "pcc-loop",
+      "title": "In the Loop",
+      "institution": "Portland Community College, EUA",
+      "authors": "Equipe docente ESOL do Portland Community College; consultar créditos de cada arquivo",
+      "url": "https://sites.google.com/pcc.edu/oer-for-esol/home/in-the-loop",
+      "license": "CC BY-NC-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "description": "Comunicação no intermediário superior: escuta, conversação e apresentações com temas cotidianos. Nível institucional, não equivalência CEFR certificada.",
+      "limitations": "Licença deve ser confirmada no arquivo específico. Separar livro, materiais docentes e mídias externas na auditoria. Nenhum desses arquivos foi empacotado.",
+      "reviewStatus": "pending-file-license",
+      "downloads": []
+    },
+    {
+      "id": "pcc-synthesis",
+      "title": "Synthesis",
+      "institution": "Portland Community College, EUA",
+      "authors": "Equipe docente ESOL do Portland Community College; consultar créditos de cada arquivo",
+      "url": "https://sites.google.com/pcc.edu/oer-for-esol/home/synthesis",
+      "license": "CC BY-NC-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "description": "Escrita acadêmica avançada, pesquisa, pensamento crítico, gramática e vocabulário. Complementa argumentação; não cobre sozinha todas as habilidades C1.",
+      "limitations": "Licença deve ser confirmada no arquivo específico. Textos citados e mídias podem ter exceções. Livro não empacotado; o app não corrige redações abertas.",
+      "reviewStatus": "pending-file-license",
+      "downloads": []
+    },
+    {
+      "id": "openlearn-skills",
+      "title": "English: skills for learning",
+      "institution": "The Open University, Reino Unido",
+      "authors": "The Open University; consultar agradecimentos do curso",
+      "url": "https://www.open.edu/openlearn/education-development/english-skills-learning/content-section-overview",
+      "license": "CC BY-NC-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "description": "Inglês para estudos: leitura, organização de ideias e escrita acadêmica. Nível introdutório do OpenLearn não significa inglês A1.",
+      "limitations": "Licença geral não abrange necessariamente materiais de terceiros, marcas ou mídias. Conferir Acknowledgements antes de adaptar. Curso não importado.",
+      "reviewStatus": "metadata-only",
+      "downloads": []
+    }
+  ]
+}

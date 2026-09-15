@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/course.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
+import 'sources_screen.dart';
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({super.key, required this.controller, required this.exercises, this.lesson});
@@ -120,6 +121,28 @@ class _LessonScreenState extends State<LessonScreen> {
           automaticallyImplyLeading: false,
           leading: IconButton(tooltip: 'Sair da prática', onPressed: _saving ? null : _exit, icon: const Icon(Icons.close_rounded)),
           title: Text(widget.lesson?.title ?? 'Revisão do dia'),
+          actions: [
+            if (widget.lesson?.studyNotes.isNotEmpty ?? false)
+              IconButton(
+                tooltip: 'Material de estudo',
+                icon: const Icon(Icons.menu_book_outlined),
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Antes de praticar'),
+                    content: SingleChildScrollView(
+                      child: SelectableText(widget.lesson!.studyNotes),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Voltar à prática'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
         ),
         body: SafeArea(
           child: Center(
@@ -183,6 +206,25 @@ class _LessonScreenState extends State<LessonScreen> {
           Text('${_index + 1}/${widget.exercises.length}'),
         ]),
         const SizedBox(height: 28),
+        if (widget.lesson?.studyNotes.isNotEmpty ?? false) ...[
+          ExpansionTile(
+            key: ValueKey('study-${widget.lesson!.id}'),
+            title: const Text('Antes de praticar'),
+            subtitle: const Text('Leia a explicação e consulte durante a lição.'),
+            childrenPadding: const EdgeInsets.all(12),
+            children: [
+              SelectableText(widget.lesson!.studyNotes),
+              if (widget.lesson!.sourceIds.isNotEmpty)
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder: (_) => SourcesScreen(sourceIds: widget.lesson!.sourceIds),
+                  )),
+                  child: const Text('Leituras complementares e licenças'),
+                ),
+            ],
+          ),
+          const SizedBox(height: 16),
+        ],
         Text(switch (exercise.type) {
           ExerciseType.choice => 'ESCOLHA A RESPOSTA',
           ExerciseType.typed => 'ESCREVA SUA RESPOSTA',
