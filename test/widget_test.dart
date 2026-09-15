@@ -1,4 +1,3 @@
-import 'package:fluent_app/main.dart';
 import 'package:fluent_app/models/course.dart';
 import 'package:fluent_app/screens/lesson_screen.dart';
 import 'package:fluent_app/services/progress_store.dart';
@@ -8,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'support/pump_fluent_app.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('opens the real course offline and navigates the main tabs', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const FluentApp());
-    await tester.pumpAndSettle();
+    await pumpFluentApp(tester);
     expect(find.text('Um pouco hoje.\nUm mundo amanhã.'), findsOneWidget);
     expect(find.text('Começar lição'), findsOneWidget);
     await tester.tap(find.text('Revisar'));
@@ -63,14 +63,16 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Vamos aprender com essa!'), findsOneWidget);
     expect(controller.progress.completedLessonIds, isEmpty);
-    await tester.ensureVisible(find.text('Continuar'));
+    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '  THANK YOU!  ');
+    await tester.pump();
+    await tester.ensureVisible(find.text('Verificar'));
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
     expect(find.text('Muito bem!'), findsOneWidget);
-    await tester.ensureVisible(find.text('Continuar'));
+    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     for (final word in ['I', 'am', 'fine']) {
@@ -80,7 +82,7 @@ void main() {
     await tester.ensureVisible(find.text('Verificar'));
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Continuar'));
+    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     expect(find.text('Mais um passo dado!'), findsOneWidget);

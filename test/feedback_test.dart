@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:fluent_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../lib/main.dart';
 import '../lib/models/course.dart';
 import '../lib/models/feedback_catalog.dart';
 import '../lib/models/learning_progress.dart';
@@ -15,6 +15,7 @@ import '../lib/screens/lesson_screen.dart';
 import '../lib/services/feedback_audio_player.dart';
 import '../lib/services/progress_store.dart';
 import '../lib/state/learning_controller.dart';
+import 'support/pump_fluent_app.dart';
 
 Map<String, dynamic> _catalogJson() => jsonDecode(
       File('assets/audio_feedback/catalog.json').readAsStringSync(),
@@ -273,8 +274,7 @@ void main() {
 
   testWidgets('escolhe tema antes da lição pela tela inicial', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const FluentApp());
-    await tester.pumpAndSettle();
+    await pumpFluentApp(tester);
     await tester.tap(find.byTooltip('Feedback de áudio: Sem áudio'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Zoação leve'));
@@ -295,6 +295,7 @@ void main() {
     await controller.setFeedbackTheme('zoacao');
     final lesson = controller.course.lessons.first;
     await tester.pumpWidget(MaterialApp(
+      theme: fluentTheme,
       home: LessonScreen(
         controller: controller,
         lesson: lesson,
@@ -313,7 +314,7 @@ void main() {
     expect(outputs.single.loaded.single, contains('zoacao_erro_'));
     expect(find.text('Resposta: Hello'), findsOneWidget);
     expect(find.text('Hello é uma saudação.'), findsOneWidget);
-    await tester.ensureVisible(find.text('Continuar'));
+    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     expect(outputs.single.disposed, isTrue);
@@ -322,6 +323,7 @@ void main() {
     await tester.tap(find.text('Sem áudio'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Thank you');
+    await tester.pump();
     await tester.ensureVisible(find.text('Verificar'));
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
