@@ -12,6 +12,7 @@ coverage/
 
 # Platform-generated files and local signing material
 android/.gradle/
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 android/local.properties
 android/key.properties
 android/app/debug/

@@ -55,6 +55,8 @@ class _FluentAppState extends State<FluentApp> {
       title: 'Fluent',
       debugShowCheckedModeBanner: false,
       theme: fluentTheme,
+      darkTheme: fluentTheme,
+      themeMode: ThemeMode.dark,
       locale: const Locale('pt', 'BR'),
       supportedLocales: const [Locale('pt', 'BR')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
@@ -69,11 +71,18 @@ class _FluentAppState extends State<FluentApp> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.cloud_off_rounded, size: 56),
+                      const BrandIconBox(
+                        Icons.cloud_off_rounded,
+                        color: kError,
+                      ),
                       const SizedBox(height: 16),
-                      const Text('Não conseguimos abrir seu curso. Tente novamente.'),
+                      const Text(
+                        'Não conseguimos abrir seu curso. Tente novamente.',
+                        style: TextStyle(color: kError),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 16),
-                      FilledButton(
+                      PrimaryButton(
                         onPressed: () => setState(() => _startup = _load()),
                         child: const Text('Tentar novamente'),
                       ),
@@ -84,9 +93,14 @@ class _FluentAppState extends State<FluentApp> {
             );
           }
           if (!snapshot.hasData) {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(
+              body: AppLoading(semanticsLabel: 'Abrindo seu curso'),
+            );
           }
-          return HomeScreen(controller: snapshot.data!.$1, cloud: snapshot.data!.$2);
+          return HomeScreen(
+            controller: snapshot.data!.$1,
+            cloud: snapshot.data!.$2,
+          );
         },
       ),
     );

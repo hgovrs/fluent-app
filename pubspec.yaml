@@ -13,6 +13,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   firebase_core: 4.14.0
+  # 3.11.0 fails to compile on Dart <3.12; keep the fixed web implementation.
+  firebase_core_web: 3.12.0
   firebase_auth: 6.6.1
   cloud_firestore: 6.9.0
   shared_preferences: 2.5.5
@@ -29,3 +31,28 @@ flutter:
     - assets/courses/
     - assets/content/
     - assets/audio_feedback/
+    - assets/fonts/
+  fonts:
+    - family: Tech
+      fonts:
+        - asset: assets/fonts/santech-thin.otf
+          weight: 100
+        - asset: assets/fonts/santech-thinitalic.otf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/santech-regular.otf
+          weight: 400
+        - asset: assets/fonts/santech-italic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/santech-semibold.otf
+          weight: 600
+        - asset: assets/fonts/santech-semibolditalic.otf
+          weight: 600
+          style: italic
+    - family: Genhead
+      fonts:
+        - asset: assets/fonts/genhead.otf
+          weight: 400
+        - asset: assets/fonts/genhead-semibild.otf
+          weight: 700

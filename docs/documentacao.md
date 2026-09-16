@@ -19,13 +19,13 @@ progresso manualmente entre dispositivos.
   limitadas nem punição por errar.
 - Feedback de áudio opcional por tema (Zoação leve, Torcida e Tranquilo), com
   catálogo de frases originais e geração editorial usando sua voz no ElevenLabs.
-  Os MP3 precisam ser gerados antes da publicação; não acompanham este código.
+  Os 20 MP3 do catálogo estão em `assets/audio_feedback/` para uso offline.
 - XP, meta diária configurável, sequência de dias e progresso por curso.
 - Revisão espaçada de exercícios estudados, incluindo erros.
 - Persistência local e recuperação de falhas de armazenamento.
 - Conta opcional com e-mail/senha, recuperação de senha e backup privado no
   Cloud Firestore. Nenhum envio automático do progresso.
-- Layout adaptável, sem fontes ou imagens pagas. Nenhuma API de IA é chamada
+- Layout adaptável e exclusivamente escuro, com fontes customizadas locais. Nenhuma API de IA é chamada
   durante as aulas; a geração opcional de áudio pode consumir créditos pagos.
 - Testes de domínio, navegação, exercícios e regras de acesso; workflow de CI.
 
@@ -39,12 +39,74 @@ Pesquisa realizada antes da implementação, em setembro de 2026:
 
 | Referência | Ideia aproveitada | Decisão no Fluent |
 | --- | --- | --- |
-| [Duolingo — trilha de aprendizado](https://blog.duolingo.com/learning-path-update/) | Lições curtas, progressão e hábito diário | Trilha guiada, XP e sequência, sem limite de vidas |
+| [Duolingo — organização da tela inicial](https://blog.duolingo.com/new-duolingo-home-screen-design/) | Próximo passo claro, unidades e apoio fácil de encontrar | Trilha guiada, home compacta e detalhes sob demanda, sem copiar a identidade visual ou reordenar lições |
 | [Busuu — curso de inglês](https://www.busuu.com/en/course/learn-english) | Unidades temáticas e situações práticas | Inglês iniciante organizado por contextos cotidianos |
 | [Memrise](https://www.memrise.com/) | Retenção por revisão espaçada | Revisão local e determinística, sem IA ou serviço pago |
 
 As referências inspiram as funcionalidades, não a marca, as ilustrações ou o
-conteúdo. O visual e os exercícios deste projeto são próprios.
+conteúdo. Os exercícios deste projeto são próprios; a interface aplica o design
+system Mista descrito a seguir.
+
+## Design system
+
+`lib/theme.dart` centraliza as cores, opacidades, tipografia, raios, bordas e
+gradientes em tokens nomeados. `FluentApp` fixa `ThemeMode.dark`, inclusive quando
+o sistema operacional está em modo claro. Não há seletor de tema visual; os
+temas de áudio continuam sendo preferências independentes.
+
+- Fundo `kBackgroundDark` (`#0D0D0D`) em todos os scaffolds.
+- Marca `kBrandPurple` (`#6064A6`) e `kBrandPurpleLight` (`#9195D9`).
+  `kBrandPurpleDeep` (`#363A8D`) fica reservado a interseções sólidas de logos,
+  sem multiply ou blend modes.
+- Superfícies roxas a 15–18%, bordas roxo-claro a 35% e espessura 0,8.
+  Diálogos, menus e tooltips compõem essa superfície sobre o fundo escuro para
+  não deixar o conteúdo atrás atravessar o painel.
+- `PrimaryButton`: gradiente horizontal, raio 16, glow roxo a 30% com blur 16 e
+  deslocamento (0, 6), `ElevatedButton` transparente e label Tech 16 bold.
+  Desabilitado, usa a superfície inativa e não recebe glow.
+- `SurfaceCard`: raio 16, ou 12 com `compact`; `BrandIconBox`: padding 8, raio 10
+  e ícone 20. Chips usam raio 999, padding horizontal 10/vertical 5 e texto 11 w600.
+- Texto branco, secundário a 70%, hint a 60%, placeholder a 20%; erros de sistema
+  e formulário usam `red.shade300`. Foco dos campos usa roxo sólido e raio 12.
+- Progresso e acertos usam roxo claro. Coral (`#F27166`, borda `#F28E85`) aparece
+  somente no badge de sequência e em pequenos avisos de respostas incorretas,
+  nunca como fundo de painéis inteiros.
+- `AppLoading` mantém o indicador circular roxo centralizado sobre o fundo
+  escuro; barras lineares são usadas somente para progresso determinado.
+
+As fontes originais foram copiadas de `mista/assets/fonts/` para `assets/fonts/`
+e declaradas em `pubspec.yaml`. **Tech** é a família global: thin 100, regular 400,
+semibold 600 e seus itálicos. **Genhead** fica restrita ao nome do app:
+regular 400 e `genhead-semibild.otf` em 700, conforme o mapeamento
+aprovado. `genhead-bold.otf` também está empacotada, mas não concorre pelo peso 700.
+Não há substituição por fontes de sistema. A disponibilidade desses arquivos
+não substitui a verificação da licença de redistribuição das fontes.
+
+Antes do primeiro frame do Flutter, `web/theme.css`, os metadados web e
+`android/app/src/main/res/values/colors.xml` espelham os tokens necessários à
+abertura. O bootstrap web carrega Tech localmente e mostra um indicador circular
+CSS; o Android mantém a abertura e as barras do sistema escuras, incluindo o
+splash do Android 12+. Esses recursos não alteram autenticação, navegação, dados,
+persistência ou chamadas de API.
+
+### Tela inicial
+
+A chamada “Um pouco hoje. Um mundo amanhã.” usa **Tech**, centralizada. A home
+prioriza a trilha atual e a próxima lição, com menos repetição de títulos e texto.
+A referência é a hierarquia da tela inicial do Duolingo, não sua paleta, marca,
+ilustrações ou regras de progressão.
+
+O botão **Trocar trilha**, no topo, abre um painel com nomes completos, quantidade
+de lições e indicação da seleção atual. As opções usam áreas grandes de toque,
+funcionam por teclado e não cortam títulos com reticências. O painel mantém o
+botão de fechar e o acesso a **Sobre a trilha atual** disponíveis durante a rolagem.
+Quando existe uma única trilha, o botão abre diretamente seus detalhes.
+
+A cobertura completa fica em **Sobre a trilha atual**, sem alterar o catálogo.
+As trilhas com cobertura declarada mantêm o aviso curto “Prática parcial, sem
+certificação.” na home. A descrição da próxima lição está no botão de informações
+do card; o início da prática continua direto. Meta diária, unidades e acesso a
+**Fontes e licenças** permanecem na mesma tela, com navegação e progresso preservados.
 
 ## Conteúdo A1–C1, fontes e uso pessoal
 
@@ -249,17 +311,24 @@ requisito; o backend de progresso continua separado do conteúdo didático.
 
 ## Feedback de áudio e ElevenLabs
 
-No ícone de alto-falante da tela inicial, escolha o tema **antes da lição**.
-O mesmo seletor aparece durante as aulas e revisões. **Sem áudio** é o padrão;
-a escolha é salva por curso no aparelho. Progresso antigo continua válido e
-temas removidos voltam efetivamente ao modo sem áudio. Restaurar um backup não
-substitui a escolha local de áudio, para não ativar brincadeiras sem consentimento.
+O lote atual foi gerado em 15/09/2026 com a voz configurada no ambiente `Fluent`
+na [execução de geração](https://github.com/hgovrs/fluent-app/actions/runs/35031581035)
+e baixado para `assets/audio_feedback/`: oito MP3 de Zoação leve, seis de Torcida
+e seis de Tranquilo. A pasta já está declarada como asset do Flutter.
 
-Ao verificar uma resposta, o app sorteia uma frase da categoria `correct`
-(acerto) ou `incorrect` (erro), evitando repetição imediata dentro de cada
-tema/categoria enquanto a sessão estiver aberta. A explicação e a resposta
-correta continuam visíveis: o áudio é uma reação, **não substitui a correção
-pedagógica** e não avalia pronúncia.
+**Zoação leve** é o padrão para novos perfis e progresso sem preferência de
+áudio salva. Temas já escolhidos, inclusive **Sem áudio**, são preservados.
+É possível trocar o tema ou silenciar pelo ícone de alto-falante da tela inicial,
+das aulas ou das revisões; a escolha é salva por curso no aparelho. Progresso
+antigo continua válido e temas removidos voltam efetivamente ao modo sem áudio.
+Restaurar um backup não substitui a escolha local de áudio.
+
+Assim que a resposta é verificada, o app sorteia e **toca automaticamente** uma
+frase da categoria `correct` (acerto) ou `incorrect` (erro), nas lições e revisões.
+Não é necessário tocar em um botão de reprodução. O sorteio evita repetição
+imediata dentro de cada tema/categoria enquanto a sessão estiver aberta.
+A explicação e a resposta correta continuam visíveis: o áudio é uma reação,
+**não substitui a correção pedagógica** e não avalia pronúncia.
 
 | Tema | Exemplo de acerto | Exemplo de erro |
 | --- | --- | --- |
@@ -395,8 +464,10 @@ A reprodução usa [just_audio](https://pub.dev/packages/just_audio), compatíve
 com Android, iOS e web. O repositório atualmente contém runners Android e web;
 iOS ainda exige seu runner e validação nativa. Ao avançar, abrir o seletor,
 sair ou colocar o app em segundo plano, a reação é interrompida.
-É possível parar/repetir a reação. Arquivo ausente, erro de reprodução ou
-bloqueio de autoplay no navegador mostram uma mensagem sem impedir a aula.
+Durante o carregamento ou a reprodução, **Parar áudio** permite interromper a
+reação. Não há botão para iniciar ou repetir o áudio manualmente. Arquivo
+ausente, erro de reprodução ou bloqueio de autoplay no navegador mostram uma
+mensagem sem impedir a aula.
 No app instalado, os MP3 empacotados funcionam offline; a limitação de
 carregamento inicial da versão web continua valendo.
 
@@ -409,6 +480,15 @@ escrito e informam que o áudio está indisponível.
 Requisitos: Flutter estável **3.35 ou superior**, Dart **3.9 ou superior** e o
 ambiente da plataforma escolhida. Use uma versão estável atual se os plugins
 nativos exigirem SDKs mais recentes.
+
+O build Android usa Kotlin **2.3.10**, Android Gradle Plugin **8.13.2** e
+Gradle **8.13** (via wrapper). Mantenha essas versões compatíveis entre si:
+o Firebase Auth utilizado inclui metadados Kotlin 2.3.
+
+Para a versão web, `firebase_core_web` está fixado em **3.12.0**, que inclui a
+[correção oficial de `isA` para Dart anterior ao 3.12](https://pub.dev/packages/firebase_core_web/changelog#3120).
+Essa dependência explícita evita reutilizar a versão incompatível 3.11.0 do
+lockfile, sem atualizar os SDKs nativos do Firebase nem editar o cache do Pub.
 
 Na raiz do repositório:
 
@@ -576,6 +656,7 @@ docs/                Documentação do projeto
 assets/courses/       Catálogo e conteúdo original empacotado
 assets/content/       Registro de fontes, licenças e downloads revisados
 assets/audio_feedback/ Temas, frases e MP3 gerados antes da publicação
+assets/fonts/         Fontes locais Tech e Genhead
 content-cache/        Livros pessoais e recibos locais (ignorado pelo Git)
 lib/models/          Cursos, exercícios, progresso e revisões
 lib/data/            Carregamento e validação do catálogo
@@ -583,7 +664,8 @@ lib/state/           Regras de aprendizado e coordenação do progresso
 lib/services/        Persistência local e Firebase opcional
 lib/screens/         Trilha, exercícios, revisão e conta
 test/                Testes de domínio e widgets
-lib/widgets/         Seletor reutilizável de temas
+lib/theme.dart       Tokens dark e componentes visuais compartilhados
+lib/widgets/         Seletor reutilizável de temas de áudio
 tool/                Aquisição editorial de fontes e geração de áudio via ElevenLabs, fora do runtime
 firebase/            Testes das regras Firestore
 android/ ios/ web/   Runners Flutter

@@ -11,7 +11,13 @@ import '../widgets/feedback_theme_button.dart';
 import 'sources_screen.dart';
 
 class LessonScreen extends StatefulWidget {
-  const LessonScreen({super.key, required this.controller, required this.exercises, this.lesson, this.createFeedbackPlayer});
+  const LessonScreen({
+    super.key,
+    required this.controller,
+    required this.exercises,
+    this.lesson,
+    this.createFeedbackPlayer,
+  });
 
   final LearningController controller;
   final List<Exercise> exercises;
@@ -22,7 +28,8 @@ class LessonScreen extends StatefulWidget {
   State<LessonScreen> createState() => _LessonScreenState();
 }
 
-class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver {
+class _LessonScreenState extends State<LessonScreen>
+    with WidgetsBindingObserver {
   final _text = TextEditingController();
   final Map<String, bool> _results = {};
   final List<int> _words = [];
@@ -88,10 +95,18 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Sair desta prática?'),
-        content: const Text('O progresso desta sessão ainda não será salvo. Você pode começar de novo quando quiser.'),
+        content: const Text(
+          'O progresso desta sessão ainda não será salvo. Você pode começar de novo quando quiser.',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Continuar')),
-          TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Sair')),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Continuar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Sair'),
+          ),
         ],
       ),
     );
@@ -110,10 +125,12 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
       _correct = _exercise.accepts(_answer);
       _results[_exercise.id] = _correct!;
       final theme = widget.controller.feedbackTheme;
-      _feedback = theme == null ? null : _feedbackPicker.pick(
-        theme,
-        _correct! ? FeedbackCategory.correct : FeedbackCategory.incorrect,
-      );
+      _feedback = theme == null
+          ? null
+          : _feedbackPicker.pick(
+              theme,
+              _correct! ? FeedbackCategory.correct : FeedbackCategory.incorrect,
+            );
     });
     if (_feedback != null) unawaited(_audio.play(_feedback!));
   }
@@ -149,7 +166,9 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
       if (!mounted) return;
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Não foi possível salvar. Tente novamente.')),
+        const SnackBar(
+          content: Text('Não foi possível salvar. Tente novamente.'),
+        ),
       );
     }
   }
@@ -164,7 +183,11 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: IconButton(tooltip: 'Sair da prática', onPressed: _saving ? null : _exit, icon: const Icon(Icons.close_rounded)),
+          leading: IconButton(
+            tooltip: 'Sair da prática',
+            onPressed: _saving ? null : _exit,
+            icon: const Icon(Icons.close_rounded),
+          ),
           title: Text(widget.lesson?.title ?? 'Revisão do dia'),
           actions: [
             if (widget.lesson?.studyNotes.isNotEmpty ?? false)
@@ -211,29 +234,66 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
       padding: const EdgeInsets.all(24),
       children: [
         const SizedBox(height: 28),
-        const CircleAvatar(radius: 52, backgroundColor: mint,
-            child: Icon(Icons.emoji_events_rounded, size: 64, color: green)),
+        const Center(
+          child: BrandIconBox(
+            Icons.emoji_events_rounded,
+            color: kBrandPurpleLight,
+          ),
+        ),
         const SizedBox(height: 28),
-        Text('Mais um passo dado!', style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.center),
+        Text(
+          'Mais um passo dado!',
+          style: Theme.of(context).textTheme.headlineLarge,
+          textAlign: TextAlign.center,
+        ),
         const SizedBox(height: 12),
-        const Text('O importante é continuar. O que foi difícil volta na revisão.',
-            textAlign: TextAlign.center),
+        const Text(
+          'O importante é continuar. O que foi difícil volta na revisão.',
+          style: kSecondaryTextStyle,
+          textAlign: TextAlign.center,
+        ),
         const SizedBox(height: 28),
         SurfaceCard(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(children: [Text('+$_earnedXp', style: Theme.of(context).textTheme.headlineMedium), const Text('XP ganhos')]),
-              Column(children: [Text('$correct/${_results.length}', style: Theme.of(context).textTheme.headlineMedium), const Text('acertos')]),
+              Column(
+                children: [
+                  Text(
+                    '+$_earnedXp',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: kBrandPurpleLight,
+                    ),
+                  ),
+                  const Text('XP ganhos', style: kSecondaryTextStyle),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    '$correct/${_results.length}',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: kBrandPurpleLight,
+                    ),
+                  ),
+                  const Text('acertos', style: kSecondaryTextStyle),
+                ],
+              ),
             ],
           ),
         ),
         if (widget.controller.storageError != null) ...[
           const SizedBox(height: 16),
-          Text(widget.controller.storageError!, style: const TextStyle(color: Colors.red)),
+          Text(
+            widget.controller.storageError!,
+            style: const TextStyle(color: kError),
+          ),
         ],
         const SizedBox(height: 28),
-        FilledButton(onPressed: () => Navigator.pop(context), child: const Text('Continuar minha jornada')),
+        PrimaryButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Continuar minha jornada'),
+        ),
       ],
     );
   }
@@ -243,50 +303,72 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
-        Row(children: [
-          Expanded(child: LinearProgressIndicator(
-            value: _index / widget.exercises.length,
-            minHeight: 10,
-            borderRadius: BorderRadius.circular(10),
-            backgroundColor: mint,
-            semanticsLabel: 'Progresso da sessão',
-          )),
-          const SizedBox(width: 16),
-          Text('${_index + 1}/${widget.exercises.length}'),
-        ]),
+        Row(
+          children: [
+            Expanded(
+              child: LinearProgressIndicator(
+                value: _index / widget.exercises.length,
+                minHeight: 10,
+                borderRadius: kPillRadius,
+                color: kBrandPurpleLight,
+                backgroundColor: kSurfacePurpleRaised,
+                semanticsLabel: 'Progresso da sessão',
+              ),
+            ),
+            const SizedBox(width: 16),
+            Text(
+              '${_index + 1}/${widget.exercises.length}',
+              style: const TextStyle(color: kTextHint),
+            ),
+          ],
+        ),
         const SizedBox(height: 28),
         if (widget.lesson?.studyNotes.isNotEmpty ?? false) ...[
           ExpansionTile(
             key: ValueKey('study-${widget.lesson!.id}'),
             title: const Text('Antes de praticar'),
-            subtitle: const Text('Leia a explicação e consulte durante a lição.'),
+            subtitle: const Text(
+              'Leia a explicação e consulte durante a lição.',
+              style: kSecondaryTextStyle,
+            ),
             childrenPadding: const EdgeInsets.all(12),
             children: [
               SelectableText(widget.lesson!.studyNotes),
               if (widget.lesson!.sourceIds.isNotEmpty)
                 TextButton(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (_) => SourcesScreen(sourceIds: widget.lesson!.sourceIds),
-                  )),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          SourcesScreen(sourceIds: widget.lesson!.sourceIds),
+                    ),
+                  ),
                   child: const Text('Leituras complementares e licenças'),
                 ),
             ],
           ),
           const SizedBox(height: 16),
         ],
-        Text(switch (exercise.type) {
-          ExerciseType.choice => 'ESCOLHA A RESPOSTA',
-          ExerciseType.typed => 'ESCREVA SUA RESPOSTA',
-          ExerciseType.wordOrder => 'ORGANIZE A FRASE',
-        }, style: const TextStyle(color: green, fontWeight: FontWeight.w800, letterSpacing: 1)),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Chip(
+            label: Text(switch (exercise.type) {
+              ExerciseType.choice => 'ESCOLHA A RESPOSTA',
+              ExerciseType.typed => 'ESCREVA SUA RESPOSTA',
+              ExerciseType.wordOrder => 'ORGANIZE A FRASE',
+            }),
+          ),
+        ),
         const SizedBox(height: 12),
         if (exercise.context.isNotEmpty) ...[
           SurfaceCard(
-            color: mint,
+            compact: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Texto de apoio', style: TextStyle(fontWeight: FontWeight.w700)),
+                const Text(
+                  'Texto de apoio',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
                 const SizedBox(height: 8),
                 SelectableText(exercise.context),
               ],
@@ -294,26 +376,48 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
           ),
           const SizedBox(height: 16),
         ],
-        Text(exercise.prompt, style: Theme.of(context).textTheme.headlineMedium),
+        Text(
+          exercise.prompt,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
         const SizedBox(height: 28),
         if (exercise.type == ExerciseType.choice)
-          ...exercise.options.map((option) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Semantics(
-              selected: _choice == option,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.all(18),
-                  alignment: Alignment.centerLeft,
-                  backgroundColor: _choice == option ? mint : Colors.white,
-                  side: BorderSide(color: _choice == option ? green : Colors.black12, width: 2),
-                  foregroundColor: ink,
+          ...exercise.options.map(
+            (option) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Semantics(
+                selected: _choice == option,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.all(18),
+                    alignment: Alignment.centerLeft,
+                    backgroundColor: _choice == option
+                        ? kSurfacePurpleRaised
+                        : kSurfacePurple,
+                    disabledBackgroundColor: _choice == option
+                        ? kSurfacePurpleRaised
+                        : kSurfacePurple,
+                    side: BorderSide(
+                      color: _choice == option
+                          ? kBrandPurpleLight
+                          : kSurfaceBorder,
+                      width: kBorderWidth,
+                    ),
+                    foregroundColor: _choice == option
+                        ? kBrandPurpleLight
+                        : kTextPrimary,
+                    disabledForegroundColor: _choice == option
+                        ? kBrandPurpleLight
+                        : kTextHint,
+                  ),
+                  onPressed: _correct != null
+                      ? null
+                      : () => setState(() => _choice = option),
+                  child: Text(option),
                 ),
-                onPressed: _correct != null ? null : () => setState(() => _choice = option),
-                child: Text(option),
               ),
             ),
-          )),
+          ),
         if (exercise.type == ExerciseType.typed)
           TextField(
             controller: _text,
@@ -321,7 +425,10 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
             autocorrect: false,
             enableSuggestions: false,
             textCapitalization: TextCapitalization.none,
-            decoration: const InputDecoration(labelText: 'Sua resposta', hintText: 'Digite aqui…'),
+            decoration: const InputDecoration(
+              labelText: 'Sua resposta',
+              hintText: 'Digite aqui…',
+            ),
             onChanged: (_) => setState(() {}),
             onSubmitted: (_) {
               if (_answer.trim().isNotEmpty && _correct == null) _check();
@@ -329,29 +436,40 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
           ),
         if (exercise.type == ExerciseType.wordOrder) ...[
           SurfaceCard(
-            color: mint,
+            emphasized: true,
             child: _words.isEmpty
-                ? const Text('Toque nas palavras abaixo para montar sua resposta.')
+                ? const Text(
+                    'Toque nas palavras abaixo para montar sua resposta.',
+                    style: TextStyle(color: kTextHint),
+                  )
                 : Wrap(
-                    spacing: 8, runSpacing: 8,
+                    spacing: 8,
+                    runSpacing: 8,
                     children: [
                       for (final index in _words)
                         InputChip(
                           label: Text(exercise.options[index]),
-                          onDeleted: _correct != null ? null : () => setState(() => _words.remove(index)),
+                          selected: true,
+                          showCheckmark: false,
+                          labelStyle: kSelectedChipTextStyle,
+                          onDeleted: _correct != null
+                              ? null
+                              : () => setState(() => _words.remove(index)),
                         ),
                     ],
                   ),
           ),
           const SizedBox(height: 20),
           Wrap(
-            spacing: 8, runSpacing: 8,
+            spacing: 8,
+            runSpacing: 8,
             children: [
               for (final (index, word) in exercise.options.indexed)
                 ActionChip(
                   label: Text(word),
                   onPressed: _correct != null || _words.contains(index)
-                      ? null : () => setState(() => _words.add(index)),
+                      ? null
+                      : () => setState(() => _words.add(index)),
                 ),
             ],
           ),
@@ -361,12 +479,33 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
           Semantics(
             liveRegion: true,
             child: SurfaceCard(
-              color: _correct! ? mint : const Color(0xFFFFEED4),
+              emphasized: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_correct! ? 'Muito bem!' : 'Vamos aprender com essa!',
-                      style: Theme.of(context).textTheme.titleLarge),
+                  Row(
+                    children: [
+                      BrandIconBox(
+                        _correct!
+                            ? Icons.check_rounded
+                            : Icons.info_outline_rounded,
+                        color: _correct! ? kBrandPurpleLight : kBrandCoral,
+                        accent: !_correct!,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          _correct! ? 'Muito bem!' : 'Vamos aprender com essa!',
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: _correct!
+                                    ? kBrandPurpleLight
+                                    : kTextPrimary,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
                   if (_feedback != null) ...[
                     const SizedBox(height: 8),
                     Text(_feedback!.text),
@@ -375,49 +514,66 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
                       builder: (context, _) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              if (_audio.status == FeedbackAudioStatus.playing ||
-                                  _audio.status == FeedbackAudioStatus.loading) {
-                                unawaited(_audio.stop());
-                              } else {
-                                unawaited(_audio.play(_feedback!));
-                              }
-                            },
-                            icon: Icon(
-                              _audio.status == FeedbackAudioStatus.playing ||
-                                      _audio.status == FeedbackAudioStatus.loading
-                                  ? Icons.stop_rounded
-                                  : Icons.volume_up_rounded,
+                          if (_audio.status == FeedbackAudioStatus.loading)
+                            const SizedBox(
+                              height: 64,
+                              child: AppLoading(
+                                semanticsLabel: 'Carregando reação de áudio',
+                              ),
                             ),
-                            label: Text(
-                              _audio.status == FeedbackAudioStatus.playing ||
-                                      _audio.status == FeedbackAudioStatus.loading
-                                  ? 'Parar áudio'
-                                  : 'Ouvir reação',
+                          if (_audio.status == FeedbackAudioStatus.playing ||
+                              _audio.status == FeedbackAudioStatus.loading)
+                            TextButton.icon(
+                              onPressed: () => unawaited(_audio.stop()),
+                              icon: const Icon(Icons.stop_rounded),
+                              label: const Text('Parar áudio'),
                             ),
-                          ),
                           if (_audio.status == FeedbackAudioStatus.unavailable)
-                            const Text('Áudio indisponível. Você pode continuar pela correção escrita.'),
+                            const Text(
+                              'Áudio indisponível. Você pode continuar pela correção escrita.',
+                              style: TextStyle(color: kTextHint),
+                            ),
                         ],
                       ),
                     ),
                   ],
                   if (!_correct!) ...[
                     const SizedBox(height: 8),
-                    Text('Resposta: ${exercise.answer}', style: const TextStyle(fontWeight: FontWeight.w700)),
+                    Text(
+                      'Resposta: ${exercise.answer}',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                   ],
                   const SizedBox(height: 8),
-                  Text(exercise.explanation),
+                  Text(exercise.explanation, style: kSecondaryTextStyle),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 20),
         ],
-        FilledButton(
-          onPressed: _saving ? null : _correct != null ? _continue : _answer.trim().isEmpty ? null : _check,
-          child: Text(_saving ? 'Salvando…' : _correct != null ? 'Continuar' : 'Verificar'),
+        if (_saving) ...[
+          const SizedBox(
+            height: 64,
+            child: AppLoading(semanticsLabel: 'Salvando progresso'),
+          ),
+          const SizedBox(height: 12),
+        ],
+        PrimaryButton(
+          onPressed: _saving
+              ? null
+              : _correct != null
+              ? _continue
+              : _answer.trim().isEmpty
+              ? null
+              : _check,
+          child: Text(
+            _saving
+                ? 'Salvando…'
+                : _correct != null
+                ? 'Continuar'
+                : 'Verificar',
+          ),
         ),
       ],
     );

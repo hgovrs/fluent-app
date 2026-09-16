@@ -51,13 +51,15 @@ class ReviewSchedule {
   }
 
   Map<String, dynamic> toJson() => {
-        'dueDate': dueDate,
-        'intervalDays': intervalDays,
-        'successCount': successCount,
-      };
+    'dueDate': dueDate,
+    'intervalDays': intervalDays,
+    'successCount': successCount,
+  };
 }
 
 class LearningProgress {
+  static const defaultFeedbackThemeId = 'zoacao';
+
   LearningProgress({
     this.totalXp = 0,
     this.dailyGoal = 30,
@@ -65,12 +67,12 @@ class LearningProgress {
     Map<String, int> activity = const {},
     Map<String, ReviewSchedule> reviews = const {},
     this.reviewedCount = 0,
-    this.feedbackThemeId = 'off',
+    this.feedbackThemeId = defaultFeedbackThemeId,
     DateTime Function()? now,
-  })  : completedLessonIds = Set.unmodifiable(completedLessonIds),
-        activity = Map.unmodifiable(activity),
-        reviews = Map.unmodifiable(reviews),
-        _now = now ?? DateTime.now;
+  }) : completedLessonIds = Set.unmodifiable(completedLessonIds),
+       activity = Map.unmodifiable(activity),
+       reviews = Map.unmodifiable(reviews),
+       _now = now ?? DateTime.now;
 
   final int totalXp;
   final int dailyGoal;
@@ -104,17 +106,16 @@ class LearningProgress {
     Map<String, ReviewSchedule>? reviews,
     int? reviewedCount,
     String? feedbackThemeId,
-  }) =>
-      LearningProgress(
-        totalXp: totalXp ?? this.totalXp,
-        dailyGoal: dailyGoal ?? this.dailyGoal,
-        completedLessonIds: completedLessonIds ?? this.completedLessonIds,
-        activity: activity ?? this.activity,
-        reviews: reviews ?? this.reviews,
-        reviewedCount: reviewedCount ?? this.reviewedCount,
-        feedbackThemeId: feedbackThemeId ?? this.feedbackThemeId,
-        now: _now,
-      );
+  }) => LearningProgress(
+    totalXp: totalXp ?? this.totalXp,
+    dailyGoal: dailyGoal ?? this.dailyGoal,
+    completedLessonIds: completedLessonIds ?? this.completedLessonIds,
+    activity: activity ?? this.activity,
+    reviews: reviews ?? this.reviews,
+    reviewedCount: reviewedCount ?? this.reviewedCount,
+    feedbackThemeId: feedbackThemeId ?? this.feedbackThemeId,
+    now: _now,
+  );
 
   factory LearningProgress.fromJson(
     Map<String, dynamic> json, {
@@ -123,7 +124,7 @@ class LearningProgress {
     final completed = json['completedLessonIds'];
     final activityJson = json['activity'];
     final reviewsJson = json['reviews'];
-    final feedbackThemeId = json['feedbackThemeId'] ?? 'off';
+    final feedbackThemeId = json['feedbackThemeId'] ?? defaultFeedbackThemeId;
     if (feedbackThemeId is! String ||
         feedbackThemeId.length > 64 ||
         !RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(feedbackThemeId)) {
@@ -162,12 +163,12 @@ class LearningProgress {
   }
 
   Map<String, dynamic> toJson() => {
-        'totalXp': totalXp,
-        'dailyGoal': dailyGoal,
-        'completedLessonIds': completedLessonIds.toList()..sort(),
-        'activity': Map<String, int>.from(activity),
-        'reviews': reviews.map((key, value) => MapEntry(key, value.toJson())),
-        'reviewedCount': reviewedCount,
-        'feedbackThemeId': feedbackThemeId,
-      };
+    'totalXp': totalXp,
+    'dailyGoal': dailyGoal,
+    'completedLessonIds': completedLessonIds.toList()..sort(),
+    'activity': Map<String, int>.from(activity),
+    'reviews': reviews.map((key, value) => MapEntry(key, value.toJson())),
+    'reviewedCount': reviewedCount,
+    'feedbackThemeId': feedbackThemeId,
+  };
 }

@@ -8,6 +8,8 @@ import 'package:fluent_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/pump_fluent_app.dart';
+
 void main() {
   testWidgets('material de estudo pode ser consultado sem responder', (tester) async {
     final lesson = Lesson(
@@ -65,12 +67,14 @@ void main() {
   });
 
   testWidgets('referências filtradas ficam disponíveis offline', (tester) async {
-    final sources = await ContentSource.load();
-    await tester.pumpWidget(MaterialApp(
-      theme: fluentTheme,
-      home: const SourcesScreen(sourceIds: ['communication-beginnings']),
-    ));
-    await tester.pumpAndSettle();
+    final sources = (await tester.runAsync(ContentSource.load))!;
+    await pumpAssetRoute<List<ContentSource>>(
+      tester,
+      () => tester.pumpWidget(MaterialApp(
+        theme: fluentTheme,
+        home: const SourcesScreen(sourceIds: ['communication-beginnings']),
+      )),
+    );
     expect(find.text(sources.singleWhere((s) => s.id == 'communication-beginnings').title),
         findsOneWidget);
     expect(find.text(sources.singleWhere((s) => s.id == 'bc-reads').title), findsNothing);
