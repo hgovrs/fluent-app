@@ -8,6 +8,7 @@ import 'screens/home_screen.dart';
 import 'services/cloud_service.dart';
 import 'services/progress_store.dart';
 import 'state/learning_controller.dart';
+import 'widgets/fluent_logo.dart';
 import 'theme.dart';
 
 void main() {
@@ -69,7 +70,9 @@ class _FluentAppState extends State<FluentApp> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.cloud_off_rounded, size: 56),
+                      const FluentLogo(size: 72),
+                      const SizedBox(height: 16),
+                      const Icon(Icons.cloud_off_rounded, size: 40),
                       const SizedBox(height: 16),
                       const Text('Não conseguimos abrir seu curso. Tente novamente.'),
                       const SizedBox(height: 16),
@@ -84,7 +87,28 @@ class _FluentAppState extends State<FluentApp> {
             );
           }
           if (!snapshot.hasData) {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FluentLogo(size: 96),
+                    SizedBox(height: 20),
+                    Text(
+                      'fluent',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1,
+                        color: ink,
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
           }
           return HomeScreen(controller: snapshot.data!.$1, cloud: snapshot.data!.$2);
         },

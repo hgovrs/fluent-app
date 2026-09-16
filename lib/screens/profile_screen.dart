@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/cloud_service.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
+import '../widgets/fluent_logo.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.controller, required this.cloud});
@@ -119,8 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(radius: 30, backgroundColor: mint,
-                      child: Icon(Icons.spa_rounded, color: green, size: 34)),
+                  const FluentLogo(size: 64),
                   const SizedBox(height: 16),
                   Text('Aprendiz de novos mundos', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 18),

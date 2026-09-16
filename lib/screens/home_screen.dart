@@ -7,6 +7,7 @@ import '../services/cloud_service.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
 import '../widgets/feedback_theme_button.dart';
+import '../widgets/fluent_logo.dart';
 import 'lesson_screen.dart';
 import 'profile_screen.dart';
 import 'sources_screen.dart';
@@ -64,14 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         final controller = widget.controller;
         return Scaffold(
           appBar: AppBar(
-            title: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.spa_rounded, color: green),
-                SizedBox(width: 8),
-                Text('fluent', style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: -1)),
-              ],
-            ),
+            title: const FluentWordmark(),
             actions: [
               FeedbackThemeButton(controller: controller),
               Padding(
