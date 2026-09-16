@@ -28,6 +28,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - logo.png
     - assets/courses/
     - assets/content/
     - assets/audio_feedback/
