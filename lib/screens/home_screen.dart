@@ -8,6 +8,7 @@ import '../state/learning_controller.dart';
 import '../theme.dart';
 import '../widgets/course_picker_button.dart';
 import '../widgets/feedback_voice_button.dart';
+import '../widgets/fluent_logo.dart';
 import 'lesson_screen.dart';
 import 'profile_screen.dart';
 import 'sources_screen.dart';
@@ -67,20 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         final controller = widget.controller;
         return Scaffold(
           appBar: AppBar(
-            title: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.spa_rounded, color: kBrandPurpleLight),
-                SizedBox(width: 8),
-                Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text('fluent', style: kBrandHeadlineStyle),
-                  ),
-                ),
-              ],
-            ),
+            title: const FluentWordmark(),
             actions: [
               FeedbackVoiceButton(controller: controller),
               Padding(

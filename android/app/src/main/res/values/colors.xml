@@ -3,5 +3,7 @@
     <!-- Bootstrap mirrors of lib/theme.dart, before Flutter paints its first frame. -->
     <color name="background_dark">#0D0D0D</color>
     <color name="brand_purple">#6064A6</color>
+    <color name="brand_purple_light">#9195D9</color>
+    <color name="brand_coral">#F27166</color>
     <color name="text_primary">#FFFFFF</color>
 </resources>

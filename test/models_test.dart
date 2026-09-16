@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../lib/data/course_catalog.dart';
-import '../lib/models/course.dart';
-import '../lib/models/learning_progress.dart';
-import '../lib/services/progress_store.dart';
+import 'package:fluent_app/data/course_catalog.dart';
+import 'package:fluent_app/models/course.dart';
+import 'package:fluent_app/models/learning_progress.dart';
+import 'package:fluent_app/services/progress_store.dart';
 
 class _DiskAssets extends CachingAssetBundle {
   @override

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../lib/models/course.dart';
-import '../lib/services/progress_store.dart';
-import '../lib/state/learning_controller.dart';
+import 'package:fluent_app/models/course.dart';
+import 'package:fluent_app/services/progress_store.dart';
+import 'package:fluent_app/state/learning_controller.dart';
 
 Course _course(String id) => Course(
   id: id,

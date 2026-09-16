@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../lib/data/content_sources.dart';
-import '../lib/data/course_catalog.dart';
-import '../lib/models/course.dart';
+import 'package:fluent_app/data/content_sources.dart';
+import 'package:fluent_app/data/course_catalog.dart';
+import 'package:fluent_app/models/course.dart';
 
 class _ContentAssets extends CachingAssetBundle {
   @override

@@ -178,8 +178,9 @@ class Course {
       for (final lesson in unit.lessons) {
         if (!ids.add(lesson.id)) throw const FormatException('ID duplicado.');
         for (final exercise in lesson.exercises) {
-          if (!ids.add(exercise.id))
+          if (!ids.add(exercise.id)) {
             throw const FormatException('ID duplicado.');
+          }
         }
       }
     }

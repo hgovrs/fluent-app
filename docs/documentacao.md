@@ -69,7 +69,7 @@ temas de áudio continuam sendo preferências independentes.
 - Texto branco, secundário a 70%, hint a 60%, placeholder a 20%; erros de sistema
   e formulário usam `red.shade300`. Foco dos campos usa roxo sólido e raio 12.
 - Progresso e acertos usam roxo claro. Coral (`#F27166`, borda `#F28E85`) aparece
-  somente no badge de sequência e em pequenos avisos de respostas incorretas,
+  no pequeno ponto do logo, no badge de sequência e em avisos de respostas incorretas,
   nunca como fundo de painéis inteiros.
 - `AppLoading` mantém o indicador circular roxo centralizado sobre o fundo
   escuro; barras lineares são usadas somente para progresso determinado.
@@ -88,6 +88,23 @@ abertura. O bootstrap web carrega Tech localmente e mostra um indicador circular
 CSS; o Android mantém a abertura e as barras do sistema escuras, incluindo o
 splash do Android 12+. Esses recursos não alteram autenticação, navegação, dados,
 persistência ou chamadas de API.
+
+### Marca do Fluent
+
+A geometria do balão com a letra **F** e o ponto de conquista da
+[PR #3](https://github.com/hgovrs/fluent-app/pull/3) foi reaproveitada, mas não sua
+paleta verde/âmbar nem seus fundos claros. `FluentLogo`, em
+`lib/widgets/fluent_logo.dart`, usa `kPrimaryGradient`, branco e um pequeno ponto
+coral. No app, o glow reutiliza `kPrimaryShadow`. `FluentWordmark` mantém o nome em
+Genhead e se adapta ao espaço disponível sem cortar o nome com fontes ampliadas.
+
+O mesmo desenho 108×108 aparece no cabeçalho, perfil, abertura/carregamento, erro
+de inicialização, favicon e ícone/splash Android. `web/favicon.svg` e
+`android/app/src/main/res/drawable/ic_launcher.xml` mantêm a mesma geometria e os
+mesmos extremos do gradiente horizontal. O bootstrap web também exibe a marca
+com glow, mantendo o fundo escuro e o indicador circular. A variante
+`withBackground: false` desenha apenas o balão roxo, a letra branca e o ponto
+coral sobre transparência.
 
 ### Tela inicial
 

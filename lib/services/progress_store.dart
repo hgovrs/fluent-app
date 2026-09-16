@@ -38,7 +38,7 @@ class ProgressStore {
       }
     });
     // A failed write must not poison subsequent writes.
-    _pending = next.then<void>((_) {}, onError: (Object _, StackTrace __) {});
+    _pending = next.then<void>((_) {}, onError: (Object _, StackTrace _) {});
     return next;
   }
 }

@@ -9,6 +9,7 @@ import 'services/cloud_service.dart';
 import 'services/progress_store.dart';
 import 'state/learning_controller.dart';
 import 'theme.dart';
+import 'widgets/fluent_logo.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,11 +67,13 @@ class _FluentAppState extends State<FluentApp> {
           if (snapshot.hasError) {
             return Scaffold(
               body: Center(
-                child: Padding(
+                child: SingleChildScrollView(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const FluentLogo(size: 72),
+                      const SizedBox(height: 16),
                       const BrandIconBox(
                         Icons.cloud_off_rounded,
                         color: kError,
@@ -94,7 +97,25 @@ class _FluentAppState extends State<FluentApp> {
           }
           if (!snapshot.hasData) {
             return const Scaffold(
-              body: AppLoading(semanticsLabel: 'Abrindo seu curso'),
+              body: Center(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ExcludeSemantics(child: FluentLogo(size: 96)),
+                      SizedBox(height: 20),
+                      Text('fluent', style: kBrandHeadlineStyle),
+                      SizedBox(height: 24),
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: AppLoading(semanticsLabel: 'Abrindo seu curso'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           return HomeScreen(
