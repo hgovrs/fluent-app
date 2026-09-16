@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 1,
-  "themes": [
+  "schemaVersion": 2,
+  "voices": [
     {
-      "id": "zoacao",
-      "name": "Zoação leve",
-      "description": "Energia de mona e pajubá: brinca com a resposta, nunca com você. Sem humilhação.",
+      "id": "natasha_caldeirao",
+      "name": "Natasha Caldeirão",
+      "description": "Voz mona com pajubá: celebra o acerto e zoa a resposta, nunca você.",
       "clips": [
         {"id": "acerto_1", "category": "correct", "text": "Isssaa! Bateu o cabelo e lacroooou a resposta!"},
         {"id": "acerto_2", "category": "correct", "text": "Cloooose perfeito, mooona! Essa aí é de cooroa!"},
@@ -30,32 +30,6 @@
         {"id": "erro_10", "category": "incorrect", "text": "Calmaa, rainhaaa! Essa não lacrou. Organiza com a correção."},
         {"id": "erro_11", "category": "incorrect", "text": "O close saiu embaçadooo. Olha a explicaçãão e volta montada."},
         {"id": "erro_12", "category": "incorrect", "text": "Não foi o picooo dessa vez. Ajusta o passo e tenta outraa."}
-      ]
-    },
-    {
-      "id": "torcida",
-      "name": "Torcida",
-      "description": "Energia de arquibancada para celebrar e seguir tentando.",
-      "clips": [
-        {"id": "acerto_1", "category": "correct", "text": "É acerto! A torcida foi à loucura com essa resposta!"},
-        {"id": "acerto_2", "category": "correct", "text": "Jogada ensaiada, resposta certa! Mandou muito bem!"},
-        {"id": "acerto_3", "category": "correct", "text": "Que categoria! Mais uma resposta no fundo da rede!"},
-        {"id": "erro_1", "category": "incorrect", "text": "Foi na trave! Confere a correção e prepara a próxima jogada."},
-        {"id": "erro_2", "category": "incorrect", "text": "O jogo continua! Vamos olhar a explicação dessa resposta."},
-        {"id": "erro_3", "category": "incorrect", "text": "Hora de ajustar a estratégia! A correção mostra o caminho."}
-      ]
-    },
-    {
-      "id": "tranquilo",
-      "name": "Tranquilo",
-      "description": "Incentivo direto, sem brincadeiras e sem pressão.",
-      "clips": [
-        {"id": "acerto_1", "category": "correct", "text": "Muito bem! Você acertou essa resposta."},
-        {"id": "acerto_2", "category": "correct", "text": "Isso mesmo! Mais um passo no seu aprendizado."},
-        {"id": "acerto_3", "category": "correct", "text": "Resposta correta. Continue no seu ritmo."},
-        {"id": "erro_1", "category": "incorrect", "text": "Ainda não foi dessa vez. Veja a resposta e a explicação."},
-        {"id": "erro_2", "category": "incorrect", "text": "Errar faz parte da prática. Vamos entender essa correção."},
-        {"id": "erro_3", "category": "incorrect", "text": "Sem pressa. Leia a explicação para se preparar para a próxima."}
       ]
     }
   ]
