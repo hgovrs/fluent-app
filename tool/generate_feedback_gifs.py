@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert a local video to a GIF and temporal feedback clips using FFmpeg."""
+"""Prepare local video GIFs, audio, transcripts and per-speaker WAV files."""
 
 import argparse
 import json
@@ -10,6 +10,11 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+if __package__:
+    from . import feedback_speech
+else:
+    import feedback_speech
 
 
 CATEGORIES = ("correct", "incorrect")
@@ -114,24 +119,29 @@ def make_clips(duration, fps, segments=None, category=None, segment_duration=3):
 
 
 def generate(video, output, *, fps=10, width=480, segments=None,
-             category=None, segment_duration=3):
+             category=None, segment_duration=3, speech=None, audio_only=False):
     video = Path(video).resolve()
     output = Path(output).absolute()
     if not video.is_file():
         raise GenerationError("Informe um arquivo de vídeo local existente.")
     if output.exists() or output.is_symlink():
         raise GenerationError("A pasta de saída já existe; escolha uma pasta nova.")
+    speech = speech or feedback_speech.SpeechOptions()
+    speech.validate()
+    if audio_only and (not speech.enabled or category or segments is not None):
+        raise GenerationError("--audio-only requer uma etapa de áudio e não aceita cortes de GIF.")
     if not 1 <= fps <= 50 or not 16 <= width <= 1920:
         raise GenerationError("Use fps entre 1 e 50 e largura entre 16 e 1920.")
     for tool in ("ffmpeg", "ffprobe"):
         if not shutil.which(tool):
             raise GenerationError(f"Instale FFmpeg e disponibilize {tool} no PATH.")
-    duration = video_duration(video)
-    clips = make_clips(duration, fps, segments, category, segment_duration)
+    duration = None if audio_only else video_duration(video)
+    clips = [] if audio_only else make_clips(duration, fps, segments, category, segment_duration)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".feedback-gifs-", dir=output.parent) as temporary:
         staging = Path(temporary) / "result"
         staging.mkdir()
+        audio = feedback_speech.prepare(video, staging, speech, run_media) if speech.enabled else None
         full_gif = staging / "full.gif"
         filters = (
             f"[0:v:0]setpts=PTS-STARTPTS,fps={fps},"
@@ -139,11 +149,12 @@ def generate(video, output, *, fps=10, width=480, segments=None,
             "[a]palettegen[p];[b][p]paletteuse"
         )
         base = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-nostdin", "-n"]
-        run_media(base + [
-            "-protocol_whitelist", "file,pipe", "-i", str(video),
-            "-filter_complex_threads", "1", "-filter_complex", filters,
-            "-an", "-t", str(duration), "-loop", "0", str(full_gif),
-        ])
+        if not audio_only:
+            run_media(base + [
+                "-protocol_whitelist", "file,pipe", "-i", str(video),
+                "-filter_complex_threads", "1", "-filter_complex", filters,
+                "-an", "-t", str(duration), "-loop", "0", str(full_gif),
+            ])
         for clip in clips:
             run_media(base + [
                 "-ignore_loop", "1", "-i", str(full_gif),
@@ -158,6 +169,10 @@ def generate(video, output, *, fps=10, width=480, segments=None,
             "width": width,
             "clips": clips,
         }
+        if audio:
+            catalog["audio"] = audio
+        if audio_only:
+            catalog = {"schemaVersion": 1, "audio": audio}
         (staging / "catalog.json").write_text(
             json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8",
         )
@@ -174,13 +189,23 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--category", choices=CATEGORIES, help="Categoria de todos os cortes automáticos.")
     mode.add_argument("--segments", type=Path, help="JSON com lista de cortes: id, category, start, end.")
+    mode.add_argument("--audio-only", action="store_true", help="Preparar áudio sem gerar GIFs.")
     parser.add_argument("--segment-duration", type=positive_number, default=None,
                         help="Segundos por corte automático (padrão: 3).")
     parser.add_argument("--fps", type=int, default=10, help="Quadros por segundo, 1–50 (padrão: 10).")
     parser.add_argument("--width", type=int, default=480, help="Largura, 16–1920 (padrão: 480).")
+    parser.add_argument("--extract-audio", action="store_true", help="Extrair a primeira faixa em WAV.")
+    parser.add_argument("--transcribe-model", type=Path, help="Pasta local de modelo faster-whisper.")
+    speakers = parser.add_mutually_exclusive_group()
+    speakers.add_argument("--diarization-model", type=Path, help="Pasta local do pyannote community-1.")
+    speakers.add_argument("--speaker-segments", type=Path, help="JSON revisado: speaker, start, end.")
+    parser.add_argument("--language", help="Idioma da transcrição, por exemplo pt; padrão: detectar.")
+    parser.add_argument("--num-speakers", type=int, help="Quantidade conhecida de locutores (1–100).")
+    parser.add_argument("--voices-authorized", action="store_true",
+                        help="Confirmar autorização dos donos das vozes para preparar amostras.")
     args = parser.parse_args(argv)
-    if args.segments and args.segment_duration is not None:
-        parser.error("--segment-duration não pode ser usado com --segments.")
+    if (args.segments or args.audio_only) and args.segment_duration is not None:
+        parser.error("--segment-duration só pode ser usado com --category.")
     try:
         segments = None
         if args.segments:
@@ -190,11 +215,20 @@ def main(argv=None):
         catalog = generate(
             args.video, args.output, fps=args.fps, width=args.width, segments=segments,
             category=args.category, segment_duration=args.segment_duration or 3,
+            audio_only=args.audio_only,
+            speech=feedback_speech.SpeechOptions(
+                extract_audio=args.extract_audio, transcribe_model=args.transcribe_model,
+                diarization_model=args.diarization_model, speaker_segments=args.speaker_segments,
+                language=args.language, num_speakers=args.num_speakers,
+                voices_authorized=args.voices_authorized,
+            ),
         )
     except (GenerationError, OSError, ValueError) as exc:
         print(f"Erro: {exc}", file=sys.stderr)
         return 1
-    print(f"GIF completo e {len(catalog['clips'])} trechos salvos em {args.output.absolute()}")
+    print(f"Arquivos preparados em {args.output.absolute()}")
+    for warning in catalog.get("audio", {}).get("warnings", []):
+        print(f"Aviso: {warning}", file=sys.stderr)
     return 0
 
 

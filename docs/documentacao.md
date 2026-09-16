@@ -410,7 +410,9 @@ O script editorial `tool/generate_feedback_gifs.py` converte um vídeo local em
 `full.gif` e depois divide esse GIF em **trechos temporais**, não em recortes
 da imagem. Requer **Python 3 e FFmpeg**, com `ffmpeg` e `ffprobe` no `PATH`
 (Ubuntu/Debian: `sudo apt install ffmpeg`; macOS: `brew install ffmpeg`).
-Não requer pacotes Python adicionais, serviços externos ou envio do vídeo.
+O modo de GIFs e a extração WAV não requerem pacotes Python adicionais, serviços
+externos ou envio do vídeo. Transcrição e diarização são etapas locais opcionais
+com modelos e dependências próprios, descritos abaixo.
 Use apenas vídeos próprios ou com autorização para adaptação e distribuição.
 
 Defina `REPO` como o caminho absoluto do seu clone. Para separar um vídeo de
@@ -473,6 +475,141 @@ instalado; esses testes de integração são pulados sem ele):
 cd "$REPO"
 python3 -m unittest discover -s "$REPO/test" -p '*_test.py' -v
 ```
+
+### Extrair áudio e texto e reunir trechos por voz
+
+O mesmo script agora aceita etapas opcionais de áudio, sem alterar os comandos
+de GIF existentes. Para extrair apenas o áudio:
+
+```sh
+python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
+  --output "$REPO/feedback-gifs/audio" --audio-only --extract-audio
+```
+
+Isso produz `audio.wav` (primeira faixa de áudio, PCM 16 bits, mono, 44,1 kHz)
+e `catalog.json`. O vídeo permanece intacto. Vídeos sem áudio falham sem publicar
+uma saída parcial. `--audio-only` também aceita arquivos de áudio locais;
+não combine essa opção com `--category`, `--segments` ou `--segment-duration`.
+Para gerar GIFs **e** áudio, mantenha `--category`/`--segments` e acrescente as
+opções de áudio em vez de `--audio-only`.
+
+**Instalação opcional para IA local:** use Python **3.10 ou superior**, FFmpeg e
+um ambiente virtual fora do repositório. Os pacotes de IA são grandes e a
+diarização instala PyTorch/TorchCodec; confira a compatibilidade destes com o
+seu sistema e FFmpeg. A transcrição usa CPU/int8; o pipeline community-1 usa
+CPU por padrão. Não é necessário instalar ambos se usar apenas uma etapa:
+
+```sh
+python3 -m venv "/tmp/fluent-speech-venv"
+. "/tmp/fluent-speech-venv/bin/activate"
+python3 -m pip install faster-whisper==1.2.1 pyannote.audio==4.0.7
+```
+
+Antes da execução, baixe os modelos completos em pastas **fora do Git**, conforme
+as instruções oficiais do [faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+e do [pyannote community-1](https://huggingface.co/pyannote/speaker-diarization-community-1).
+Exemplo de preparação com o CLI `hf`, instalado por `huggingface-hub` nas
+dependências acima:
+
+```sh
+hf download Systran/faster-whisper-small --local-dir "/caminho/modelos/whisper-small"
+hf auth login
+hf download pyannote/speaker-diarization-community-1 \
+  --local-dir "/caminho/modelos/community-1"
+```
+
+O community-1 requer aceitar os termos de acesso do modelo e autenticar o download
+no Hugging Face. Não coloque tokens no código ou nos argumentos do script.
+Use somente modelos/configurações de fontes confiáveis: carregar modelos não é
+uma operação segura para arquivos arbitrários. A pasta Whisper precisa conter
+o modelo no formato CTranslate2; a pasta community-1 deve incluir `config.yaml`
+e todos os pesos/subdiretórios, não apenas o arquivo de configuração.
+
+Downloads/instalação são uma preparação separada que usa internet. **Durante o
+processamento**, o script exige caminhos locais, configura o Hugging Face em
+modo offline e desativa a telemetria do Hugging Face e do pyannote. Não baixa
+modelos automaticamente, não envia mídia a serviços externos, não chama
+ElevenLabs e não utiliza o pipeline remoto precision-2.
+
+Para extrair áudio, transcrever e separar as vozes automaticamente:
+
+```sh
+python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
+  --output "$REPO/feedback-gifs/vozes" --audio-only \
+  --transcribe-model "/caminho/modelos/whisper-small" --language pt \
+  --diarization-model "/caminho/modelos/community-1" \
+  --voices-authorized
+```
+
+`--transcribe-model` e `--diarization-model` já implicam extração de áudio.
+Omitir `--language` ativa a detecção do idioma. Se souber a quantidade de pessoas,
+acrescente `--num-speakers 2` à diarização (1–100). A separação agrupa locutores
+por semelhança da voz, **não identifica quem são**; os rótulos valem apenas para
+aquela execução. Não são inferidos nome, gênero ou identidade real.
+
+Saídas adicionais:
+
+- `transcript.txt` e `transcript.json`: texto completo e segmentos com tempos
+  estimados pelo Whisper; não é uma transcrição atribuída a cada locutor.
+- `speaker_segments.json`: lista de falas detectadas com `speaker`, `start`, `end`.
+- `speakers/speaker_001/clip_0001.wav`, etc.: cortes individuais de cada voz.
+- `speakers/speaker_001/combined.wav`, etc.: todos os cortes aproveitáveis dessa
+  voz, em ordem cronológica e sem os intervalos de outras vozes/silêncio.
+- `catalog.json`: seção `audio` com caminhos relativos, durações, correspondência
+  entre rótulos e arquivos, método de separação e avisos.
+
+Os tempos de fala/transcrição são relativos ao início de **`audio.wav`**, que
+começa na primeira amostra da faixa selecionada; não se deve presumir alinhamento
+com GIFs quando a faixa original tiver atraso. Os WAVs mantêm a taxa de amostragem
+e não passam por normalização, redução de ruído ou alteração de timbre.
+
+**Revisão manual ou sem modelo de diarização:** ouça `audio.wav`, ajuste a lista
+`speaker_segments.json` ou crie um JSON equivalente:
+
+```json
+[
+  {"speaker": "voz_a", "start": 0.5, "end": 2.0},
+  {"speaker": "voz_b", "start": 2.5, "end": 4.0},
+  {"speaker": "voz_a", "start": 4.5, "end": 6.0}
+]
+```
+
+```sh
+python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
+  --output "$REPO/feedback-gifs/vozes-revisadas" --audio-only \
+  --speaker-segments "/caminho/locutores-revisados.json" --voices-authorized
+```
+
+Essa alternativa requer apenas Python/FFmpeg, aceita até 10.000 trechos e 100
+locutores e valida os limites contra a duração do áudio extraído. Não combine
+`--speaker-segments` com `--diarization-model`. Use sempre uma pasta nova.
+
+**Sobreposições e limites:** diarização determina *quando* cada voz fala, mas
+não separa fisicamente duas vozes simultâneas. Intervalos marcados com mais de um
+locutor são **excluídos dos WAVs por voz**, preservados no áudio original e
+contabilizados em `excludedOverlapDuration`. Cortes sobrepostos da mesma voz são
+unificados para não duplicar amostras. Rótulos sem fala isolada ficam no catálogo
+com `file: null`; se não houver falas aproveitáveis, o script emite um aviso.
+Música, ruído, vozes muito semelhantes e sobreposições não detectadas podem
+contaminar os resultados; transcrição e agrupamento precisam de revisão humana.
+
+**Para ElevenLabs:** `--voices-authorized` confirma que você tem autorização dos
+donos das vozes para preparar essas amostras; não constitui comprovação de
+consentimento. Use sua própria voz ou obtenha permissão explícita para criação
+de voz sintética. Ouça os `combined.wav`, remova trechos incorretos no JSON e
+gere novamente antes de enviar manualmente. Confira os requisitos atuais da
+modalidade de clonagem e do seu plano no ElevenLabs; o script não garante
+aceitação, fidelidade ou duração suficiente das amostras. Não adiciona voz à
+conta nem gera clones automaticamente.
+
+Áudio, transcrições e rótulos podem conter dados pessoais. Mantenha todas as
+saídas em `feedback-gifs/` (ignorada pelo Git) ou fora do repositório; não
+versione nem distribua essas amostras sem autorização.
+
+Os testes de áudio usam mídia sintética e verificam cortes/junção de amostras
+reais com FFmpeg. As interfaces de IA são testadas com respostas simuladas;
+a qualidade e a execução dos modelos completos precisam ser validadas no seu
+ambiente com os modelos instalados.
 
 ## Executar localmente
 
