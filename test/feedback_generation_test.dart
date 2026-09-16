@@ -43,11 +43,11 @@ void main() {
     );
     await catalog.parent.create(recursive: true);
     await catalog.writeAsString(jsonEncode({
-      'schemaVersion': 1,
-      'themes': [
+      'schemaVersion': 2,
+      'voices': [
         {
-          'id': 'zoacao',
-          'name': 'Zoação leve',
+          'id': 'natasha_caldeirao',
+          'name': 'Natasha Caldeirão',
           'description': 'Feedback original.',
           'clips': [
             {'id': 'acerto_1', 'category': 'correct', 'text': 'Boa!'},
@@ -57,7 +57,7 @@ void main() {
       ],
     }));
     clip = File.fromUri(
-      root.uri.resolve('assets/audio_feedback/zoacao_acerto_1.mp3'),
+      root.uri.resolve('assets/audio_feedback/natasha_caldeirao_acerto_1.mp3'),
     );
     messages = [];
     requests = [];
@@ -109,7 +109,7 @@ void main() {
 
   test('invalid catalog fails before requests or writes', () async {
     await File.fromUri(root.uri.resolve('assets/audio_feedback/catalog.json'))
-        .writeAsString('{"schemaVersion":1,"themes":[]}');
+        .writeAsString('{"schemaVersion":2,"voices":[]}');
     expect(await run(['--generate']), 1);
     expect(requests, isEmpty);
     expect(await clip.exists(), isFalse);
@@ -153,7 +153,7 @@ void main() {
     expect(await clip.readAsBytes(), _mp3);
     expect(
       await File.fromUri(
-        root.uri.resolve('assets/audio_feedback/zoacao_erro_1.mp3'),
+        root.uri.resolve('assets/audio_feedback/natasha_caldeirao_erro_1.mp3'),
       ).readAsBytes(),
       _mp3,
     );

@@ -6,7 +6,7 @@ import '../models/course.dart';
 import '../services/cloud_service.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
-import '../widgets/feedback_theme_button.dart';
+import '../widgets/feedback_voice_button.dart';
 import 'lesson_screen.dart';
 import 'profile_screen.dart';
 import 'sources_screen.dart';
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               ],
             ),
             actions: [
-              FeedbackThemeButton(controller: controller),
+              FeedbackVoiceButton(controller: controller),
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: Chip(

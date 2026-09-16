@@ -99,7 +99,7 @@ Future<int> runFeedbackGeneration(
       throw const GenerationException('Invalid feedback catalog.');
     }
     final catalog = FeedbackCatalog.fromJson(decoded);
-    final clips = catalog.themes.expand((theme) => theme.clips).toList();
+    final clips = catalog.voices.expand((voice) => voice.clips).toList();
     final planned = <FeedbackClip>[];
     for (final clip in clips) {
       final file = File.fromUri(repositoryRoot.uri.resolve(clip.assetPath));

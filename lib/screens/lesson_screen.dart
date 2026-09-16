@@ -7,7 +7,7 @@ import '../models/feedback_catalog.dart';
 import '../services/feedback_audio_player.dart';
 import '../state/learning_controller.dart';
 import '../theme.dart';
-import '../widgets/feedback_theme_button.dart';
+import '../widgets/feedback_voice_button.dart';
 import 'sources_screen.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -36,21 +36,21 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
   late final FeedbackAudioPlayer _audio;
   final _feedbackPicker = FeedbackPicker();
   FeedbackClip? _feedback;
-  late String _themeId;
+  late String _voiceId;
 
   @override
   void initState() {
     super.initState();
     _audio = widget.createFeedbackPlayer?.call() ?? FeedbackAudioPlayer();
-    _themeId = widget.controller.feedbackThemeId;
-    widget.controller.addListener(_themeChanged);
+    _voiceId = widget.controller.feedbackVoiceId;
+    widget.controller.addListener(_voiceChanged);
     WidgetsBinding.instance.addObserver(this);
   }
 
-  void _themeChanged() {
-    final themeId = widget.controller.feedbackThemeId;
-    if (_themeId == themeId) return;
-    _themeId = themeId;
+  void _voiceChanged() {
+    final voiceId = widget.controller.feedbackVoiceId;
+    if (_voiceId == voiceId) return;
+    _voiceId = voiceId;
     unawaited(_audio.stop());
     setState(() => _feedback = null);
   }
@@ -71,7 +71,7 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    widget.controller.removeListener(_themeChanged);
+    widget.controller.removeListener(_voiceChanged);
     _audio.dispose();
     _text.dispose();
     super.dispose();
@@ -109,9 +109,9 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
     setState(() {
       _correct = _exercise.accepts(_answer);
       _results[_exercise.id] = _correct!;
-      final theme = widget.controller.feedbackTheme;
-      _feedback = theme == null ? null : _feedbackPicker.pick(
-        theme,
+      final voice = widget.controller.feedbackVoice;
+      _feedback = voice == null ? null : _feedbackPicker.pick(
+        voice,
         _correct! ? FeedbackCategory.correct : FeedbackCategory.incorrect,
       );
     });
@@ -187,7 +187,7 @@ class _LessonScreenState extends State<LessonScreen> with WidgetsBindingObserver
                   ),
                 ),
               ),
-            FeedbackThemeButton(
+            FeedbackVoiceButton(
               controller: widget.controller,
               onOpening: () => unawaited(_audio.stop()),
             ),

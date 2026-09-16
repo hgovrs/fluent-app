@@ -40,9 +40,9 @@ class LearningController extends ChangeNotifier {
       courses.firstWhere((course) => course.id == _selectedCourseId);
   LearningProgress get progress => _progress[_selectedCourseId]!;
   bool get goalReached => progress.dailyXp >= progress.dailyGoal;
-  FeedbackTheme? get feedbackTheme =>
-      feedbackCatalog.theme(progress.feedbackThemeId);
-  String get feedbackThemeId => feedbackTheme?.id ?? FeedbackCatalog.off;
+  FeedbackVoice? get feedbackVoice =>
+      feedbackCatalog.voice(progress.feedbackVoiceId);
+  String get feedbackVoiceId => feedbackVoice?.id ?? FeedbackCatalog.off;
 
   bool isCompleted(Lesson lesson) =>
       course.lessons.any((item) => item.id == lesson.id) &&
@@ -189,11 +189,11 @@ class LearningController extends ChangeNotifier {
     await _persist();
   }
 
-  Future<void> setFeedbackTheme(String id) async {
-    if (id != FeedbackCatalog.off && feedbackCatalog.theme(id) == null) {
-      throw ArgumentError('Tema de feedback desconhecido.');
+  Future<void> setFeedbackVoice(String id) async {
+    if (id != FeedbackCatalog.off && feedbackCatalog.voice(id) == null) {
+      throw ArgumentError('Voz de feedback desconhecida.');
     }
-    _progress[_selectedCourseId] = progress.copyWith(feedbackThemeId: id);
+    _progress[_selectedCourseId] = progress.copyWith(feedbackVoiceId: id);
     await _persist();
   }
 
