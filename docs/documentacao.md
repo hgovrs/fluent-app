@@ -404,6 +404,76 @@ carregamento inicial da versão web continua valendo.
 proprietário. Até gerar e empacotar os MP3, os temas mostram suas frases por
 escrito e informam que o áudio está indisponível.
 
+## Preparar GIFs de feedback a partir de vídeo
+
+O script editorial `tool/generate_feedback_gifs.py` converte um vídeo local em
+`full.gif` e depois divide esse GIF em **trechos temporais**, não em recortes
+da imagem. Requer **Python 3 e FFmpeg**, com `ffmpeg` e `ffprobe` no `PATH`
+(Ubuntu/Debian: `sudo apt install ffmpeg`; macOS: `brew install ffmpeg`).
+Não requer pacotes Python adicionais, serviços externos ou envio do vídeo.
+Use apenas vídeos próprios ou com autorização para adaptação e distribuição.
+
+Defina `REPO` como o caminho absoluto do seu clone. Para separar um vídeo de
+acertos em trechos de 3 segundos:
+
+```sh
+REPO="/home/runner/work/fluent-app/fluent-app"
+python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
+  --output "$REPO/feedback-gifs/acertos" \
+  --category correct --segment-duration 3 --fps 10 --width 480
+```
+
+Use `--category incorrect` para um vídeo de erros. A categoria é escolhida por
+você: o script **não identifica automaticamente** quais cenas são de acerto/erro.
+O último trecho pode ser menor; uma sobra menor que um quadro é incorporada ao
+trecho anterior. A proporção da imagem é preservada e os GIFs repetem sem áudio.
+
+Para selecionar cenas diferentes do mesmo vídeo, salve um JSON local, por
+exemplo em `/tmp/cortes.json`, com tempos em segundos:
+
+```json
+[
+  {"id": "acerto_01", "category": "correct", "start": 0, "end": 2.5},
+  {"id": "erro_01", "category": "incorrect", "start": 4, "end": 6}
+]
+```
+
+```sh
+python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
+  --output "$REPO/feedback-gifs/reacoes" --segments "/tmp/cortes.json"
+```
+
+Os cortes devem estar dentro da duração do vídeo e durar pelo menos um quadro.
+IDs são únicos, começam com letra minúscula ou número e contêm até 80 letras
+minúsculas, números, `_` ou `-`; `full` é reservado. Não combine `--segments`
+com `--category` ou `--segment-duration`.
+
+Cada execução gera uma **pasta nova** contendo `full.gif`, os GIFs individuais e
+`catalog.json`. O catálogo registra `id`, `category`, `start`, `end` e `file`
+(relativo à pasta de saída) de cada trecho, além de duração da origem, FPS e
+largura. Os tempos são os cortes solicitados; a duração real pode variar pela
+precisão dos quadros e pela resolução de centésimos de segundo do formato GIF.
+O vídeo original não é alterado, saídas existentes não são sobrescritas e
+conversões que falham não publicam uma pasta incompleta.
+
+Prefira vídeos curtos: o GIF completo pode consumir bastante memória e espaço.
+Reduza `--width` (16–1920) e `--fps` (1–50) para arquivos menores. O limite é de
+1.000 trechos por execução. A pasta `feedback-gifs/` é ignorada pelo Git; se usar
+outro destino, mantenha mídias pessoais fora do repositório.
+
+**Este script apenas prepara arquivos.** Ainda não há upload de vídeo nem
+exibição de GIFs nas respostas do app. Uma integração futura precisará selecionar
+um trecho pela categoria, registrar os assets no Flutter e exibi-los ao corrigir
+a questão. O catálogo de GIFs é independente do catálogo de áudio existente.
+
+Testes Python (incluem conversão real de um vídeo sintético quando FFmpeg está
+instalado; esses testes de integração são pulados sem ele):
+
+```sh
+cd "$REPO"
+python3 -m unittest discover -s "$REPO/test" -p '*_test.py' -v
+```
+
 ## Executar localmente
 
 Requisitos: Flutter estável **3.35 ou superior**, Dart **3.9 ou superior** e o
