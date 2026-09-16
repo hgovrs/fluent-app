@@ -106,7 +106,7 @@ def diarize(audio, model_path, num_speakers):
         ) from None
 
 
-def validate_turns(turns, duration):
+def validate_turns(turns, duration, *, clip_to_audio=False):
     if not isinstance(turns, list) or len(turns) > 10000:
         raise SpeechError("Os locutores devem ser uma lista com no máximo 10.000 trechos.")
     validated = []
@@ -120,6 +120,13 @@ def validate_turns(turns, duration):
         if any(isinstance(v, bool) or not isinstance(v, (int, float))
                or not math.isfinite(v) for v in (start, end)):
             raise SpeechError("start/end dos locutores devem ser segundos numéricos finitos.")
+        if start >= end:
+            raise SpeechError("Cada trecho de voz deve ter start menor que end.")
+        if clip_to_audio:
+            # Model inference can include padding beyond the recording boundaries.
+            start, end = max(0, start), min(duration, end)
+            if start >= end:
+                continue
         if not 0 <= start < end <= duration:
             raise SpeechError(f"Trecho de voz fora do áudio extraído ({duration:.3f}s).")
         validated.append({"start": start, "end": end, "speaker": speaker})
@@ -228,7 +235,7 @@ def prepare(video, destination, options, run_media):
             turns = json.loads(Path(options.speaker_segments).read_text(encoding="utf-8"))
         else:
             turns = diarize(audio, options.diarization_model, options.num_speakers)
-        turns = validate_turns(turns, duration)
+        turns = validate_turns(turns, duration, clip_to_audio=bool(options.diarization_model))
         write_json(destination / "speaker_segments.json", turns)
         speakers, overlap = write_speakers(audio, destination, turns)
         result.update({

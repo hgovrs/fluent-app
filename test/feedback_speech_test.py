@@ -262,6 +262,54 @@ class SpeakerSegmentsTest(WorkspaceTest):
             with self.subTest(case=index), self.assertRaises(speech.SpeechError):
                 speech.validate_turns(turns, 2)
 
+    def test_automatic_turns_clip_partial_overlap_at_both_audio_boundaries(self):
+        turns = [
+            {"speaker": "B", "start": 1.5, "end": 2.05},
+            {"speaker": "A", "start": -0.05, "end": 0.5},
+        ]
+        original = json.loads(json.dumps(turns))
+        self.assertEqual(speech.validate_turns(turns, 2, clip_to_audio=True), [
+            {"speaker": "A", "start": 0, "end": 0.5},
+            {"speaker": "B", "start": 1.5, "end": 2},
+        ])
+        self.assertEqual(turns, original)
+        self.assertEqual(speech.validate_turns([
+            {"speaker": "A", "start": -1, "end": 3},
+        ], 2, clip_to_audio=True), [{"speaker": "A", "start": 0, "end": 2}])
+
+    def test_automatic_turns_entirely_outside_recording_are_discarded(self):
+        turns = [
+            {"speaker": "before", "start": -2, "end": -1},
+            {"speaker": "touches-start", "start": -1, "end": 0},
+            {"speaker": "touches-end", "start": 2, "end": 3},
+            {"speaker": "after", "start": 3, "end": 4},
+        ]
+        self.assertEqual(speech.validate_turns(turns, 2, clip_to_audio=True), [])
+        inside = {"speaker": "inside", "start": 0.5, "end": 1.5}
+        self.assertEqual(speech.validate_turns([*turns, inside], 2, clip_to_audio=True), [inside])
+
+    def test_automatic_turns_reject_reversed_empty_and_nonfinite_times_before_clipping(self):
+        invalid = [
+            (1, 0), (1, 1), (-1, -2), (4, 3),
+            (float("nan"), 1), (0, float("nan")),
+            (-float("inf"), 1), (0, float("inf")),
+            (float("inf"), 1), (0, -float("inf")),
+        ]
+        for start, end in invalid:
+            with self.subTest(start=start, end=end), self.assertRaises(speech.SpeechError):
+                speech.validate_turns([
+                    {"speaker": "A", "start": start, "end": end},
+                ], 2, clip_to_audio=True)
+
+    def test_manual_turns_still_reject_out_of_bounds_instead_of_clipping(self):
+        for start, end in ((-0.05, 0.5), (1.5, 2.05), (-1, 3), (-2, -1), (3, 4)):
+            for options in ({}, {"clip_to_audio": False}):
+                with self.subTest(start=start, end=end, options=options), \
+                        self.assertRaisesRegex(speech.SpeechError, "fora do áudio"):
+                    speech.validate_turns([
+                        {"speaker": "A", "start": start, "end": end},
+                    ], 2, **options)
+
     def test_same_voice_overlaps_duplicates_and_adjacent_ranges_are_merged(self):
         intervals, overlap = speech.clean_intervals([
             {"speaker": "A", "start": 0, "end": 2},
@@ -455,6 +503,38 @@ class SpeechIntegrationTest(WorkspaceTest):
         self.assertEqual(read_pcm(output / catalog["audio"]["speakers"][0]["file"])[1],
                          read_pcm(output / "audio.wav")[1])
         self.assertEqual(json.loads((output / "speaker_segments.json").read_text())[0]["start"], 0)
+
+    def test_automatic_diarization_eof_padding_exports_clipped_exact_pcm(self):
+        predictions = [
+            {"speaker": "B", "start": 0.5, "end": 1.05},
+            {"speaker": "A", "start": -0.05, "end": 0.5},
+            {"speaker": "padding", "start": 1.1, "end": 1.2},
+        ]
+        with mock.patch.object(speech, "diarize", return_value=predictions) as diarize:
+            catalog = self.generate(audio_only=True, speech=speech.SpeechOptions(
+                diarization_model=self.root, voices_authorized=True,
+            ))
+        diarize.assert_called_once()
+        output = self.root / "out"
+        self.assertEqual(json.loads((output / "speaker_segments.json").read_text()), [
+            {"speaker": "A", "start": 0, "end": 0.5},
+            {"speaker": "B", "start": 0.5, "end": 1},
+        ])
+        audio = catalog["audio"]
+        self.assertEqual(audio["speakerMethod"], "pyannote-community-1")
+        self.assertEqual(audio["excludedOverlapDuration"], 0)
+        self.assertEqual([item["label"] for item in audio["speakers"]], ["A", "B"])
+        source_pcm = read_pcm(output / "audio.wav")[1]
+        for index, item in enumerate(audio["speakers"]):
+            with self.subTest(speaker=item["label"]):
+                self.assertEqual(item["duration"], 0.5)
+                self.assertEqual(len(item["clips"]), 1)
+                clip = item["clips"][0]
+                self.assertEqual((clip["start"], clip["end"]), (index * 0.5, (index + 1) * 0.5))
+                expected = source_pcm[index * 44100:(index + 1) * 44100]
+                self.assertEqual(read_pcm(output / item["file"])[1], expected)
+                self.assertEqual(read_pcm(output / clip["file"])[1], expected)
+        self.assertEqual(json.loads((output / "catalog.json").read_text()), catalog)
 
     def test_empty_and_fully_overlapping_turns_emit_no_clean_speech_warning(self):
         for turns in ([], [

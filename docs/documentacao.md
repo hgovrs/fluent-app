@@ -583,6 +583,9 @@ python3 "$REPO/tool/generate_feedback_gifs.py" "/caminho/meu-video.mp4" \
 Essa alternativa requer apenas Python/FFmpeg, aceita até 10.000 trechos e 100
 locutores e valida os limites contra a duração do áudio extraído. Não combine
 `--speaker-segments` com `--diarization-model`. Use sempre uma pasta nova.
+Predições automáticas que ultrapassam o início/fim do áudio por preenchimento
+das janelas do modelo são recortadas aos limites; previsões inteiramente fora
+do áudio são descartadas. O JSON manual continua exigindo limites exatos válidos.
 
 **Sobreposições e limites:** diarização determina *quando* cada voz fala, mas
 não separa fisicamente duas vozes simultâneas. Intervalos marcados com mais de um
