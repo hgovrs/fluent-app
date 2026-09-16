@@ -27,37 +27,40 @@ void main() {
     List<String> arguments, {
     Map<String, String> environment = _credentials,
     AudioSynthesis? synthesize,
-  }) =>
-      runFeedbackGeneration(
-        arguments,
-        repositoryRoot: root,
-        environment: environment,
-        synthesize: synthesize ?? fakeSynthesis,
-        log: messages.add,
-      );
+  }) => runFeedbackGeneration(
+    arguments,
+    repositoryRoot: root,
+    environment: environment,
+    synthesize: synthesize ?? fakeSynthesis,
+    log: messages.add,
+  );
 
   setUp(() async {
-    root = await Directory.systemTemp.createTemp('fluent_feedback_generation_test_');
+    root = await Directory.systemTemp.createTemp(
+      'fluent_feedback_generation_test_',
+    );
     final catalog = File.fromUri(
       root.uri.resolve('assets/audio_feedback/catalog.json'),
     );
     await catalog.parent.create(recursive: true);
-    await catalog.writeAsString(jsonEncode({
-      'schemaVersion': 1,
-      'themes': [
-        {
-          'id': 'zoacao',
-          'name': 'Zoação leve',
-          'description': 'Feedback original.',
-          'clips': [
-            {'id': 'acerto_1', 'category': 'correct', 'text': 'Boa!'},
-            {'id': 'erro_1', 'category': 'incorrect', 'text': 'Quase!'},
-          ],
-        },
-      ],
-    }));
+    await catalog.writeAsString(
+      jsonEncode({
+        'schemaVersion': 2,
+        'voices': [
+          {
+            'id': 'natasha_caldeirao',
+            'name': 'Natasha Caldeirão',
+            'description': 'Feedback original.',
+            'clips': [
+              {'id': 'acerto_1', 'category': 'correct', 'text': 'Boa!'},
+              {'id': 'erro_1', 'category': 'incorrect', 'text': 'Quase!'},
+            ],
+          },
+        ],
+      }),
+    );
     clip = File.fromUri(
-      root.uri.resolve('assets/audio_feedback/zoacao_acerto_1.mp3'),
+      root.uri.resolve('assets/audio_feedback/natasha_caldeirao_acerto_1.mp3'),
     );
     messages = [];
     requests = [];
@@ -77,8 +80,9 @@ void main() {
   });
 
   test('help needs neither catalog nor credentials', () async {
-    await File.fromUri(root.uri.resolve('assets/audio_feedback/catalog.json'))
-        .delete();
+    await File.fromUri(
+      root.uri.resolve('assets/audio_feedback/catalog.json'),
+    ).delete();
     expect(await run(['--help'], environment: {}), 0);
     expect(requests, isEmpty);
     expect(messages.join('\n'), contains('--force'));
@@ -96,11 +100,14 @@ void main() {
     expect(requests, isEmpty);
   });
 
-  test('chargeable operations require explicit generate authorization', () async {
-    expect(await run([]), 1);
-    expect(requests, isEmpty);
-    expect(messages.last, contains('--generate'));
-  });
+  test(
+    'chargeable operations require explicit generate authorization',
+    () async {
+      expect(await run([]), 1);
+      expect(requests, isEmpty);
+      expect(messages.last, contains('--generate'));
+    },
+  );
 
   test('unknown flags never make requests', () async {
     expect(await run(['--generate', '--typo']), 1);
@@ -108,8 +115,9 @@ void main() {
   });
 
   test('invalid catalog fails before requests or writes', () async {
-    await File.fromUri(root.uri.resolve('assets/audio_feedback/catalog.json'))
-        .writeAsString('{"schemaVersion":1,"themes":[]}');
+    await File.fromUri(
+      root.uri.resolve('assets/audio_feedback/catalog.json'),
+    ).writeAsString('{"schemaVersion":2,"voices":[]}');
     expect(await run(['--generate']), 1);
     expect(requests, isEmpty);
     expect(await clip.exists(), isFalse);
@@ -153,14 +161,11 @@ void main() {
     expect(await clip.readAsBytes(), _mp3);
     expect(
       await File.fromUri(
-        root.uri.resolve('assets/audio_feedback/zoacao_erro_1.mp3'),
+        root.uri.resolve('assets/audio_feedback/natasha_caldeirao_erro_1.mp3'),
       ).readAsBytes(),
       _mp3,
     );
-    expect(
-      (await clip.parent.list().toList()).whereType<Directory>(),
-      isEmpty,
-    );
+    expect((await clip.parent.list().toList()).whereType<Directory>(), isEmpty);
     expect(messages.join('\n'), isNot(contains('test-only-key')));
   });
 
@@ -171,7 +176,11 @@ void main() {
       text: 'Boa!',
     );
     expect(request.uri.host, 'api.elevenlabs.io');
-    expect(request.uri.pathSegments, ['v1', 'text-to-speech', 'custom/voice ?#']);
+    expect(request.uri.pathSegments, [
+      'v1',
+      'text-to-speech',
+      'custom/voice ?#',
+    ]);
     expect(request.uri.queryParameters, {'output_format': 'mp3_44100_128'});
   });
 
@@ -194,29 +203,41 @@ void main() {
     }
   });
 
-  test('provider failure stops immediately without overwriting old audio', () async {
-    await clip.writeAsBytes(_mp3);
-    var calls = 0;
-    for (final status in [401, 429]) {
+  test(
+    'provider failure stops immediately without overwriting old audio',
+    () async {
+      await clip.writeAsBytes(_mp3);
+      var calls = 0;
+      for (final status in [401, 429]) {
+        expect(
+          await run(
+            ['--generate', '--force'],
+            synthesize: (_) async {
+              calls++;
+              throw GenerationException('ElevenLabs returned HTTP $status.');
+            },
+          ),
+          1,
+        );
+        expect(messages.last, contains('HTTP $status'));
+        expect(await clip.readAsBytes(), _mp3);
+      }
+      expect(calls, 2);
       expect(
-        await run(['--generate', '--force'], synthesize: (_) async {
-          calls++;
-          throw GenerationException('ElevenLabs returned HTTP $status.');
-        }),
-        1,
+        (await clip.parent.list().toList()).whereType<Directory>(),
+        isEmpty,
       );
-      expect(messages.last, contains('HTTP $status'));
-      expect(await clip.readAsBytes(), _mp3);
-    }
-    expect(calls, 2);
-    expect((await clip.parent.list().toList()).whereType<Directory>(), isEmpty);
-  });
+    },
+  );
 
   test('unexpected failures never expose transport secrets', () async {
     expect(
-      await run(['--generate'], synthesize: (_) async {
-        throw Exception('test-only-key private provider response');
-      }),
+      await run(
+        ['--generate'],
+        synthesize: (_) async {
+          throw Exception('test-only-key private provider response');
+        },
+      ),
       1,
     );
     expect(messages.join('\n'), isNot(contains('test-only-key')));
@@ -226,10 +247,13 @@ void main() {
   test('timeouts stop without retries or incomplete output', () async {
     var calls = 0;
     expect(
-      await run(['--generate'], synthesize: (_) async {
-        calls++;
-        throw TimeoutException('test-only-key');
-      }),
+      await run(
+        ['--generate'],
+        synthesize: (_) async {
+          calls++;
+          throw TimeoutException('test-only-key');
+        },
+      ),
       1,
     );
     expect(calls, 1);
@@ -241,12 +265,15 @@ void main() {
   test('later failure preserves completed clips for a resumable run', () async {
     var calls = 0;
     expect(
-      await run(['--generate'], synthesize: (_) async {
-        if (++calls == 2) {
-          throw const GenerationException('ElevenLabs returned HTTP 429.');
-        }
-        return _mp3;
-      }),
+      await run(
+        ['--generate'],
+        synthesize: (_) async {
+          if (++calls == 2) {
+            throw const GenerationException('ElevenLabs returned HTTP 429.');
+          }
+          return _mp3;
+        },
+      ),
       1,
     );
     expect(calls, 2);
@@ -274,8 +301,9 @@ void main() {
     await marker.writeAsString('preserve');
     expect(await run(['--generate', '--force']), 1);
     expect(await marker.readAsString(), 'preserve');
-    final directories =
-        (await clip.parent.list().toList()).whereType<Directory>().toList();
+    final directories = (await clip.parent.list().toList())
+        .whereType<Directory>()
+        .toList();
     expect(directories.map((directory) => directory.path), [clip.path]);
     expect(requests, hasLength(1));
   });
@@ -286,13 +314,12 @@ void main() {
       String? mime = 'audio/mpeg',
       int? length,
       List<List<int>> chunks = const [_mp3],
-    }) =>
-        readSynthesisResponse(
-          statusCode: status,
-          contentType: mime,
-          contentLength: length ?? _mp3.length,
-          body: Stream.fromIterable(chunks),
-        );
+    }) => readSynthesisResponse(
+      statusCode: status,
+      contentType: mime,
+      contentLength: length ?? _mp3.length,
+      body: Stream.fromIterable(chunks),
+    );
 
     test('accepts bounded MPEG audio', () async {
       expect(await read(), _mp3);
@@ -309,7 +336,10 @@ void main() {
 
     test('rejects missing or incorrect MIME and empty responses', () async {
       for (final mime in [null, 'application/json', 'text/html']) {
-        await expectLater(read(mime: mime), throwsA(isA<GenerationException>()));
+        await expectLater(
+          read(mime: mime),
+          throwsA(isA<GenerationException>()),
+        );
       }
       await expectLater(
         read(length: 0, chunks: []),
@@ -329,20 +359,23 @@ void main() {
       );
     });
 
-    test('rejects a truncated response or an interrupted body stream', () async {
-      await expectLater(
-        read(length: _mp3.length + 1),
-        throwsA(isA<GenerationException>()),
-      );
-      await expectLater(
-        readSynthesisResponse(
-          statusCode: 200,
-          contentType: 'audio/mpeg',
-          contentLength: -1,
-          body: Stream<List<int>>.error(const SocketException('Interrupted')),
-        ),
-        throwsA(isA<SocketException>()),
-      );
-    });
+    test(
+      'rejects a truncated response or an interrupted body stream',
+      () async {
+        await expectLater(
+          read(length: _mp3.length + 1),
+          throwsA(isA<GenerationException>()),
+        );
+        await expectLater(
+          readSynthesisResponse(
+            statusCode: 200,
+            contentType: 'audio/mpeg',
+            contentLength: -1,
+            body: Stream<List<int>>.error(const SocketException('Interrupted')),
+          ),
+          throwsA(isA<SocketException>()),
+        );
+      },
+    );
   });
 }

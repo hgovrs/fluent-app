@@ -12,7 +12,9 @@ import 'support/pump_fluent_app.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('opens the real course offline and navigates the main tabs', (tester) async {
+  testWidgets('opens the real course offline and navigates the main tabs', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({});
     await pumpFluentApp(tester);
     expect(find.text('Um pouco hoje.\nUm mundo amanhã.'), findsOneWidget);
@@ -27,43 +29,82 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
-  testWidgets('checks all exercise types and saves only at session end', (tester) async {
+  testWidgets('checks all exercise types and saves only at session end', (
+    tester,
+  ) async {
     final exercises = [
       Exercise(
-        id: 'choice', type: ExerciseType.choice, prompt: 'Como se diz olá?',
-        answer: 'Hello', options: ['Hello', 'Goodbye'], explanation: 'Hello é uma saudação.',
+        id: 'choice',
+        type: ExerciseType.choice,
+        prompt: 'Como se diz olá?',
+        answer: 'Hello',
+        options: ['Hello', 'Goodbye'],
+        explanation: 'Hello é uma saudação.',
       ),
       Exercise(
-        id: 'typed', type: ExerciseType.typed, prompt: 'Escreva obrigado.',
-        answer: 'Thank you', explanation: 'Thank you expressa gratidão.',
+        id: 'typed',
+        type: ExerciseType.typed,
+        prompt: 'Escreva obrigado.',
+        answer: 'Thank you',
+        explanation: 'Thank you expressa gratidão.',
       ),
       Exercise(
-        id: 'order', type: ExerciseType.wordOrder, prompt: 'Organize: eu estou bem.',
-        answer: 'I am fine', options: ['fine', 'I', 'am'], explanation: 'I am fine significa estou bem.',
+        id: 'order',
+        type: ExerciseType.wordOrder,
+        prompt: 'Organize: eu estou bem.',
+        answer: 'I am fine',
+        options: ['fine', 'I', 'am'],
+        explanation: 'I am fine significa estou bem.',
       ),
     ];
-    final lesson = Lesson(id: 'lesson', title: 'Primeiros passos', description: 'Saudações', exercises: exercises);
+    final lesson = Lesson(
+      id: 'lesson',
+      title: 'Primeiros passos',
+      description: 'Saudações',
+      exercises: exercises,
+    );
     final controller = LearningController(
       courses: [
         Course(
-          id: 'en', title: 'Inglês', sourceLanguage: 'pt-BR', targetLanguage: 'en', level: 'A1',
-          units: [CourseUnit(id: 'unit', title: 'Começo', description: 'Começo', lessons: [lesson])],
+          id: 'en',
+          title: 'Inglês',
+          sourceLanguage: 'pt-BR',
+          targetLanguage: 'en',
+          level: 'A1',
+          units: [
+            CourseUnit(
+              id: 'unit',
+              title: 'Começo',
+              description: 'Começo',
+              lessons: [lesson],
+            ),
+          ],
         ),
       ],
       store: ProgressStore(read: () async => null, write: (_) async => true),
     );
     await controller.load();
-    await tester.pumpWidget(MaterialApp(
-      theme: fluentTheme,
-      home: LessonScreen(controller: controller, exercises: exercises, lesson: lesson),
-    ));
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: fluentTheme,
+        home: LessonScreen(
+          controller: controller,
+          exercises: exercises,
+          lesson: lesson,
+        ),
+      ),
+    );
     await tester.tap(find.text('Goodbye'));
     await tester.pump();
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
     expect(find.text('Vamos aprender com essa!'), findsOneWidget);
     expect(controller.progress.completedLessonIds, isEmpty);
-    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      find.text('Continuar'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '  THANK YOU!  ');
@@ -72,7 +113,11 @@ void main() {
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
     expect(find.text('Muito bem!'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      find.text('Continuar'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     for (final word in ['I', 'am', 'fine']) {
@@ -82,7 +127,11 @@ void main() {
     await tester.ensureVisible(find.text('Verificar'));
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(find.text('Continuar'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      find.text('Continuar'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     expect(find.text('Mais um passo dado!'), findsOneWidget);

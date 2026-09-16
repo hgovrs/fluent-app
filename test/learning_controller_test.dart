@@ -3,45 +3,46 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../lib/models/course.dart';
-import '../lib/services/progress_store.dart';
-import '../lib/state/learning_controller.dart';
+import 'package:fluent_app/models/course.dart';
+import 'package:fluent_app/services/progress_store.dart';
+import 'package:fluent_app/state/learning_controller.dart';
 
 Course _course(String id) => Course(
-      id: id,
-      title: 'Curso $id',
-      sourceLanguage: 'pt-BR',
-      targetLanguage: id,
-      level: 'A1',
-      units: [
-        CourseUnit(
-          id: '$id-unit',
-          title: 'Unidade',
-          description: 'Uma unidade.',
-          lessons: List.generate(
-            3,
-            (i) => Lesson(
-              id: '$id-lesson-$i',
-              title: 'Lição $i',
-              description: 'Uma lição.',
-              exercises: List.generate(
-                2,
-                (j) => Exercise(
-                  id: '$id-exercise-$i-$j',
-                  type: ExerciseType.typed,
-                  prompt: 'Olá',
-                  answer: 'Hello',
-                  explanation: 'Hello significa olá.',
-                ),
-              ),
+  id: id,
+  title: 'Curso $id',
+  sourceLanguage: 'pt-BR',
+  targetLanguage: id,
+  level: 'A1',
+  units: [
+    CourseUnit(
+      id: '$id-unit',
+      title: 'Unidade',
+      description: 'Uma unidade.',
+      lessons: List.generate(
+        3,
+        (i) => Lesson(
+          id: '$id-lesson-$i',
+          title: 'Lição $i',
+          description: 'Uma lição.',
+          exercises: List.generate(
+            2,
+            (j) => Exercise(
+              id: '$id-exercise-$i-$j',
+              type: ExerciseType.typed,
+              prompt: 'Olá',
+              answer: 'Hello',
+              explanation: 'Hello significa olá.',
             ),
           ),
         ),
-      ],
-    );
+      ),
+    ),
+  ],
+);
 
-Map<String, bool> _answers(Lesson lesson, {bool correct = true}) =>
-    {for (final exercise in lesson.exercises) exercise.id: correct};
+Map<String, bool> _answers(Lesson lesson, {bool correct = true}) => {
+  for (final exercise in lesson.exercises) exercise.id: correct,
+};
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +65,10 @@ void main() {
     );
     courses = [_course('en'), _course('es')];
     controller = LearningController(
-        courses: courses, store: store, now: () => now);
+      courses: courses,
+      store: store,
+      now: () => now,
+    );
   });
 
   tearDown(() => controller.dispose());
@@ -75,8 +79,10 @@ void main() {
     expect(controller.nextLesson, lessons.first);
     expect(controller.isUnlocked(lessons.first), isTrue);
     expect(controller.isUnlocked(lessons[1]), isFalse);
-    await expectLater(controller.completeLesson(lessons[1], _answers(lessons[1])),
-        throwsArgumentError);
+    await expectLater(
+      controller.completeLesson(lessons[1], _answers(lessons[1])),
+      throwsArgumentError,
+    );
     await controller.completeLesson(lessons.first, _answers(lessons.first));
     expect(controller.isCompleted(lessons.first), isTrue);
     expect(controller.isUnlocked(lessons[1]), isTrue);
@@ -106,23 +112,32 @@ void main() {
     expect(controller.progress.streak, 2);
   });
 
-  test('rejeita resultados parciais e IDs estranhos sem mudar progresso',
-      () async {
-    final lesson = controller.course.lessons.first;
-    await expectLater(controller.completeLesson(lesson, {}), throwsArgumentError);
-    await expectLater(
-      controller.completeLesson(lesson,
-          {lesson.exercises.first.id: true, 'unknown': true}),
-      throwsArgumentError,
-    );
-    await expectLater(
-      controller.completeLesson(courses.last.lessons.first,
-          _answers(courses.last.lessons.first)),
-      throwsArgumentError,
-    );
-    expect(controller.progress.totalXp, 0);
-    expect(saved, isNull);
-  });
+  test(
+    'rejeita resultados parciais e IDs estranhos sem mudar progresso',
+    () async {
+      final lesson = controller.course.lessons.first;
+      await expectLater(
+        controller.completeLesson(lesson, {}),
+        throwsArgumentError,
+      );
+      await expectLater(
+        controller.completeLesson(lesson, {
+          lesson.exercises.first.id: true,
+          'unknown': true,
+        }),
+        throwsArgumentError,
+      );
+      await expectLater(
+        controller.completeLesson(
+          courses.last.lessons.first,
+          _answers(courses.last.lessons.first),
+        ),
+        throwsArgumentError,
+      );
+      expect(controller.progress.totalXp, 0);
+      expect(saved, isNull);
+    },
+  );
 
   test('erros entram na fila hoje e vocabulário aprendido amanhã', () async {
     final lesson = controller.course.lessons.first;
@@ -130,39 +145,45 @@ void main() {
       lesson.exercises.first.id: false,
       lesson.exercises.last.id: true,
     });
-    expect(controller.dueExercises.map((e) => e.id),
-        [lesson.exercises.first.id]);
+    expect(controller.dueExercises.map((e) => e.id), [
+      lesson.exercises.first.id,
+    ]);
     now = DateTime(2026, 9, 11);
     expect(controller.dueExercises, hasLength(2));
-    await controller.completeReview(
-        {for (final exercise in controller.dueExercises) exercise.id: true});
+    await controller.completeReview({
+      for (final exercise in controller.dueExercises) exercise.id: true,
+    });
     expect(controller.progress.reviewedCount, 2);
     expect(controller.progress.totalXp, 30);
     expect(controller.dueExercises, isEmpty);
     expect(controller.progress.streak, 2);
-    await expectLater(controller.completeReview({lesson.exercises.first.id: true}),
-        throwsArgumentError);
+    await expectLater(
+      controller.completeReview({lesson.exercises.first.id: true}),
+      throwsArgumentError,
+    );
   });
 
-  test('repetição espaçada progride em 1, 3, 7, 14, 30 dias e reinicia no erro',
-      () async {
-    final lesson = controller.course.lessons.first;
-    await controller.completeLesson(lesson, _answers(lesson, correct: false));
-    final id = lesson.exercises.first.id;
-    for (final interval in [1, 3, 7, 14, 30, 30]) {
+  test(
+    'repetição espaçada progride em 1, 3, 7, 14, 30 dias e reinicia no erro',
+    () async {
+      final lesson = controller.course.lessons.first;
+      await controller.completeLesson(lesson, _answers(lesson, correct: false));
+      final id = lesson.exercises.first.id;
+      for (final interval in [1, 3, 7, 14, 30, 30]) {
+        await controller.completeReview({id: true});
+        final schedule = controller.progress.reviews[id]!;
+        expect(schedule.intervalDays, interval);
+        now = now.add(Duration(days: interval));
+      }
+      await controller.completeReview({id: false});
+      expect(controller.progress.reviews[id]!.intervalDays, 1);
+      expect(controller.progress.reviews[id]!.successCount, 0);
+      now = now.add(const Duration(days: 1));
       await controller.completeReview({id: true});
-      final schedule = controller.progress.reviews[id]!;
-      expect(schedule.intervalDays, interval);
-      now = now.add(Duration(days: interval));
-    }
-    await controller.completeReview({id: false});
-    expect(controller.progress.reviews[id]!.intervalDays, 1);
-    expect(controller.progress.reviews[id]!.successCount, 0);
-    now = now.add(const Duration(days: 1));
-    await controller.completeReview({id: true});
-    expect(controller.progress.reviews[id]!.intervalDays, 1);
-    expect(controller.progress.totalXp, 20);
-  });
+      expect(controller.progress.reviews[id]!.intervalDays, 1);
+      expect(controller.progress.totalXp, 20);
+    },
+  );
 
   test('curso, meta, fila e pontuação ficam isolados e persistem', () async {
     final lesson = controller.course.lessons.first;
@@ -175,7 +196,10 @@ void main() {
     expect(controller.isCompleted(lesson), isFalse);
     await controller.setDailyGoal(20);
     final restored = LearningController(
-        courses: courses, store: store, now: () => now);
+      courses: courses,
+      store: store,
+      now: () => now,
+    );
     addTearDown(restored.dispose);
     await restored.load();
     expect(restored.course.id, 'es');
@@ -195,7 +219,9 @@ void main() {
     addTearDown(first.dispose);
     addTearDown(second.dispose);
     await first.completeLesson(
-        first.course.lessons.first, _answers(first.course.lessons.first));
+      first.course.lessons.first,
+      _answers(first.course.lessons.first),
+    );
     await second.load();
     expect(second.progress.totalXp, 40);
     expect(second.progress.completedLessonIds, hasLength(1));
@@ -213,7 +239,9 @@ void main() {
     await controller.completeLesson(lesson, _answers(lesson));
     final remote = controller.exportProgress();
     await controller.completeLesson(
-        controller.course.lessons[1], _answers(controller.course.lessons[1]));
+      controller.course.lessons[1],
+      _answers(controller.course.lessons[1]),
+    );
     await controller.mergeRemote(remote);
     await controller.mergeRemote(remote);
     expect(controller.progress.totalXp, 80);
@@ -226,8 +254,7 @@ void main() {
     final lesson = controller.course.lessons.first;
     await controller.completeLesson(lesson, _answers(lesson));
     final before = controller.exportProgress();
-    final remote =
-        jsonDecode(jsonEncode(before)) as Map<String, dynamic>;
+    final remote = jsonDecode(jsonEncode(before)) as Map<String, dynamic>;
     remote['courses']['es']['totalXp'] = -1;
     await expectLater(controller.mergeRemote(remote), throwsFormatException);
     expect(controller.exportProgress(), before);
@@ -235,21 +262,23 @@ void main() {
     await expectLater(controller.mergeRemote(remote), throwsFormatException);
   });
 
-  test('dados corrompidos não derrubam o app nem são sobrescritos ao carregar',
-      () async {
-    for (final raw in [
-      '{broken',
-      '[]',
-      '{"schemaVersion":99,"courses":{},"selectedCourseId":"en"}',
-      '{"schemaVersion":1,"courses":{"en":42},"selectedCourseId":"en"}',
-    ]) {
-      saved = raw;
-      await controller.load();
-      expect(controller.storageError, isNotNull);
-      expect(controller.progress.totalXp, 0);
-      expect(saved, raw);
-    }
-  });
+  test(
+    'dados corrompidos não derrubam o app nem são sobrescritos ao carregar',
+    () async {
+      for (final raw in [
+        '{broken',
+        '[]',
+        '{"schemaVersion":99,"courses":{},"selectedCourseId":"en"}',
+        '{"schemaVersion":1,"courses":{"en":42},"selectedCourseId":"en"}',
+      ]) {
+        saved = raw;
+        await controller.load();
+        expect(controller.storageError, isNotNull);
+        expect(controller.progress.totalXp, 0);
+        expect(saved, raw);
+      }
+    },
+  );
 
   test('IDs desconhecidos no progresso salvo são rejeitados', () async {
     final remote = controller.exportProgress();
@@ -258,22 +287,26 @@ void main() {
     expect(controller.progress.completedLessonIds, isEmpty);
   });
 
-  test('falha de persistência mantém a sessão e recuperação limpa aviso',
-      () async {
-    var succeeds = false;
-    final unreliable = LearningController(
-      courses: courses,
-      store: ProgressStore(
-          read: () async => null, write: (_) async => succeeds),
-      now: () => now,
-    );
-    addTearDown(unreliable.dispose);
-    final lesson = unreliable.course.lessons.first;
-    await unreliable.completeLesson(lesson, _answers(lesson));
-    expect(unreliable.storageError, isNotNull);
-    expect(unreliable.progress.totalXp, 40);
-    succeeds = true;
-    await unreliable.setDailyGoal(50);
-    expect(unreliable.storageError, isNull);
-  });
+  test(
+    'falha de persistência mantém a sessão e recuperação limpa aviso',
+    () async {
+      var succeeds = false;
+      final unreliable = LearningController(
+        courses: courses,
+        store: ProgressStore(
+          read: () async => null,
+          write: (_) async => succeeds,
+        ),
+        now: () => now,
+      );
+      addTearDown(unreliable.dispose);
+      final lesson = unreliable.course.lessons.first;
+      await unreliable.completeLesson(lesson, _answers(lesson));
+      expect(unreliable.storageError, isNotNull);
+      expect(unreliable.progress.totalXp, 40);
+      succeeds = true;
+      await unreliable.setDailyGoal(50);
+      expect(unreliable.storageError, isNull);
+    },
+  );
 }

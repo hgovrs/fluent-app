@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import '../lib/models/feedback_catalog.dart';
+import 'package:fluent_app/models/feedback_catalog.dart';
 
 const maxAudioBytes = 10 * 1024 * 1024;
 const _requestTimeout = Duration(seconds: 60);
@@ -38,22 +38,22 @@ class SynthesisRequest {
     required String voiceId,
     required String apiKey,
     required String text,
-  })  : uri = Uri(
-          scheme: 'https',
-          host: 'api.elevenlabs.io',
-          pathSegments: ['v1', 'text-to-speech', voiceId],
-          queryParameters: {'output_format': 'mp3_44100_128'},
-        ),
-        headers = Map.unmodifiable({
-          'xi-api-key': apiKey,
-          'Content-Type': 'application/json',
-          'Accept': 'audio/mpeg',
-        }),
-        body = Map.unmodifiable({
-          'text': text,
-          'model_id': 'eleven_multilingual_v2',
-          'language_code': 'pt',
-        });
+  }) : uri = Uri(
+         scheme: 'https',
+         host: 'api.elevenlabs.io',
+         pathSegments: ['v1', 'text-to-speech', voiceId],
+         queryParameters: {'output_format': 'mp3_44100_128'},
+       ),
+       headers = Map.unmodifiable({
+         'xi-api-key': apiKey,
+         'Content-Type': 'application/json',
+         'Accept': 'audio/mpeg',
+       }),
+       body = Map.unmodifiable({
+         'text': text,
+         'model_id': 'eleven_multilingual_v2',
+         'language_code': 'pt',
+       });
 
   final Uri uri;
   final Map<String, String> headers;
@@ -99,7 +99,7 @@ Future<int> runFeedbackGeneration(
       throw const GenerationException('Invalid feedback catalog.');
     }
     final catalog = FeedbackCatalog.fromJson(decoded);
-    final clips = catalog.themes.expand((theme) => theme.clips).toList();
+    final clips = catalog.voices.expand((voice) => voice.clips).toList();
     final planned = <FeedbackClip>[];
     for (final clip in clips) {
       final file = File.fromUri(repositoryRoot.uri.resolve(clip.assetPath));
@@ -107,8 +107,10 @@ Future<int> runFeedbackGeneration(
         planned.add(clip);
       }
     }
-    final characters =
-        planned.fold<int>(0, (total, clip) => total + clip.text.runes.length);
+    final characters = planned.fold<int>(
+      0,
+      (total, clip) => total + clip.text.runes.length,
+    );
     output(
       'Catalog: ${clips.length} phrases. Planned: ${planned.length} phrases, '
       '$characters characters. Skipped: ${clips.length - planned.length}.',
@@ -133,11 +135,9 @@ Future<int> runFeedbackGeneration(
     }
     final generate = synthesize ?? synthesizeWithElevenLabs;
     for (final clip in planned) {
-      final bytes = await generate(SynthesisRequest(
-        voiceId: voiceId,
-        apiKey: apiKey,
-        text: clip.text,
-      ));
+      final bytes = await generate(
+        SynthesisRequest(voiceId: voiceId, apiKey: apiKey, text: clip.text),
+      );
       _validateAudio(bytes);
       await _writeAtomically(
         File.fromUri(repositoryRoot.uri.resolve(clip.assetPath)),
@@ -163,8 +163,7 @@ Future<int> runFeedbackGeneration(
 }
 
 Future<List<int>> synthesizeWithElevenLabs(SynthesisRequest input) async {
-  final client = HttpClient()
-    ..connectionTimeout = const Duration(seconds: 15);
+  final client = HttpClient()..connectionTimeout = const Duration(seconds: 15);
   try {
     return await _sendRequest(client, input).timeout(_requestTimeout);
   } finally {
@@ -223,18 +222,22 @@ Future<List<int>> readSynthesisResponse({
 
 void _validateAudio(List<int> bytes) {
   if (bytes.length > maxAudioBytes || !_hasMp3Header(bytes)) {
-    throw const GenerationException('Empty, oversized or invalid MP3 response.');
+    throw const GenerationException(
+      'Empty, oversized or invalid MP3 response.',
+    );
   }
 }
 
 bool _hasMp3Header(List<int> bytes) {
   if (bytes.length < 10) return false;
-  final hasId3 = bytes[0] == 0x49 &&
+  final hasId3 =
+      bytes[0] == 0x49 &&
       bytes[1] == 0x44 &&
       bytes[2] == 0x33 &&
       bytes[3] >= 2 &&
       bytes[3] <= 4;
-  final hasFrame = bytes[0] == 0xff &&
+  final hasFrame =
+      bytes[0] == 0xff &&
       (bytes[1] & 0xe0) == 0xe0 &&
       (bytes[1] & 0x18) != 0x08 &&
       (bytes[1] & 0x06) == 0x02 &&

@@ -9,6 +9,7 @@ import 'services/cloud_service.dart';
 import 'services/progress_store.dart';
 import 'state/learning_controller.dart';
 import 'theme.dart';
+import 'widgets/fluent_logo.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +56,8 @@ class _FluentAppState extends State<FluentApp> {
       title: 'Fluent',
       debugShowCheckedModeBanner: false,
       theme: fluentTheme,
+      darkTheme: fluentTheme,
+      themeMode: ThemeMode.dark,
       locale: const Locale('pt', 'BR'),
       supportedLocales: const [Locale('pt', 'BR')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
@@ -64,16 +67,25 @@ class _FluentAppState extends State<FluentApp> {
           if (snapshot.hasError) {
             return Scaffold(
               body: Center(
-                child: Padding(
+                child: SingleChildScrollView(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.cloud_off_rounded, size: 56),
+                      const FluentLogo(size: 72),
                       const SizedBox(height: 16),
-                      const Text('Não conseguimos abrir seu curso. Tente novamente.'),
+                      const BrandIconBox(
+                        Icons.cloud_off_rounded,
+                        color: kError,
+                      ),
                       const SizedBox(height: 16),
-                      FilledButton(
+                      const Text(
+                        'Não conseguimos abrir seu curso. Tente novamente.',
+                        style: TextStyle(color: kError),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      PrimaryButton(
                         onPressed: () => setState(() => _startup = _load()),
                         child: const Text('Tentar novamente'),
                       ),
@@ -84,9 +96,32 @@ class _FluentAppState extends State<FluentApp> {
             );
           }
           if (!snapshot.hasData) {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(
+              body: Center(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ExcludeSemantics(child: FluentLogo(size: 96)),
+                      SizedBox(height: 20),
+                      Text('fluent', style: kBrandHeadlineStyle),
+                      SizedBox(height: 24),
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: AppLoading(semanticsLabel: 'Abrindo seu curso'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
           }
-          return HomeScreen(controller: snapshot.data!.$1, cloud: snapshot.data!.$2);
+          return HomeScreen(
+            controller: snapshot.data!.$1,
+            cloud: snapshot.data!.$2,
+          );
         },
       ),
     );

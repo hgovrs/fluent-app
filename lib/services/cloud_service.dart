@@ -46,8 +46,9 @@ class CloudService extends ChangeNotifier {
           appId: appId,
           messagingSenderId: senderId,
           projectId: projectId,
-          authDomain:
-              authDomain.isEmpty ? '$projectId.firebaseapp.com' : authDomain,
+          authDomain: authDomain.isEmpty
+              ? '$projectId.firebaseapp.com'
+              : authDomain,
           iosBundleId: bundleId.isEmpty ? null : bundleId,
         ),
       );
@@ -221,7 +222,8 @@ class CloudService extends ChangeNotifier {
     if (_disposed || _busy) return null;
     _error = null;
     if (!available) {
-      _error = 'A nuvem não está configurada. Seus dados continuam neste aparelho.';
+      _error =
+          'A nuvem não está configurada. Seus dados continuam neste aparelho.';
     } else if (requireUser && _auth!.currentUser == null) {
       _error = 'Entre na sua conta para usar o backup.';
     }

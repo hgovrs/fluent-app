@@ -30,8 +30,10 @@ class Exercise {
   bool accepts(String input) {
     final normalized = normalize(input);
     return normalized.isNotEmpty &&
-        [answer, ...acceptedAnswers]
-            .any((candidate) => normalize(candidate) == normalized);
+        [
+          answer,
+          ...acceptedAnswers,
+        ].any((candidate) => normalize(candidate) == normalized);
   }
 
   factory Exercise.fromJson(Map<String, dynamic> json, {String context = ''}) {
@@ -61,8 +63,10 @@ class Exercise {
     final actual = options.map(normalize).toList()..sort();
     return actual.isNotEmpty &&
         actual.length == expected.length &&
-        List.generate(actual.length, (i) => actual[i] == expected[i])
-            .every((value) => value);
+        List.generate(
+          actual.length,
+          (i) => actual[i] == expected[i],
+        ).every((value) => value);
   }
 }
 
@@ -84,13 +88,16 @@ class Lesson {
   final List<String> sourceIds;
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
-    final passage =
-        json.containsKey('readingPassage') ? _text(json, 'readingPassage') : '';
+    final passage = json.containsKey('readingPassage')
+        ? _text(json, 'readingPassage')
+        : '';
     return Lesson(
       id: _text(json, 'id'),
       title: _text(json, 'title'),
       description: _text(json, 'description'),
-      studyNotes: json.containsKey('studyNotes') ? _text(json, 'studyNotes') : '',
+      studyNotes: json.containsKey('studyNotes')
+          ? _text(json, 'studyNotes')
+          : '',
       sourceIds: _strings(json['sourceIds'] ?? []),
       exercises: _objects(json, 'exercises')
           .map((exercise) => Exercise.fromJson(exercise, context: passage))
@@ -113,12 +120,14 @@ class CourseUnit {
   final List<Lesson> lessons;
 
   factory CourseUnit.fromJson(Map<String, dynamic> json) => CourseUnit(
-        id: _text(json, 'id'),
-        title: _text(json, 'title'),
-        description: _text(json, 'description'),
-        lessons:
-            _objects(json, 'lessons').map(Lesson.fromJson).toList(growable: false),
-      );
+    id: _text(json, 'id'),
+    title: _text(json, 'title'),
+    description: _text(json, 'description'),
+    lessons: _objects(
+      json,
+      'lessons',
+    ).map(Lesson.fromJson).toList(growable: false),
+  );
 }
 
 class Course {
@@ -158,7 +167,10 @@ class Course {
       level: _text(json, 'level'),
       coverage: json.containsKey('coverage') ? _text(json, 'coverage') : '',
       contentVersion: version,
-      units: _objects(json, 'units').map(CourseUnit.fromJson).toList(growable: false),
+      units: _objects(
+        json,
+        'units',
+      ).map(CourseUnit.fromJson).toList(growable: false),
     );
     final ids = <String>{};
     for (final unit in course.units) {
@@ -166,7 +178,9 @@ class Course {
       for (final lesson in unit.lessons) {
         if (!ids.add(lesson.id)) throw const FormatException('ID duplicado.');
         for (final exercise in lesson.exercises) {
-          if (!ids.add(exercise.id)) throw const FormatException('ID duplicado.');
+          if (!ids.add(exercise.id)) {
+            throw const FormatException('ID duplicado.');
+          }
         }
       }
     }
@@ -195,10 +209,12 @@ List<Map<String, dynamic>> _objects(Map<String, dynamic> json, String key) {
   if (value is! List || value.isEmpty) {
     throw FormatException('Lista inválida: $key');
   }
-  return value.map((item) {
-    if (item is! Map<String, dynamic>) {
-      throw FormatException('Objeto inválido: $key');
-    }
-    return item;
-  }).toList(growable: false);
+  return value
+      .map((item) {
+        if (item is! Map<String, dynamic>) {
+          throw FormatException('Objeto inválido: $key');
+        }
+        return item;
+      })
+      .toList(growable: false);
 }
