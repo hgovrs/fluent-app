@@ -19,7 +19,7 @@ progresso manualmente entre dispositivos.
   limitadas nem punição por errar.
 - Feedback de áudio automático por voz (inicia com Natasha Caldeirão), com
   catálogo de frases originais e geração editorial no ElevenLabs.
-  O catálogo atual tem 24 frases; os MP3 correspondentes precisam ser gerados.
+  As 24 frases do catálogo têm MP3 locais para reprodução offline.
 - XP, meta diária configurável, sequência de dias e progresso por curso.
 - Revisão espaçada de exercícios estudados, incluindo erros.
 - Persistência local e recuperação de falhas de armazenamento.
@@ -69,7 +69,7 @@ temas de áudio continuam sendo preferências independentes.
 - Texto branco, secundário a 70%, hint a 60%, placeholder a 20%; erros de sistema
   e formulário usam `red.shade300`. Foco dos campos usa roxo sólido e raio 12.
 - Progresso e acertos usam roxo claro. Coral (`#F27166`, borda `#F28E85`) aparece
-  no pequeno ponto do logo, no badge de sequência e em avisos de respostas incorretas,
+  no badge de sequência e em avisos de respostas incorretas,
   nunca como fundo de painéis inteiros.
 - `AppLoading` mantém o indicador circular roxo centralizado sobre o fundo
   escuro; barras lineares são usadas somente para progresso determinado.
@@ -91,20 +91,32 @@ persistência ou chamadas de API.
 
 ### Marca do Fluent
 
-A geometria do balão com a letra **F** e o ponto de conquista da
-[PR #3](https://github.com/hgovrs/fluent-app/pull/3) foi reaproveitada, mas não sua
-paleta verde/âmbar nem seus fundos claros. `FluentLogo`, em
-`lib/widgets/fluent_logo.dart`, usa `kPrimaryGradient`, branco e um pequeno ponto
-coral. No app, o glow reutiliza `kPrimaryShadow`. `FluentWordmark` mantém o nome em
-Genhead e se adapta ao espaço disponível sem cortar o nome com fontes ampliadas.
+**`logo.png`, na raiz, é a fonte única da marca.** A arte fornecida pelo
+proprietário substitui o antigo balão vetorial com a letra F. Suas cores,
+transparência e proporção são preservadas, sem recoloração, cortes ou distorção;
+essa imagem é a exceção aprovada à paleta dos componentes da interface.
+`FluentLogo` usa `Image.asset` com `BoxFit.contain` no cabeçalho, perfil, abertura
+e erro de inicialização. `FluentWordmark` mantém o nome em Genhead.
 
-O mesmo desenho 108×108 aparece no cabeçalho, perfil, abertura/carregamento, erro
-de inicialização, favicon e ícone/splash Android. `web/favicon.svg` e
-`android/app/src/main/res/drawable/ic_launcher.xml` mantêm a mesma geometria e os
-mesmos extremos do gradiente horizontal. O bootstrap web também exibe a marca
-com glow, mantendo o fundo escuro e o indicador circular. A variante
-`withBackground: false` desenha apenas o balão roxo, a letra branca e o ponto
-coral sobre transparência.
+Os ícones quadrados contêm a arte inteira centralizada sobre `#0D0D0D`.
+Há ícones Android legados nas cinco densidades, foreground adaptativo com área
+segura de 66/108 e fundo escuro, além de ícones web 192/512, versões maskable,
+favicon PNG e Apple touch icon. As margens mantêm a imagem dentro de máscaras
+circulares sem cortar bandeiras ou mascote. Os splashes anteriores ao Android 12
+e o bootstrap web usam cópias idênticas do original; o Android 12+ usa o ícone
+adaptativo. Não há mudanças de conteúdo, progresso ou áudio.
+
+Ao trocar a imagem, regenere os derivados a partir da raiz:
+
+```powershell
+python -m pip install -r tool\requirements-branding.txt
+python tool\generate_brand_assets.py
+python tool\generate_brand_assets.py --check
+python -m unittest discover -s test -p brand_assets_test.py
+```
+
+`assets/branding/manifest.json` registra o SHA-256 do original e dos derivados.
+O gerador nunca modifica `logo.png`; publique o original e os derivados juntos.
 
 ### Tela inicial
 
@@ -328,11 +340,13 @@ requisito; o backend de progresso continua separado do conteúdo didático.
 
 ## Feedback de áudio e ElevenLabs
 
-O lote legado foi gerado em 15/09/2026 com a voz configurada no ambiente `Fluent`
-na [execução de geração](https://github.com/hgovrs/fluent-app/actions/runs/35031581035)
-e contém oito MP3 de Zoação leve, seis de Torcida e seis de Tranquilo. Esses IDs
-não correspondem às 24 frases do catálogo atual. A pasta `assets/audio_feedback/`
-já está declarada como asset do Flutter.
+Os 24 MP3 de **Natasha Caldeirão** foram gerados em 16/09/2026 com a voz
+configurada no ambiente `Fluent`, na
+[execução de geração](https://github.com/hgovrs/fluent-app/actions/runs/35157909092):
+12 reações de acerto e 12 de erro, correspondentes aos 1.290 caracteres do
+catálogo atual. Os arquivos estão em `assets/audio_feedback/`, já declarada
+como asset do Flutter. Os 20 MP3 dos temas antigos foram retirados do pacote;
+continuam disponíveis no histórico do Git.
 
 **Natasha Caldeirão** é o padrão para novos perfis e progresso sem preferência
 de áudio salva. A escolha é salva por curso em `feedbackVoiceId`; o campo legado
@@ -490,9 +504,9 @@ mensagem sem impedir a aula.
 No app instalado, os MP3 empacotados funcionam offline; a limitação de
 carregamento inicial da versão web continua valendo.
 
-**Estado desta entrega:** nenhum áudio foi sintetizado sem as credenciais do
-proprietário. Até gerar e empacotar os MP3, as vozes mostram suas frases por
-escrito e informam que o áudio está indisponível.
+**Estado desta entrega:** todos os 24 MP3 do catálogo estão empacotados.
+A geração foi autorizada pelo proprietário; nenhuma chave fica no app.
+As frases e a correção escrita continuam disponíveis se a reprodução falhar.
 
 ## Preparar GIFs de feedback a partir de vídeo
 

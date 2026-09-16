@@ -72,7 +72,7 @@ class _FluentAppState extends State<FluentApp> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const FluentLogo(size: 72),
+                      const FluentLogo(size: 120),
                       const SizedBox(height: 16),
                       const BrandIconBox(
                         Icons.cloud_off_rounded,
@@ -103,7 +103,7 @@ class _FluentAppState extends State<FluentApp> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ExcludeSemantics(child: FluentLogo(size: 96)),
+                      ExcludeSemantics(child: FluentLogo(size: 160)),
                       SizedBox(height: 20),
                       Text('fluent', style: kBrandHeadlineStyle),
                       SizedBox(height: 24),

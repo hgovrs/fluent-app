@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const FluentLogo(size: 64),
+                  const FluentLogo(size: 96),
                   const SizedBox(height: 16),
                   Text(
                     'Aprendiz de novos mundos',

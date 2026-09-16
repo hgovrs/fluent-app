@@ -1,0 +1,27 @@
+{
+  "source": "logo.png",
+  "sourceSha256": "91cf467014e42870af3e339526638176be44d0ff99aea42a2b4bf64967c625ea",
+  "width": 1536,
+  "height": 1024,
+  "preserveEntireImage": true,
+  "outputs": {
+    "android/app/src/main/res/drawable-hdpi/ic_launcher_foreground.png": "0f49a7224c43c5662496fece78d2c21736c456c7fa1e6d953defd8ba9b1350f3",
+    "android/app/src/main/res/drawable-mdpi/ic_launcher_foreground.png": "bf83342976ba030114f1bd6bb173051b19bf5f77007b3c5ad95036e74da4621f",
+    "android/app/src/main/res/drawable-nodpi/brand_logo.png": "91cf467014e42870af3e339526638176be44d0ff99aea42a2b4bf64967c625ea",
+    "android/app/src/main/res/drawable-xhdpi/ic_launcher_foreground.png": "846496e814f6c16a4f030842eb066ec798e99026d43e9474559cda6cf09838eb",
+    "android/app/src/main/res/drawable-xxhdpi/ic_launcher_foreground.png": "b03df3bba88f2372a945cd325d2781b7ccb2a0bdc1cf68773bf25d70a5c65029",
+    "android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png": "afb0f22d444495df9f5b425a76e761dfcbc766c71bf23ed86bcd24746a94510c",
+    "android/app/src/main/res/mipmap-hdpi/ic_launcher.png": "40622f83ce2ffb35e96b1c3fb476a5e14877d823f014203019ee6ac1104eb605",
+    "android/app/src/main/res/mipmap-mdpi/ic_launcher.png": "f284d17e4fa2652c7fbb04effcc4dba5d03532a7e50b97eaaf13bb8ae8264015",
+    "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": "16fe340e43ae4fe024de07c69587ccccd69e2e68978daa3542faefdf2a0c4092",
+    "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": "65be17e117a2dcdad34ef3684c86b403859023df490244b0f7669d345c347186",
+    "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": "b1b594425291afc3e4b8a6f1a5f378bc205645fa95769d2b63f944898f1b6540",
+    "web/favicon.png": "0a5328736145db3a7432a722033819413c28e32a4618f20fb1bb1caf774dffe8",
+    "web/icons/apple-touch-icon.png": "00dae620734156f9d7ae51f3d951485238ccedec9c89434d38134fabff5d0b77",
+    "web/icons/icon-192.png": "b1b594425291afc3e4b8a6f1a5f378bc205645fa95769d2b63f944898f1b6540",
+    "web/icons/icon-512.png": "37489773d655a5d077a8577e015991e06c5a246227ad06c84881921f1a4b4bdb",
+    "web/icons/icon-maskable-192.png": "b78a3b9ee490f13204a84d69aaa472e396ab4c18d36cff7d354b6aad15cf61b4",
+    "web/icons/icon-maskable-512.png": "9fabff5753c082a1b751aa1d8d7570bb0b6829f4f7f0fe145a14ecf11d710cf5",
+    "web/logo.png": "91cf467014e42870af3e339526638176be44d0ff99aea42a2b4bf64967c625ea"
+  }
+}
