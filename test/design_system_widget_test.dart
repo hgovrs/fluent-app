@@ -227,7 +227,12 @@ void main() {
       expect(
         tester
             .widget<ElevatedButton>(
-              find.widgetWithText(ElevatedButton, 'Revisar agora'),
+              find.ancestor(
+                of: find.text('Revisar agora'),
+                matching: find.byWidgetPredicate(
+                  (widget) => widget is ElevatedButton,
+                ),
+              ),
             )
             .onPressed,
         isNull,
