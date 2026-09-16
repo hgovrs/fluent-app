@@ -112,6 +112,19 @@ void main() {
           expect(clip.assetPath, endsWith('.mp3'));
         }
       }
+      final zoacao = catalog.theme('zoacao')!;
+      expect(
+        zoacao.clips
+            .where((clip) => clip.category == FeedbackCategory.correct)
+            .length,
+        greaterThanOrEqualTo(10),
+      );
+      expect(
+        zoacao.clips
+            .where((clip) => clip.category == FeedbackCategory.incorrect)
+            .length,
+        greaterThanOrEqualTo(10),
+      );
     });
 
     test('rejeita caminhos, IDs duplicados e categorias incompletas', () {

@@ -263,13 +263,14 @@ pedagógica** e não avalia pronúncia.
 
 | Tema | Exemplo de acerto | Exemplo de erro |
 | --- | --- | --- |
-| Zoação leve | “Receba! Mais uma pro gabarito!” | “Você foi com tanta certeza que até eu acreditei.” |
+| Zoação leve | “Babaaadooo! Serviu a resposta certa com excelênciaaa!” | “Uuóoo! O clooose não veeio. Ajusta e tenta de noovoo.” |
 | Torcida | “Que categoria! Mais uma resposta no fundo da rede!” | “Hora de ajustar a estratégia! A correção mostra o caminho.” |
 | Tranquilo | “Resposta correta. Continue no seu ritmo.” | “Sem pressa. Leia a explicação para se preparar para a próxima.” |
 
-O catálogo tem 20 frases. O tema Zoação leve usa as oito reações curtas aprovadas,
-incluindo adaptações de bordões brasileiros; Torcida e Tranquilo mantêm suas
-frases originais. Não usamos gravações de terceiros nem imitamos suas vozes.
+O catálogo tem 36 frases. O tema Zoação leve traz 12 acertos e 12 erros com
+energia de mona/pajubá e grafia alongada (ex.: mooona, babaaadooo, uuóoo) para
+guiar a entonação na síntese de voz; Torcida e Tranquilo mantêm suas frases
+originais. Não usamos gravações de terceiros nem imitamos suas vozes.
 Referências culturais não equivalem a autorização: confira direitos e licenças
 antes da distribuição. A pesquisa de feedback da
 [Education Endowment Foundation](https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/feedback)
