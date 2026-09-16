@@ -5,8 +5,8 @@ import '../state/learning_controller.dart';
 import '../theme.dart';
 import 'selection_tile.dart';
 
-class FeedbackThemeButton extends StatelessWidget {
-  const FeedbackThemeButton({
+class FeedbackVoiceButton extends StatelessWidget {
+  const FeedbackVoiceButton({
     super.key,
     required this.controller,
     this.onOpening,
@@ -27,12 +27,12 @@ class FeedbackThemeButton extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             children: [
               Text(
-                'Feedback de áudio',
+                'Voz do feedback',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 8),
               const Text(
-                'Escolha o clima das reações a acertos e erros. '
+                'Escolha a voz das reações a acertos e erros. '
                 'A preferência vale para este curso e pode mudar a qualquer hora.',
                 style: kSecondaryTextStyle,
               ),
@@ -41,25 +41,25 @@ class FeedbackThemeButton extends StatelessWidget {
                 icon: Icons.volume_off_rounded,
                 title: 'Sem áudio',
                 subtitle: 'Somente a correção escrita.',
-                selected: controller.feedbackThemeId == FeedbackCatalog.off,
+                selected: controller.feedbackVoiceId == FeedbackCatalog.off,
                 onTap: () => Navigator.pop(context, FeedbackCatalog.off),
               ),
-              for (final theme in controller.feedbackCatalog.themes)
+              for (final voice in controller.feedbackCatalog.voices)
                 SelectionTile(
-                  icon: controller.feedbackThemeId == theme.id
+                  icon: controller.feedbackVoiceId == voice.id
                       ? Icons.check_circle_rounded
-                      : Icons.volume_up_rounded,
-                  title: theme.name,
+                      : Icons.record_voice_over_rounded,
+                  title: voice.name,
                   subtitle:
-                      '${theme.description}\n'
-                      'Acerto: ${theme.clips.firstWhere((clip) => clip.category == FeedbackCategory.correct).text}\n'
-                      'Erro: ${theme.clips.firstWhere((clip) => clip.category == FeedbackCategory.incorrect).text}',
-                  selected: controller.feedbackThemeId == theme.id,
-                  onTap: () => Navigator.pop(context, theme.id),
+                      '${voice.description}\n'
+                      'Acerto: ${voice.clips.firstWhere((clip) => clip.category == FeedbackCategory.correct).text}\n'
+                      'Erro: ${voice.clips.firstWhere((clip) => clip.category == FeedbackCategory.incorrect).text}',
+                  selected: controller.feedbackVoiceId == voice.id,
+                  onTap: () => Navigator.pop(context, voice.id),
                 ),
-              if (controller.feedbackCatalog.themes.isEmpty)
+              if (controller.feedbackCatalog.voices.isEmpty)
                 const Text(
-                  'Os temas de áudio não estão disponíveis nesta versão.',
+                  'As vozes de áudio não estão disponíveis nesta versão.',
                   style: TextStyle(color: kTextHint),
                 ),
               const SizedBox(height: 12),
@@ -74,7 +74,7 @@ class FeedbackThemeButton extends StatelessWidget {
       ),
     );
     if (selected != null && context.mounted) {
-      await controller.setFeedbackTheme(selected);
+      await controller.setFeedbackVoice(selected);
     }
   }
 
@@ -83,12 +83,12 @@ class FeedbackThemeButton extends StatelessWidget {
     listenable: controller,
     builder: (context, _) => IconButton(
       tooltip:
-          'Feedback de áudio: ${controller.feedbackTheme?.name ?? 'Sem áudio'}',
+          'Voz do feedback: ${controller.feedbackVoice?.name ?? 'Sem áudio'}',
       icon: Icon(
-        controller.feedbackTheme == null
+        controller.feedbackVoice == null
             ? Icons.volume_off_rounded
-            : Icons.volume_up_rounded,
-        color: controller.feedbackTheme == null
+            : Icons.record_voice_over_rounded,
+        color: controller.feedbackVoice == null
             ? kBrandPurple
             : kBrandPurpleLight,
       ),

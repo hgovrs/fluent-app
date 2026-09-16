@@ -13,10 +13,10 @@ class LearningController extends ChangeNotifier {
     required ProgressStore store,
     FeedbackCatalog? feedbackCatalog,
     DateTime Function()? now,
-  })  : courses = List.unmodifiable(courses),
-        feedbackCatalog = feedbackCatalog ?? FeedbackCatalog([]),
-        _store = store,
-        _now = now ?? DateTime.now {
+  }) : courses = List.unmodifiable(courses),
+       feedbackCatalog = feedbackCatalog ?? FeedbackCatalog([]),
+       _store = store,
+       _now = now ?? DateTime.now {
     if (courses.isEmpty ||
         courses.map((course) => course.id).toSet().length != courses.length) {
       throw ArgumentError('É necessário um catálogo com IDs únicos.');
@@ -40,9 +40,9 @@ class LearningController extends ChangeNotifier {
       courses.firstWhere((course) => course.id == _selectedCourseId);
   LearningProgress get progress => _progress[_selectedCourseId]!;
   bool get goalReached => progress.dailyXp >= progress.dailyGoal;
-  FeedbackTheme? get feedbackTheme =>
-      feedbackCatalog.theme(progress.feedbackThemeId);
-  String get feedbackThemeId => feedbackTheme?.id ?? FeedbackCatalog.off;
+  FeedbackVoice? get feedbackVoice =>
+      feedbackCatalog.voice(progress.feedbackVoiceId);
+  String get feedbackVoiceId => feedbackVoice?.id ?? FeedbackCatalog.off;
 
   bool isCompleted(Lesson lesson) =>
       course.lessons.any((item) => item.id == lesson.id) &&
@@ -51,8 +51,7 @@ class LearningController extends ChangeNotifier {
   bool isUnlocked(Lesson lesson) {
     final lessons = course.lessons;
     final index = lessons.indexWhere((item) => item.id == lesson.id);
-    return index >= 0 &&
-        (index == 0 || isCompleted(lessons[index - 1]));
+    return index >= 0 && (index == 0 || isCompleted(lessons[index - 1]));
   }
 
   Lesson? get nextLesson {
@@ -64,15 +63,16 @@ class LearningController extends ChangeNotifier {
 
   List<Exercise> get dueExercises {
     final today = calendarDate(_now());
-    final result = course.lessons
-        .expand((lesson) => lesson.exercises)
-        .where((exercise) {
+    final result = course.lessons.expand((lesson) => lesson.exercises).where((
+      exercise,
+    ) {
       final review = progress.reviews[exercise.id];
       return review != null && review.dueDate.compareTo(today) <= 0;
     }).toList();
     result.sort((a, b) {
-      final order = progress.reviews[a.id]!.dueDate
-          .compareTo(progress.reviews[b.id]!.dueDate);
+      final order = progress.reviews[a.id]!.dueDate.compareTo(
+        progress.reviews[b.id]!.dueDate,
+      );
       return order == 0 ? a.id.compareTo(b.id) : order;
     });
     return List.unmodifiable(result);
@@ -97,16 +97,14 @@ class LearningController extends ChangeNotifier {
     _notify();
   }
 
-  Future<void> completeLesson(
-      Lesson lesson, Map<String, bool> results) async {
+  Future<void> completeLesson(Lesson lesson, Map<String, bool> results) async {
     final matches = course.lessons.where((item) => item.id == lesson.id);
     if (matches.isEmpty || !isUnlocked(matches.first)) {
       throw ArgumentError('Lição indisponível.');
     }
     final canonical = matches.first;
     final ids = canonical.exercises.map((item) => item.id).toSet();
-    if (results.length != ids.length ||
-        !ids.every(results.containsKey)) {
+    if (results.length != ids.length || !ids.every(results.containsKey)) {
       throw ArgumentError('Responda todos os exercícios da lição.');
     }
     final firstCompletion = !isCompleted(canonical);
@@ -119,7 +117,10 @@ class LearningController extends ChangeNotifier {
     for (final exercise in canonical.exercises) {
       if (!results[exercise.id]!) {
         reviews[exercise.id] = ReviewSchedule(
-            dueDate: today, intervalDays: 0, successCount: 0);
+          dueDate: today,
+          intervalDays: 0,
+          successCount: 0,
+        );
       } else if (!reviews.containsKey(exercise.id)) {
         reviews[exercise.id] = ReviewSchedule(
           dueDate: calendarDate(currentDay.add(const Duration(days: 1))),
@@ -143,7 +144,9 @@ class LearningController extends ChangeNotifier {
   Future<void> completeReview(Map<String, bool> results) async {
     final due = dueExercises.map((exercise) => exercise.id).toSet();
     if (results.keys.any((id) => !due.contains(id))) {
-      throw ArgumentError('A revisão contém exercícios que não estão pendentes.');
+      throw ArgumentError(
+        'A revisão contém exercícios que não estão pendentes.',
+      );
     }
     if (results.isEmpty) return;
     final currentDay = calendarDay(_now());
@@ -166,10 +169,7 @@ class LearningController extends ChangeNotifier {
     }
     _progress[_selectedCourseId] = progress.copyWith(
       reviewedCount: progress.reviewedCount + results.length,
-      activity: {
-        ...progress.activity,
-        today: progress.activity[today] ?? 0,
-      },
+      activity: {...progress.activity, today: progress.activity[today] ?? 0},
       reviews: reviews,
     );
     await _persist();
@@ -189,19 +189,19 @@ class LearningController extends ChangeNotifier {
     await _persist();
   }
 
-  Future<void> setFeedbackTheme(String id) async {
-    if (id != FeedbackCatalog.off && feedbackCatalog.theme(id) == null) {
-      throw ArgumentError('Tema de feedback desconhecido.');
+  Future<void> setFeedbackVoice(String id) async {
+    if (id != FeedbackCatalog.off && feedbackCatalog.voice(id) == null) {
+      throw ArgumentError('Voz de feedback desconhecida.');
     }
-    _progress[_selectedCourseId] = progress.copyWith(feedbackThemeId: id);
+    _progress[_selectedCourseId] = progress.copyWith(feedbackVoiceId: id);
     await _persist();
   }
 
   Map<String, dynamic> exportProgress() => {
-        'schemaVersion': 1,
-        'selectedCourseId': _selectedCourseId,
-        'courses': _progress.map((key, value) => MapEntry(key, value.toJson())),
-      };
+    'schemaVersion': 1,
+    'selectedCourseId': _selectedCourseId,
+    'courses': _progress.map((key, value) => MapEntry(key, value.toJson())),
+  };
 
   Future<void> mergeRemote(Map<String, dynamic> remote) async {
     final parsed = _parseEnvelope(remote);

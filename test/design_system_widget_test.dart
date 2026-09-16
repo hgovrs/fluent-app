@@ -177,11 +177,11 @@ void main() {
 
       await tester.tap(
         find.byTooltip(
-          'Feedback de áudio: ${home.controller.feedbackTheme?.name ?? 'Sem áudio'}',
+          'Voz do feedback: ${home.controller.feedbackVoice?.name ?? 'Sem áudio'}',
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Feedback de áudio'), findsOneWidget);
+      expect(find.text('Voz do feedback'), findsOneWidget);
       final sheet = tester.widget<Material>(
         find
             .descendant(

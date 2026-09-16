@@ -6,8 +6,8 @@ class ProgressStore {
   ProgressStore({
     Future<String?> Function()? read,
     Future<bool> Function(String value)? write,
-  })  : _read = read ?? _readPreferences,
-        _write = write ?? _writePreferences;
+  }) : _read = read ?? _readPreferences,
+       _write = write ?? _writePreferences;
 
   static const storageKey = 'fluent.learning.v1';
   final Future<String?> Function() _read;

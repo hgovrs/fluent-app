@@ -31,8 +31,10 @@ void main() {
       final ids = <String>{};
       for (final lesson in course.lessons) {
         expect(lesson.exercises.length, greaterThanOrEqualTo(5));
-        expect(lesson.exercises.map((e) => e.type).toSet(),
-            containsAll(ExerciseType.values));
+        expect(
+          lesson.exercises.map((e) => e.type).toSet(),
+          containsAll(ExerciseType.values),
+        );
         for (final exercise in lesson.exercises) {
           expect(ids.add(exercise.id), isTrue);
           expect(exercise.accepts(exercise.answer), isTrue);
@@ -47,9 +49,9 @@ void main() {
     });
 
     test('rejeita IDs duplicados e perguntas sem opção correta', () {
-      final json = jsonDecode(
-          File('assets/courses/en_starter.json').readAsStringSync())
-          as Map<String, dynamic>;
+      final json =
+          jsonDecode(File('assets/courses/en_starter.json').readAsStringSync())
+              as Map<String, dynamic>;
       final exercises = json['units'][0]['lessons'][0]['exercises'] as List;
       exercises[1]['id'] = exercises[0]['id'];
       expect(() => Course.fromJson(json), throwsFormatException);
@@ -119,20 +121,27 @@ void main() {
         activity: {'2026-09-10': 70},
         reviews: {
           'exercise': const ReviewSchedule(
-              dueDate: '2026-09-11', intervalDays: 1, successCount: 0),
+            dueDate: '2026-09-11',
+            intervalDays: 1,
+            successCount: 0,
+          ),
         },
         reviewedCount: 2,
         now: () => DateTime(2026, 9, 10),
       );
-      final saved = jsonDecode(jsonEncode(progress.toJson()))
-          as Map<String, dynamic>;
+      final saved =
+          jsonDecode(jsonEncode(progress.toJson())) as Map<String, dynamic>;
       final restored = LearningProgress.fromJson(
-          saved, now: () => DateTime(2026, 9, 10));
+        saved,
+        now: () => DateTime(2026, 9, 10),
+      );
       expect(restored.toJson(), progress.toJson());
       expect(restored.dailyXp, 70);
       expect(restored.streak, 1);
-      expect(() => restored.completedLessonIds.add('other'),
-          throwsUnsupportedError);
+      expect(
+        () => restored.completedLessonIds.add('other'),
+        throwsUnsupportedError,
+      );
     });
 
     test('sequência permanece ontem, expira após um dia perdido', () {
@@ -165,8 +174,12 @@ void main() {
       }
       expect(() => parseCalendarDate('2026-02-30'), throwsFormatException);
       expect(() => parseCalendarDate('2026-2-1'), throwsFormatException);
-      expect(calendarDate(calendarDay(DateTime(2026, 3, 8, 23))
-          .add(const Duration(days: 1))), '2026-03-09');
+      expect(
+        calendarDate(
+          calendarDay(DateTime(2026, 3, 8, 23)).add(const Duration(days: 1)),
+        ),
+        '2026-03-09',
+      );
     });
 
     test('rejeita dados armazenados negativos, fracionados e malformados', () {
@@ -175,20 +188,34 @@ void main() {
         {'totalXp': 2.5},
         {'dailyGoal': 0},
         {'dailyGoal': 1001},
-        {'completedLessonIds': [42]},
-        {'activity': {'2026-02-30': 10}},
-        {'activity': {'2026-09-10': -5}},
-        {'reviews': {'e': null}},
+        {
+          'completedLessonIds': [42],
+        },
+        {
+          'activity': {'2026-02-30': 10},
+        },
+        {
+          'activity': {'2026-09-10': -5},
+        },
+        {
+          'reviews': {'e': null},
+        },
         {
           'reviews': {
-            'e': {'dueDate': '2026-09-10', 'intervalDays': 31, 'successCount': 1}
-          }
+            'e': {
+              'dueDate': '2026-09-10',
+              'intervalDays': 31,
+              'successCount': 1,
+            },
+          },
         },
         {'reviewedCount': 'five'},
       ]) {
         expect(
-          () => LearningProgress.fromJson(
-              {...LearningProgress().toJson(), ...invalid}),
+          () => LearningProgress.fromJson({
+            ...LearningProgress().toJson(),
+            ...invalid,
+          }),
           throwsFormatException,
           reason: invalid.toString(),
         );
@@ -210,7 +237,10 @@ void main() {
         },
       );
       expect(await store.load(), isNull);
-      await Future.wait([store.save({'value': 1}), store.save({'value': 2})]);
+      await Future.wait([
+        store.save({'value': 1}),
+        store.save({'value': 2}),
+      ]);
       expect(writes, [1, 2]);
       expect(await store.load(), {'value': 2});
     });

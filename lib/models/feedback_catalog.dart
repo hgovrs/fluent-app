@@ -16,8 +16,8 @@ class FeedbackClip {
   final String assetPath;
 }
 
-class FeedbackTheme {
-  FeedbackTheme({
+class FeedbackVoice {
+  FeedbackVoice({
     required this.id,
     required this.name,
     required this.description,
@@ -31,37 +31,37 @@ class FeedbackTheme {
 }
 
 class FeedbackCatalog {
-  FeedbackCatalog(List<FeedbackTheme> themes)
-      : themes = List.unmodifiable(themes);
+  FeedbackCatalog(List<FeedbackVoice> voices)
+    : voices = List.unmodifiable(voices);
 
   static const off = 'off';
-  final List<FeedbackTheme> themes;
+  final List<FeedbackVoice> voices;
 
-  FeedbackTheme? theme(String id) {
-    for (final theme in themes) {
-      if (theme.id == id) return theme;
+  FeedbackVoice? voice(String id) {
+    for (final voice in voices) {
+      if (voice.id == id) return voice;
     }
     return null;
   }
 
   factory FeedbackCatalog.fromJson(Map<String, dynamic> json) {
-    final items = json['themes'];
-    if (json['schemaVersion'] != 1 || items is! List || items.isEmpty) {
+    final items = json['voices'];
+    if (json['schemaVersion'] != 2 || items is! List || items.isEmpty) {
       throw const FormatException('Catálogo de feedback inválido.');
     }
-    final themes = <FeedbackTheme>[];
-    final themeIds = <String>{};
+    final voices = <FeedbackVoice>[];
+    final voiceIds = <String>{};
     for (final item in items) {
       if (item is! Map<String, dynamic>) {
-        throw const FormatException('Tema inválido.');
+        throw const FormatException('Voz inválida.');
       }
       final id = _id(item['id']);
-      if (id == off || !themeIds.add(id)) {
-        throw const FormatException('ID de tema reservado ou duplicado.');
+      if (id == off || !voiceIds.add(id)) {
+        throw const FormatException('ID de voz reservado ou duplicado.');
       }
       final entries = item['clips'];
       if (entries is! List || entries.isEmpty) {
-        throw const FormatException('Tema sem frases.');
+        throw const FormatException('Voz sem frases.');
       }
       final clips = <FeedbackClip>[];
       final clipIds = <String>{};
@@ -78,29 +78,34 @@ class FeedbackCatalog {
           'incorrect' => FeedbackCategory.incorrect,
           _ => throw const FormatException('Categoria desconhecida.'),
         };
-        clips.add(FeedbackClip(
-          id: clipId,
-          category: category,
-          text: _text(entry['text']),
-          assetPath: 'assets/audio_feedback/${id}_$clipId.mp3',
-        ));
+        clips.add(
+          FeedbackClip(
+            id: clipId,
+            category: category,
+            text: _text(entry['text']),
+            assetPath: 'assets/audio_feedback/${id}_$clipId.mp3',
+          ),
+        );
       }
       if (!FeedbackCategory.values.every(
-          (category) => clips.any((clip) => clip.category == category))) {
-        throw const FormatException('Tema deve ter frases de acerto e erro.');
+        (category) => clips.any((clip) => clip.category == category),
+      )) {
+        throw const FormatException('Voz deve ter frases de acerto e erro.');
       }
-      themes.add(FeedbackTheme(
-        id: id,
-        name: _text(item['name']),
-        description: _text(item['description']),
-        clips: clips,
-      ));
+      voices.add(
+        FeedbackVoice(
+          id: id,
+          name: _text(item['name']),
+          description: _text(item['description']),
+          clips: clips,
+        ),
+      );
     }
-    final paths = themes.expand((theme) => theme.clips).map((c) => c.assetPath);
+    final paths = voices.expand((voice) => voice.clips).map((c) => c.assetPath);
     if (paths.toSet().length != paths.length) {
       throw const FormatException('Nomes de arquivos de áudio duplicados.');
     }
-    return FeedbackCatalog(themes);
+    return FeedbackCatalog(voices);
   }
 
   static String _id(dynamic value) {
@@ -126,9 +131,11 @@ class FeedbackPicker {
   final Random _random;
   final Map<String, String> _previous = {};
 
-  FeedbackClip pick(FeedbackTheme theme, FeedbackCategory category) {
-    final key = '${theme.id}/${category.name}';
-    final clips = theme.clips.where((clip) => clip.category == category).toList();
+  FeedbackClip pick(FeedbackVoice voice, FeedbackCategory category) {
+    final key = '${voice.id}/${category.name}';
+    final clips = voice.clips
+        .where((clip) => clip.category == category)
+        .toList();
     final candidates = clips.length > 1
         ? clips.where((clip) => clip.id != _previous[key]).toList()
         : clips;

@@ -7,8 +7,9 @@ import '../models/course.dart';
 class CourseCatalog {
   static Future<List<Course>> load({AssetBundle? bundle}) async {
     final assets = bundle ?? rootBundle;
-    final manifest =
-        jsonDecode(await assets.loadString('assets/courses/catalog.json'));
+    final manifest = jsonDecode(
+      await assets.loadString('assets/courses/catalog.json'),
+    );
     if (manifest is! Map<String, dynamic> ||
         manifest['courses'] is! List ||
         (manifest['courses'] as List).isEmpty) {

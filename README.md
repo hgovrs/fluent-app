@@ -15,6 +15,6 @@ A documentação completa está em **[docs/documentacao.md](docs/documentacao.md
 - Conteúdo A1–C1, fontes, licenças e uso pessoal.
 - Aquisição e armazenamento dos materiais e migração futura para nuvem.
 - Design system exclusivamente dark, com fontes locais Tech e Genhead.
-- Feedback de áudio opcional, temas de áudio e geração editorial com ElevenLabs.
+- Feedback de áudio por voz, reprodução automática e geração editorial com ElevenLabs.
 - Execução local, configuração do Firebase e privacidade.
 - Inclusão de cursos, estrutura do projeto e estado da validação.

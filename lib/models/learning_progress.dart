@@ -58,7 +58,7 @@ class ReviewSchedule {
 }
 
 class LearningProgress {
-  static const defaultFeedbackThemeId = 'zoacao';
+  static const defaultFeedbackVoiceId = 'natasha_caldeirao';
 
   LearningProgress({
     this.totalXp = 0,
@@ -67,7 +67,7 @@ class LearningProgress {
     Map<String, int> activity = const {},
     Map<String, ReviewSchedule> reviews = const {},
     this.reviewedCount = 0,
-    this.feedbackThemeId = defaultFeedbackThemeId,
+    this.feedbackVoiceId = defaultFeedbackVoiceId,
     DateTime Function()? now,
   }) : completedLessonIds = Set.unmodifiable(completedLessonIds),
        activity = Map.unmodifiable(activity),
@@ -80,7 +80,7 @@ class LearningProgress {
   final Map<String, int> activity;
   final Map<String, ReviewSchedule> reviews;
   final int reviewedCount;
-  final String feedbackThemeId;
+  final String feedbackVoiceId;
   final DateTime Function() _now;
 
   int get dailyXp => activity[calendarDate(_now())] ?? 0;
@@ -105,7 +105,7 @@ class LearningProgress {
     Map<String, int>? activity,
     Map<String, ReviewSchedule>? reviews,
     int? reviewedCount,
-    String? feedbackThemeId,
+    String? feedbackVoiceId,
   }) => LearningProgress(
     totalXp: totalXp ?? this.totalXp,
     dailyGoal: dailyGoal ?? this.dailyGoal,
@@ -113,7 +113,7 @@ class LearningProgress {
     activity: activity ?? this.activity,
     reviews: reviews ?? this.reviews,
     reviewedCount: reviewedCount ?? this.reviewedCount,
-    feedbackThemeId: feedbackThemeId ?? this.feedbackThemeId,
+    feedbackVoiceId: feedbackVoiceId ?? this.feedbackVoiceId,
     now: _now,
   );
 
@@ -124,11 +124,14 @@ class LearningProgress {
     final completed = json['completedLessonIds'];
     final activityJson = json['activity'];
     final reviewsJson = json['reviews'];
-    final feedbackThemeId = json['feedbackThemeId'] ?? defaultFeedbackThemeId;
-    if (feedbackThemeId is! String ||
-        feedbackThemeId.length > 64 ||
-        !RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(feedbackThemeId)) {
-      throw const FormatException('Tema de feedback inválido.');
+    final feedbackVoiceId =
+        json['feedbackVoiceId'] ??
+        json['feedbackThemeId'] ??
+        defaultFeedbackVoiceId;
+    if (feedbackVoiceId is! String ||
+        feedbackVoiceId.length > 64 ||
+        !RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(feedbackVoiceId)) {
+      throw const FormatException('Voz de feedback inválida.');
     }
     if (completed is! List ||
         completed.any((id) => id is! String || id.isEmpty) ||
@@ -157,7 +160,7 @@ class LearningProgress {
       activity: activity,
       reviews: reviews,
       reviewedCount: nonnegativeInt(json['reviewedCount'], 'reviewedCount'),
-      feedbackThemeId: feedbackThemeId,
+      feedbackVoiceId: feedbackVoiceId,
       now: now,
     );
   }
@@ -169,6 +172,6 @@ class LearningProgress {
     'activity': Map<String, int>.from(activity),
     'reviews': reviews.map((key, value) => MapEntry(key, value.toJson())),
     'reviewedCount': reviewedCount,
-    'feedbackThemeId': feedbackThemeId,
+    'feedbackVoiceId': feedbackVoiceId,
   };
 }

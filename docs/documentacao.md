@@ -17,9 +17,9 @@ progresso manualmente entre dispositivos.
 - Exercícios de múltipla escolha, escrita e organização de frases.
 - Feedback explicativo, correção tolerante a maiúsculas e pontuação, sem vidas
   limitadas nem punição por errar.
-- Feedback de áudio opcional por tema (Zoação leve, Torcida e Tranquilo), com
-  catálogo de frases originais e geração editorial usando sua voz no ElevenLabs.
-  Os 20 MP3 do catálogo estão em `assets/audio_feedback/` para uso offline.
+- Feedback de áudio automático por voz (inicia com Natasha Caldeirão), com
+  catálogo de frases originais e geração editorial no ElevenLabs.
+  O catálogo atual tem 24 frases; os MP3 correspondentes precisam ser gerados.
 - XP, meta diária configurável, sequência de dias e progresso por curso.
 - Revisão espaçada de exercícios estudados, incluindo erros.
 - Persistência local e recuperação de falhas de armazenamento.
@@ -311,36 +311,37 @@ requisito; o backend de progresso continua separado do conteúdo didático.
 
 ## Feedback de áudio e ElevenLabs
 
-O lote atual foi gerado em 15/09/2026 com a voz configurada no ambiente `Fluent`
+O lote legado foi gerado em 15/09/2026 com a voz configurada no ambiente `Fluent`
 na [execução de geração](https://github.com/hgovrs/fluent-app/actions/runs/35031581035)
-e baixado para `assets/audio_feedback/`: oito MP3 de Zoação leve, seis de Torcida
-e seis de Tranquilo. A pasta já está declarada como asset do Flutter.
+e contém oito MP3 de Zoação leve, seis de Torcida e seis de Tranquilo. Esses IDs
+não correspondem às 24 frases do catálogo atual. A pasta `assets/audio_feedback/`
+já está declarada como asset do Flutter.
 
-**Zoação leve** é o padrão para novos perfis e progresso sem preferência de
-áudio salva. Temas já escolhidos, inclusive **Sem áudio**, são preservados.
-É possível trocar o tema ou silenciar pelo ícone de alto-falante da tela inicial,
-das aulas ou das revisões; a escolha é salva por curso no aparelho. Progresso
-antigo continua válido e temas removidos voltam efetivamente ao modo sem áudio.
+**Natasha Caldeirão** é o padrão para novos perfis e progresso sem preferência
+de áudio salva. A escolha é salva por curso em `feedbackVoiceId`; o campo legado
+`feedbackThemeId` continua sendo lido quando não há uma escolha de voz salva.
+**Sem áudio** e outras preferências salvas são preservados; IDs que não existem
+no catálogo atual ficam efetivamente sem áudio até a seleção de uma voz.
+É possível trocar a voz ou silenciar pelo seletor da tela inicial, das aulas ou
+das revisões. O progresso antigo continua válido.
 Restaurar um backup não substitui a escolha local de áudio.
 
 Assim que a resposta é verificada, o app sorteia e **toca automaticamente** uma
 frase da categoria `correct` (acerto) ou `incorrect` (erro), nas lições e revisões.
 Não é necessário tocar em um botão de reprodução. O sorteio evita repetição
-imediata dentro de cada tema/categoria enquanto a sessão estiver aberta.
+imediata dentro de cada voz/categoria enquanto a sessão estiver aberta.
 A explicação e a resposta correta continuam visíveis: o áudio é uma reação,
 **não substitui a correção pedagógica** e não avalia pronúncia.
 
-| Tema | Exemplo de acerto | Exemplo de erro |
+| Voz | Exemplo de acerto | Exemplo de erro |
 | --- | --- | --- |
-| Zoação leve | “Receba! Mais uma pro gabarito!” | “Você foi com tanta certeza que até eu acreditei.” |
-| Torcida | “Que categoria! Mais uma resposta no fundo da rede!” | “Hora de ajustar a estratégia! A correção mostra o caminho.” |
-| Tranquilo | “Resposta correta. Continue no seu ritmo.” | “Sem pressa. Leia a explicação para se preparar para a próxima.” |
+| Natasha Caldeirão | “Babaaadooo! Serviu a resposta certa com excelênciaaa!” | “Uuóoo! O clooose não veeio. Ajusta e tenta de noovoo.” |
 
-O catálogo tem 20 frases. O tema Zoação leve usa as oito reações curtas aprovadas,
-incluindo adaptações de bordões brasileiros; Torcida e Tranquilo mantêm suas
-frases originais. Não usamos gravações de terceiros nem imitamos suas vozes.
-Referências culturais não equivalem a autorização: confira direitos e licenças
-antes da distribuição. A pesquisa de feedback da
+O catálogo tem 24 frases na voz Natasha Caldeirão (12 acertos e 12 erros), com
+energia de mona/pajubá e grafia alongada (ex.: mooona, babaaadooo, uuóoo) para
+guiar a entonação na síntese. Novas vozes entram só pelo catálogo. Não usamos
+gravações de terceiros. Referências culturais não equivalem a autorização:
+confira direitos e licenças antes da distribuição. A pesquisa de feedback da
 [Education Endowment Foundation](https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/feedback)
 orientou a decisão de comentar a tarefa e indicar um próximo passo, em vez de
 atacar a pessoa. As brincadeiras são opcionais, sem insultos à inteligência,
@@ -367,8 +368,8 @@ Actions. Você não precisa instalar SDK, abrir terminal ou ter computador.
    quantidade de frases/caracteres sem enviar nada ao ElevenLabs.
 5. Depois de conferir a prévia, execute com **generate marcado** para autorizar
    o consumo de créditos. Marque **force** se houver MP3 antigos no repositório
-   após mudar voz ou frases. Para as frases novas de Zoação leve, arquivos
-   previamente gerados com os mesmos IDs precisam ser substituídos.
+   após mudar frases ou o Voice ID do ElevenLabs. Arquivos legados de temas
+   (zoacao/torcida/tranquilo) não correspondem aos IDs atuais de voz.
 6. Ao terminar, abra a execução e a seção **Artifacts**. O pacote
    `feedback-audio-success-…` contém MP3 e catálogo, disponível por 30 dias;
    a prévia fica disponível por 14 dias. Baixe o ZIP para ouvir os arquivos.
@@ -444,19 +445,20 @@ publicação não comercial. Confirme as condições aplicáveis antes de distri
 não presuma que a licença open source do player cobre os áudios gerados.
 Esta integração não habilita Blaze nem altera o Firebase.
 
-### Ampliar temas e categorias
+### Ampliar vozes e categorias
 
 O catálogo independente `assets/audio_feedback/catalog.json` tem
-`schemaVersion: 1` e uma lista `themes`. Cada tema define `id`, `name`,
+`schemaVersion: 2` e uma lista `voices`. Cada voz define `id`, `name`,
 `description` e `clips`; cada frase define `id`, `category` e `text`.
 IDs usam letras minúsculas, números e sublinhado, iniciando por letra, com até
 64 caracteres; `off` é reservado. Textos têm no máximo 500 caracteres.
-Cada tema deve ter ao menos uma frase de acerto e uma de erro.
+Cada voz deve ter ao menos uma frase de acerto e uma de erro.
 
-Para adicionar um tema, basta cadastrar suas frases e gerar os áudios:
-o seletor lê o catálogo, sem lista fixa de temas na interface. Os arquivos
-seguem `assets/audio_feedback/<tema>_<frase>.mp3`; caminhos resultantes
-duplicados são rejeitados. Não altere os IDs dos cursos ou exercícios.
+Para adicionar uma voz, cadastre suas frases e gere os áudios com o Voice ID
+correspondente no ElevenLabs: o seletor lê o catálogo, sem lista fixa na
+interface. Os arquivos seguem `assets/audio_feedback/<voz>_<frase>.mp3`;
+caminhos resultantes duplicados são rejeitados. Não altere os IDs dos cursos
+ou exercícios.
 Novos **eventos**, além de acerto/erro, exigem ampliar `FeedbackCategory`, a
 validação do catálogo e o ponto de disparo correspondente, com testes.
 
@@ -472,7 +474,7 @@ No app instalado, os MP3 empacotados funcionam offline; a limitação de
 carregamento inicial da versão web continua valendo.
 
 **Estado desta entrega:** nenhum áudio foi sintetizado sem as credenciais do
-proprietário. Até gerar e empacotar os MP3, os temas mostram suas frases por
+proprietário. Até gerar e empacotar os MP3, as vozes mostram suas frases por
 escrito e informam que o áudio está indisponível.
 
 ## Executar localmente
@@ -655,7 +657,7 @@ ajustes na normalização de respostas.
 docs/                Documentação do projeto
 assets/courses/       Catálogo e conteúdo original empacotado
 assets/content/       Registro de fontes, licenças e downloads revisados
-assets/audio_feedback/ Temas, frases e MP3 gerados antes da publicação
+assets/audio_feedback/ Vozes, frases e MP3 gerados antes da publicação
 assets/fonts/         Fontes locais Tech e Genhead
 content-cache/        Livros pessoais e recibos locais (ignorado pelo Git)
 lib/models/          Cursos, exercícios, progresso e revisões
@@ -665,7 +667,7 @@ lib/services/        Persistência local e Firebase opcional
 lib/screens/         Trilha, exercícios, revisão e conta
 test/                Testes de domínio e widgets
 lib/theme.dart       Tokens dark e componentes visuais compartilhados
-lib/widgets/         Seletor reutilizável de temas de áudio
+lib/widgets/         Seletor reutilizável de vozes
 tool/                Aquisição editorial de fontes e geração de áudio via ElevenLabs, fora do runtime
 firebase/            Testes das regras Firestore
 android/ ios/ web/   Runners Flutter

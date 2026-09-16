@@ -96,16 +96,16 @@ Future<LearningController> _pumpFeedbackLesson(
   WidgetTester tester,
   List<_Output> outputs, {
   bool review = false,
-  String? savedThemeId,
+  String? savedVoiceId,
   bool failAudio = false,
 }) async {
-  final saved = savedThemeId == null
+  final saved = savedVoiceId == null
       ? null
       : jsonEncode({
           'schemaVersion': 1,
           'selectedCourseId': 'en',
           'courses': {
-            'en': LearningProgress(feedbackThemeId: savedThemeId).toJson(),
+            'en': LearningProgress(feedbackVoiceId: savedVoiceId).toJson(),
           },
         });
   final controller = LearningController(
@@ -140,76 +140,98 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('catálogo de feedback', () {
-    test('todos os temas têm acertos, erros e caminhos locais únicos', () {
+    test('todas as vozes têm acertos, erros e caminhos locais únicos', () {
       final catalog = _catalog();
       expect(
-        catalog.themes.map((theme) => theme.id),
-        containsAll(['zoacao', 'torcida', 'tranquilo']),
+        catalog.voices.map((voice) => voice.id),
+        contains('natasha_caldeirao'),
       );
       expect(
-        catalog.theme(LearningProgress.defaultFeedbackThemeId)?.name,
-        'Zoação leve',
+        catalog.voice(LearningProgress.defaultFeedbackVoiceId)?.name,
+        'Natasha Caldeirão',
       );
       final paths = <String>{};
-      for (final theme in catalog.themes) {
+      for (final voice in catalog.voices) {
         for (final category in FeedbackCategory.values) {
           expect(
-            theme.clips.where((clip) => clip.category == category),
+            voice.clips.where((clip) => clip.category == category),
             isNotEmpty,
           );
         }
-        for (final clip in theme.clips) {
+        for (final clip in voice.clips) {
           expect(paths.add(clip.assetPath), isTrue);
           expect(clip.assetPath, startsWith('assets/audio_feedback/'));
           expect(clip.assetPath, endsWith('.mp3'));
         }
       }
+      final natasha = catalog.voice('natasha_caldeirao')!;
+      expect(
+        natasha.clips
+            .where((clip) => clip.category == FeedbackCategory.correct)
+            .length,
+        greaterThanOrEqualTo(10),
+      );
+      expect(
+        natasha.clips
+            .where((clip) => clip.category == FeedbackCategory.incorrect)
+            .length,
+        greaterThanOrEqualTo(10),
+      );
     });
 
     test('rejeita caminhos, IDs duplicados e categorias incompletas', () {
       for (final id in ['../escape', 'off', 'bad/id', '']) {
         final json = _catalogJson();
-        json['themes'][0]['id'] = id;
+        json['voices'][0]['id'] = id;
         expect(() => FeedbackCatalog.fromJson(json), throwsFormatException);
       }
       final duplicate = _catalogJson();
-      duplicate['themes'][1]['id'] = duplicate['themes'][0]['id'];
+      final extra = jsonDecode(jsonEncode(duplicate['voices'][0]));
+      extra['id'] = 'outra_voz';
+      (duplicate['voices'] as List).add(extra);
+      duplicate['voices'][1]['id'] = duplicate['voices'][0]['id'];
       expect(() => FeedbackCatalog.fromJson(duplicate), throwsFormatException);
       final noErrors = _catalogJson();
-      (noErrors['themes'][0]['clips'] as List).removeWhere(
+      (noErrors['voices'][0]['clips'] as List).removeWhere(
         (dynamic clip) => clip['category'] == 'incorrect',
       );
       expect(() => FeedbackCatalog.fromJson(noErrors), throwsFormatException);
       final badCategory = _catalogJson();
-      badCategory['themes'][0]['clips'][0]['category'] = 'unknown';
+      badCategory['voices'][0]['clips'][0]['category'] = 'unknown';
       expect(
         () => FeedbackCatalog.fromJson(badCategory),
+        throwsFormatException,
+      );
+      final legacySchema = _catalogJson();
+      legacySchema['schemaVersion'] = 1;
+      expect(
+        () => FeedbackCatalog.fromJson(legacySchema),
         throwsFormatException,
       );
     });
 
     test(
-      'novos temas entram pelo catálogo, sem enum de temas na interface',
+      'novas vozes entram pelo catálogo, sem enum de vozes na interface',
       () {
         final json = _catalogJson();
-        final extra = jsonDecode(jsonEncode(json['themes'][0]));
-        extra['id'] = 'novo_tema';
-        extra['name'] = 'Novo tema';
-        (json['themes'] as List).add(extra);
+        final extra = jsonDecode(jsonEncode(json['voices'][0]));
+        extra['id'] = 'nova_voz';
+        extra['name'] = 'Nova voz';
+        (json['voices'] as List).add(extra);
         expect(
-          FeedbackCatalog.fromJson(json).theme('novo_tema')!.name,
-          'Novo tema',
+          FeedbackCatalog.fromJson(json).voice('nova_voz')!.name,
+          'Nova voz',
         );
       },
     );
 
     test('sorteia somente a categoria pedida, sem repetição imediata', () {
       final picker = FeedbackPicker(random: Random(12));
-      for (final theme in _catalog().themes) {
+      for (final voice in _catalog().voices) {
         for (final category in FeedbackCategory.values) {
           String? previous;
           for (var i = 0; i < 20; i++) {
-            final clip = picker.pick(theme, category);
+            final clip = picker.pick(voice, category);
             expect(clip.category, category);
             expect(clip.id, isNot(previous));
             previous = clip.id;
@@ -220,27 +242,50 @@ void main() {
   });
 
   group('preferência por curso', () {
-    test('progresso novo ou sem preferência inicia com Zoação leve', () {
-      expect(LearningProgress().feedbackThemeId, 'zoacao');
-      final json = LearningProgress().toJson()..remove('feedbackThemeId');
+    test('progresso novo ou sem preferência inicia com Natasha Caldeirão', () {
+      expect(LearningProgress().feedbackVoiceId, 'natasha_caldeirao');
+      final json = LearningProgress().toJson()..remove('feedbackVoiceId');
       final progress = LearningProgress.fromJson(json);
-      expect(progress.feedbackThemeId, 'zoacao');
+      expect(progress.feedbackVoiceId, 'natasha_caldeirao');
     });
 
-    test('mantém temas e silêncio salvos e rejeita preferência inválida', () {
-      for (final themeId in ['off', 'zoacao', 'torcida', 'tranquilo']) {
-        final progress = LearningProgress(feedbackThemeId: themeId);
+    test('mantém vozes e silêncio salvos e rejeita preferência inválida', () {
+      for (final voiceId in ['off', 'natasha_caldeirao', 'outra_voz']) {
+        final progress = LearningProgress(feedbackVoiceId: voiceId);
         expect(
-          LearningProgress.fromJson(progress.toJson()).feedbackThemeId,
-          themeId,
+          LearningProgress.fromJson(progress.toJson()).feedbackVoiceId,
+          voiceId,
         );
       }
       final json = LearningProgress().toJson();
-      json['feedbackThemeId'] = 42;
+      json['feedbackVoiceId'] = 42;
       expect(() => LearningProgress.fromJson(json), throwsFormatException);
     });
 
-    test('persiste, isola cursos e não ativa tema via backup remoto', () async {
+    test('migra temas legados sem apagar silêncio ou escolhas salvas', () {
+      for (final legacyId in ['off', 'zoacao', 'torcida', 'tranquilo']) {
+        final json = LearningProgress().toJson()..remove('feedbackVoiceId');
+        json['feedbackThemeId'] = legacyId;
+        final progress = LearningProgress.fromJson(json);
+        expect(progress.feedbackVoiceId, legacyId);
+        expect(progress.toJson()['feedbackVoiceId'], legacyId);
+        expect(progress.toJson().containsKey('feedbackThemeId'), isFalse);
+      }
+    });
+
+    test('a escolha de voz atual prevalece sobre o campo de tema legado', () {
+      final json = LearningProgress(feedbackVoiceId: 'off').toJson();
+      json['feedbackThemeId'] = 'zoacao';
+      expect(LearningProgress.fromJson(json).feedbackVoiceId, 'off');
+      json['feedbackVoiceId'] = 'natasha_caldeirao';
+      json['feedbackThemeId'] = 'off';
+      expect(
+        LearningProgress.fromJson(json).feedbackVoiceId,
+        'natasha_caldeirao',
+      );
+    });
+
+    test('persiste, isola cursos e não ativa voz via backup remoto', () async {
       String? saved;
       final store = ProgressStore(
         read: () async => saved,
@@ -257,27 +302,27 @@ void main() {
       final controller = create();
       addTearDown(controller.dispose);
       await controller.load();
-      expect(controller.feedbackThemeId, 'zoacao');
-      await controller.setFeedbackTheme('torcida');
+      expect(controller.feedbackVoiceId, 'natasha_caldeirao');
+      await controller.setFeedbackVoice('off');
       await controller.selectCourse('es');
-      expect(controller.feedbackThemeId, 'zoacao');
+      expect(controller.feedbackVoiceId, 'natasha_caldeirao');
       await controller.selectCourse('en');
-      expect(controller.feedbackThemeId, 'torcida');
+      expect(controller.feedbackVoiceId, 'off');
       final restored = create();
       addTearDown(restored.dispose);
       await restored.load();
-      expect(restored.feedbackThemeId, 'torcida');
-      await restored.setFeedbackTheme('off');
+      expect(restored.feedbackVoiceId, 'off');
+      await controller.setFeedbackVoice('natasha_caldeirao');
       await restored.mergeRemote(controller.exportProgress());
-      expect(restored.feedbackThemeId, 'off');
+      expect(restored.feedbackVoiceId, 'off');
       await expectLater(
-        controller.setFeedbackTheme('unknown'),
+        controller.setFeedbackVoice('unknown'),
         throwsArgumentError,
       );
     });
 
-    test('tema removido não bloqueia curso nem ativa outro áudio', () async {
-      final progress = LearningProgress(feedbackThemeId: 'tema_removido');
+    test('voz removida não bloqueia curso nem ativa outro áudio', () async {
+      final progress = LearningProgress(feedbackVoiceId: 'voz_removida');
       final controller = LearningController(
         courses: [_course('en')],
         feedbackCatalog: _catalog(),
@@ -293,13 +338,13 @@ void main() {
       addTearDown(controller.dispose);
       await controller.load();
       expect(controller.storageError, isNull);
-      expect(controller.feedbackThemeId, 'off');
+      expect(controller.feedbackVoiceId, 'off');
       expect(controller.nextLesson, isNotNull);
     });
   });
 
   group('reprodução opcional', () {
-    final clip = _catalog().themes.first.clips.first;
+    final clip = _catalog().voices.first.clips.first;
 
     test('falha de áudio não lança erro para a aula', () async {
       final output = _Output()..fail = true;
@@ -349,19 +394,27 @@ void main() {
     );
   });
 
-  testWidgets('escolhe tema antes da lição pela tela inicial', (tester) async {
+  testWidgets('escolhe voz antes da lição pela tela inicial', (tester) async {
     SharedPreferences.setMockInitialValues({});
     await pumpFluentApp(tester);
-    await tester.tap(find.byTooltip('Feedback de áudio: Zoação leve'));
+    await tester.tap(find.byTooltip('Voz do feedback: Natasha Caldeirão'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Sem áudio'));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Voz do feedback: Sem áudio'), findsOneWidget);
+    await tester.tap(find.byTooltip('Voz do feedback: Sem áudio'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Tranquilo'),
+      find.text('Natasha Caldeirão'),
       200,
       scrollable: find.byType(Scrollable).last,
     );
-    await tester.tap(find.text('Tranquilo'));
+    await tester.tap(find.text('Natasha Caldeirão'));
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Feedback de áudio: Tranquilo'), findsOneWidget);
+    expect(
+      find.byTooltip('Voz do feedback: Natasha Caldeirão'),
+      findsOneWidget,
+    );
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -376,7 +429,7 @@ void main() {
             outputs,
             review: review,
           );
-          expect(controller.feedbackThemeId, 'zoacao');
+          expect(controller.feedbackVoiceId, 'natasha_caldeirao');
           await tester.tap(find.text(correct ? 'Hello' : 'Goodbye'));
           await tester.pump();
           expect(outputs, isEmpty);
@@ -385,7 +438,9 @@ void main() {
           expect(outputs.single.plays, 1);
           expect(
             outputs.single.loaded.single,
-            contains(correct ? 'zoacao_acerto_' : 'zoacao_erro_'),
+            contains(
+              correct ? 'natasha_caldeirao_acerto_' : 'natasha_caldeirao_erro_',
+            ),
           );
           await tester.pumpAndSettle();
           await tester.scrollUntilVisible(
@@ -462,9 +517,9 @@ void main() {
     final controller = await _pumpFeedbackLesson(
       tester,
       outputs,
-      savedThemeId: 'off',
+      savedVoiceId: 'off',
     );
-    expect(controller.feedbackThemeId, 'off');
+    expect(controller.feedbackVoiceId, 'off');
     await tester.tap(find.text('Hello'));
     await tester.pump();
     await tester.tap(find.text('Verificar'));
@@ -487,7 +542,7 @@ void main() {
       store: ProgressStore(read: () async => null, write: (_) async => true),
     );
     addTearDown(controller.dispose);
-    await controller.setFeedbackTheme('zoacao');
+    await controller.setFeedbackVoice('natasha_caldeirao');
     final lesson = controller.course.lessons.first;
     await tester.pumpWidget(
       MaterialApp(
@@ -511,7 +566,7 @@ void main() {
     await tester.tap(find.text('Verificar'));
     await tester.pumpAndSettle();
     expect(outputs.single.plays, 1);
-    expect(outputs.single.loaded.single, contains('zoacao_erro_'));
+    expect(outputs.single.loaded.single, contains('natasha_caldeirao_erro_'));
     expect(find.text('Resposta: Hello'), findsOneWidget);
     expect(find.text('Hello é uma saudação.'), findsOneWidget);
     await tester.scrollUntilVisible(
@@ -522,7 +577,7 @@ void main() {
     await tester.tap(find.text('Continuar'));
     await tester.pumpAndSettle();
     expect(outputs.single.disposed, isTrue);
-    await tester.tap(find.byTooltip('Feedback de áudio: Zoação leve'));
+    await tester.tap(find.byTooltip('Voz do feedback: Natasha Caldeirão'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sem áudio'));
     await tester.pumpAndSettle();

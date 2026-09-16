@@ -29,11 +29,16 @@ class _JustAudioOutput implements FeedbackAudioOutput {
       if (!completed.isCompleted) completed.completeError(error);
     });
     try {
-      unawaited(_player.play().then((_) {
-        if (!completed.isCompleted) completed.complete();
-      }, onError: (Object error, StackTrace stack) {
-        if (!completed.isCompleted) completed.completeError(error, stack);
-      }));
+      unawaited(
+        _player.play().then(
+          (_) {
+            if (!completed.isCompleted) completed.complete();
+          },
+          onError: (Object error, StackTrace stack) {
+            if (!completed.isCompleted) completed.completeError(error, stack);
+          },
+        ),
+      );
       await completed.future;
     } finally {
       await errors.cancel();
@@ -46,7 +51,7 @@ class _JustAudioOutput implements FeedbackAudioOutput {
 
 class FeedbackAudioPlayer extends ChangeNotifier {
   FeedbackAudioPlayer({FeedbackAudioOutput Function()? createOutput})
-      : _createOutput = createOutput ?? _JustAudioOutput.new;
+    : _createOutput = createOutput ?? _JustAudioOutput.new;
 
   final FeedbackAudioOutput Function() _createOutput;
   FeedbackAudioOutput? _output;
