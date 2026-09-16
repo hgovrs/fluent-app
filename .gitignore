@@ -47,3 +47,6 @@ node_modules/
 content-cache/
 __pycache__/
 *.py[cod]
+
+# Local video/GIF preparation; not bundled into the app automatically.
+feedback-gifs/
