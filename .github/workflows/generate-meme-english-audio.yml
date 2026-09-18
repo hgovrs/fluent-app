@@ -21,12 +21,12 @@ on:
   workflow_dispatch:
     inputs:
       secret_environment:
-        description: Ambiente ElevenLabs já configurado (fluent foi usado no lote anterior)
+        description: Ambiente ElevenLabs já configurado (copilot por padrão)
         type: choice
         options:
-          - fluent
           - copilot
-        default: fluent
+          - fluent
+        default: copilot
         required: true
       request_json:
         description: Solicitação validada contendo somente os textos ingleses

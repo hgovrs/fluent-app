@@ -2,6 +2,7 @@ import copy
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -51,6 +52,15 @@ class GithubEnglishAudioTest(unittest.TestCase):
         )
         self.request_patch.start()
         self.addCleanup(self.request_patch.stop)
+        self.auth_patch = mock.patch.object(
+            github, "github_environment", side_effect=lambda: {
+                key: value for key, value in os.environ.items()
+                if key != "ELEVENLABS_API_KEY"
+            },
+        )
+        self.real_auth = github.github_environment
+        self.auth_patch.start()
+        self.addCleanup(self.auth_patch.stop)
         self.audio = b"ID3\x04\x00\x00\x00\x00\x00\x10fixture"
         self.catalog = {
             "schemaVersion": 1, "status": "complete", "courseId": "meme_test",
@@ -98,7 +108,7 @@ class GithubEnglishAudioTest(unittest.TestCase):
         self.assertEqual(self.identifier, github.batch_id(revised, self.voice, self.code_hash))
         self.assertNotEqual(self.identifier, github.batch_id(revised, "other_voice", self.code_hash))
         self.assertNotEqual(self.identifier, github.batch_id(revised, self.voice, "d" * 64))
-        self.assertNotEqual(self.identifier, github.batch_id(revised, self.voice, self.code_hash, "copilot"))
+        self.assertNotEqual(self.identifier, github.batch_id(revised, self.voice, self.code_hash, "fluent"))
         revised["scenes"][0]["textSha256"] = "e" * 64
         self.assertNotEqual(self.identifier, github.batch_id(revised, self.voice, self.code_hash))
 
@@ -231,6 +241,49 @@ class GithubEnglishAudioTest(unittest.TestCase):
             github.gh(["api", "repos/example/repo"])
         self.assertNotIn("ELEVENLABS_API_KEY", run.call_args.kwargs["env"])
 
+    def test_existing_owner_login_is_process_scoped_and_no_key_is_requested(self):
+        responses = [
+            subprocess.CompletedProcess(
+                [], 0, stdout=b"username=hgovrs\npassword=GITHUB_TEST_ONLY\n", stderr=b"",
+            ),
+            subprocess.CompletedProcess([], 0, stdout=b"hgovrs\n", stderr=b""),
+        ]
+        with mock.patch.dict("os.environ", {
+            "GH_TOKEN": "SESSION_TEST_ONLY", "ELEVENLABS_API_KEY": "ELEVEN_TEST_ONLY",
+        }, clear=True), mock.patch.object(github, "_owner_environment", None), \
+                mock.patch.object(github.subprocess, "run", side_effect=responses) as calls:
+            environment = self.real_auth()
+            self.assertEqual(os.environ["GH_TOKEN"], "SESSION_TEST_ONLY")
+        self.assertEqual(environment["GH_TOKEN"], "GITHUB_TEST_ONLY")
+        self.assertNotIn("ELEVENLABS_API_KEY", environment)
+        self.assertEqual(environment["GCM_INTERACTIVE"], "never")
+        self.assertEqual(calls.call_count, 2)
+        self.assertEqual(calls.call_args.args[0], [
+            "gh", "api", "user", "--hostname", "github.com", "--jq", ".login",
+        ])
+
+    def test_wrong_owner_identity_is_not_used_as_a_fallback(self):
+        wrong = subprocess.CompletedProcess(
+            [], 0, stdout=b"username=another\npassword=GITHUB_TEST_ONLY\n", stderr=b"",
+        )
+        with mock.patch.dict("os.environ", {}, clear=True), \
+                mock.patch.object(github, "_owner_environment", None), \
+                mock.patch.object(github.subprocess, "run", return_value=wrong) as calls:
+            with self.assertRaises(github.GithubGenerationError) as error:
+                self.real_auth()
+        self.assertNotIn("GITHUB_TEST_ONLY", str(error.exception))
+        self.assertEqual(calls.call_count, 1)
+
+    def test_worker_keeps_scoped_github_token_without_accessing_credential_manager(self):
+        with mock.patch.dict("os.environ", {
+            "GITHUB_ACTIONS": "true", "GH_TOKEN": "WORKFLOW_TEST_ONLY",
+            "ELEVENLABS_API_KEY": "ELEVEN_TEST_ONLY",
+        }, clear=True), mock.patch.object(github.subprocess, "run") as calls:
+            environment = self.real_auth()
+        self.assertEqual(environment["GH_TOKEN"], "WORKFLOW_TEST_ONLY")
+        self.assertNotIn("ELEVENLABS_API_KEY", environment)
+        calls.assert_not_called()
+
     def test_gh_failure_never_prints_provider_output_or_retries(self):
         completed = subprocess.CompletedProcess(
             [], 1, stdout=b"", stderr=b"private-fixture-value",
@@ -253,7 +306,7 @@ class GithubEnglishAudioTest(unittest.TestCase):
     def test_workflow_uses_existing_secret_without_deploy_or_secret_export(self):
         text = (github.ROOT / ".github" / "workflows" / github.WORKFLOW).read_text(encoding="utf-8")
         self.assertIn("environment: ${{ inputs.secret_environment }}", text)
-        self.assertIn("default: fluent", text)
+        self.assertIn("default: copilot", text)
         self.assertIn("inputs.secret_environment == 'fluent'", text)
         self.assertIn("secrets.ELEVENLABS_API_KEY", text)
         self.assertIn("github.event.repository.default_branch", text)

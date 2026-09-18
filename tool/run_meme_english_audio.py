@@ -27,8 +27,8 @@ else:
 
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = "generate-meme-english-audio.yml"
-DEFAULT_ENVIRONMENT = "fluent"
-ENVIRONMENTS = ("fluent", "copilot")
+DEFAULT_ENVIRONMENT = "copilot"
+ENVIRONMENTS = ("copilot", "fluent")
 RECEIPT = "github-generation.json"
 LOCAL_RECEIPT = "github-request.json"
 TITLE_PREFIX = "English meme audio "
@@ -37,6 +37,8 @@ MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
 MAX_AUDIO_BYTES = 2 * 1024 * 1024
 REPOSITORY = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")
 VOICE_ID = re.compile(r"[A-Za-z0-9_-]{1,128}")
+OWNER_LOGIN = "hgovrs"
+_owner_environment = None
 
 
 class GithubGenerationError(ValueError):
@@ -95,9 +97,52 @@ def batch_id(request, voice_id, code_hash, secret_environment=DEFAULT_ENVIRONMEN
     }).encode("utf-8"))
 
 
-def gh(arguments, *, payload=None, binary=False, timeout=120):
+def github_environment():
+    """Use the already configured repository-owner login without changing global auth."""
+    global _owner_environment
     environment = os.environ.copy()
     environment.pop("ELEVENLABS_API_KEY", None)
+    if environment.get("GITHUB_ACTIONS") == "true":
+        return environment
+    if _owner_environment is not None:
+        return _owner_environment.copy()
+    environment.update(GH_HOST="github.com", GCM_INTERACTIVE="never", GIT_TERMINAL_PROMPT="0")
+    try:
+        result = subprocess.run(
+            ["git", "credential-manager", "get"], cwd=ROOT, env=environment,
+            input=f"protocol=https\nhost=github.com\nusername={OWNER_LOGIN}\n\n".encode(),
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30, check=False,
+        )
+        if result.returncode:
+            raise GithubGenerationError("A autenticação GitHub existente do dono do repositório não está disponível.")
+        credential = {}
+        for line in result.stdout.decode("utf-8").splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                credential[key] = value
+        if credential.get("username") != OWNER_LOGIN or not credential.get("password"):
+            raise GithubGenerationError("O gerenciador não retornou a identidade GitHub esperada.")
+        environment["GH_TOKEN"] = credential["password"]
+        environment.pop("GITHUB_TOKEN", None)
+        credential.clear()
+        identity = subprocess.run(
+            ["gh", "api", "user", "--hostname", "github.com", "--jq", ".login"],
+            cwd=ROOT, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            timeout=30, check=False,
+        )
+        if identity.returncode or identity.stdout.decode("utf-8").strip() != OWNER_LOGIN:
+            raise GithubGenerationError("A identidade GitHub existente não corresponde ao dono deste repositório.")
+    except (OSError, subprocess.SubprocessError, UnicodeDecodeError) as error:
+        raise GithubGenerationError(
+            "Não foi possível usar o login GitHub existente sem interação. "
+            "Isso é autenticação do GitHub, não uma solicitação de chave ElevenLabs."
+        ) from error
+    _owner_environment = environment.copy()
+    return environment
+
+
+def gh(arguments, *, payload=None, binary=False, timeout=120):
+    environment = github_environment()
     try:
         result = subprocess.run(
             ["gh", *arguments], cwd=ROOT, env=environment,
@@ -366,7 +411,7 @@ def main(argv=None):
     parser.add_argument("--voice-id")
     parser.add_argument("--repository")
     parser.add_argument("--secret-environment", choices=ENVIRONMENTS, default=DEFAULT_ENVIRONMENT,
-                        help="Ambiente GitHub já configurado; fluent foi usado no lote anterior.")
+                        help="Ambiente GitHub já configurado; copilot é a escolha padrão deste fluxo.")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--dry-run", action="store_true")
     modes.add_argument("--generate", action="store_true")
