@@ -1,0 +1,148 @@
+name: Gerar inglês dos memes
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('English meme audio {0}/{1}', inputs.batch_id, inputs.request_id) || 'Meme audio checks' }}
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/generate-meme-english-audio.yml
+      - tool/compile_meme_course.py
+      - tool/generate_meme_english_audio.py
+      - tool/run_meme_english_audio.py
+      - test/meme_course_compiler_test.py
+      - test/meme_english_*test.py
+  push:
+    paths:
+      - .github/workflows/generate-meme-english-audio.yml
+      - tool/compile_meme_course.py
+      - tool/generate_meme_english_audio.py
+      - tool/run_meme_english_audio.py
+      - test/meme_course_compiler_test.py
+      - test/meme_english_*test.py
+  workflow_dispatch:
+    inputs:
+      secret_environment:
+        description: Ambiente ElevenLabs já configurado (fluent foi usado no lote anterior)
+        type: choice
+        options:
+          - fluent
+          - copilot
+        default: fluent
+        required: true
+      request_json:
+        description: Solicitação validada contendo somente os textos ingleses
+        type: string
+        required: true
+      voice_id:
+        description: ID da voz já cadastrada no ElevenLabs
+        type: string
+        required: true
+      batch_id:
+        description: SHA-256 do lote, voz e versão do gerador
+        type: string
+        required: true
+      request_id:
+        description: Identificador único de acompanhamento, sem repetição automática
+        type: string
+        required: true
+      engine_sha256:
+        description: SHA-256 normalizado do gerador local aprovado
+        type: string
+        required: true
+      generate:
+        description: Autorizar síntese cobrável deste lote
+        type: boolean
+        default: false
+      allow_draft:
+        description: Reconhecer que as traduções ainda estão em revisão
+        type: boolean
+        default: false
+      regenerate:
+        description: Ignorar um lote idêntico já concluído e consumir créditos novamente
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ${{ github.event_name == 'workflow_dispatch' && format('elevenlabs-meme-english-{0}', inputs.batch_id) || format('meme-audio-checks-{0}-{1}', github.event_name, github.ref) }}
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Obter código sem credenciais persistidas
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validar geração e download sem segredos ou rede
+        run: |
+          test -f test/meme_english_audio_generator_test.py
+          test -f test/meme_english_github_test.py
+          PYTHONPATH="$PWD/test" python3 -B -m unittest \
+            meme_course_compiler_test meme_english_audio_generator_test meme_english_github_test
+
+  english:
+    needs: checks
+    if: github.event_name == 'workflow_dispatch' && inputs.generate && (inputs.secret_environment == 'fluent' || inputs.secret_environment == 'copilot') && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.secret_environment }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Obter somente código versionado
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Conferir ferramentas de validação de MP3
+        run: |
+          python3 --version
+          if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+
+      - name: Sintetizar inglês ou reutilizar lote verificado
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          TTS_REQUEST_JSON: ${{ inputs.request_json }}
+          TTS_SECRET_ENVIRONMENT: ${{ inputs.secret_environment }}
+          TTS_VOICE_ID: ${{ inputs.voice_id }}
+          TTS_BATCH_ID: ${{ inputs.batch_id }}
+          TTS_ENGINE_SHA256: ${{ inputs.engine_sha256 }}
+          TTS_ALLOW_DRAFT: ${{ inputs.allow_draft }}
+          TTS_REGENERATE: ${{ inputs.regenerate }}
+        run: |
+          if [[ -z "${ELEVENLABS_API_KEY//[[:space:]]/}" ]]; then
+            echo "::error::O workflow não recebeu ELEVENLABS_API_KEY do ambiente selecionado. Não envie a chave em mensagens ou artefatos."
+            exit 1
+          fi
+          python3 -B tool/run_meme_english_audio.py --worker
+
+      - name: Disponibilizar downloads e estado, nunca credenciais
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: meme-english-${{ inputs.batch_id }}
+          path: build/meme-course-work/github-${{ github.run_id }}-${{ github.run_attempt }}/audio/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Registrar limites da operação
+        if: always()
+        run: |
+          {
+            echo "## Inglês dos memes"
+            echo "- Credencial reutilizada no ambiente configurado; a chave não é exportada."
+            echo "- Somente texto inglês é sintetizado; originais em português permanecem intactos."
+            echo "- O catálogo precisa declarar status complete antes de integrar os MP3."
+            echo "- Uma falha pode ter consumido créditos; não há repetição automática."
+            echo "- Nenhum commit de mídias, deploy, Firebase ou alteração da voz salva."
+          } >> "$GITHUB_STEP_SUMMARY"
